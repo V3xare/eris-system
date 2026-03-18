@@ -1,0 +1,65 @@
+{
+  "name": "v-eris-system",
+  "version": "1.0.0",
+  "description": "",
+  "bootstrapVersion": 3,
+  "styleLoaders": [],
+  "main": "./release/cjs/index.js",
+  "module": "./release/index.js",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "webpack": "webpack --mode development",
+    "auto": "tsc -watch - tsconfig.json",
+    "build": "yarn build:esm && yarn build:cjs && yarn copy && yarn copy2 && yarn copy3",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir release/cjs",
+    "tsc2": "tsc && tsc -m es6 --outDir release && webpack --mode development",
+    "tsc": "tsc",
+    "tsc3": "tsc --emitDeclarationOnly",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development",
+    "production": "webpack --mode production",
+    "copy": "copyfiles -u 2 \"./source/components/**/*.{css,scss}\" \"./release/cjs/components\"",
+    "copy2": "copyfiles -u 2 \"./assets/**/*.{scss,css}\" \"./release/assets/styles/\"",
+    "copy3": "copyfiles -u 2 \"./assets/**/*.{woff,woff2,ttf}\" \"./release/assets/fonts/\"",
+    "pub": "tsc && npm version patch --force && npm publish --access public"
+  },
+  "files": [
+    "package.json",
+    "tsconfig.json",
+    "release/*",
+    "types/*"
+  ],
+  "imports": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/V3xare/eris-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
+    "module-alias": "^2.2.3",
+    "node-sass": "^9.0.0",
+    "qs": "^6.14.0",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "v-eris": "^1.0.283",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "copyfiles": "^2.4.1",
+    "esbuild-loader": "^3.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.2.1",
+    "webpack-dev-server": "^4.15.1"
+  }
+}

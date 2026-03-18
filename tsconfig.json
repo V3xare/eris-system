@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "lib": ["dom", "esnext"],
+    "importHelpers": true,
+    "declaration": true, // generate typings
+    "declarationMap": true, // generate source maps, if desired
+    "declarationDir": "types", // explicit directory
+    "sourceMap": true,
+    "rootDir": "./source",
+	"baseUrl": "./source",
+    "outDir": "./release/esm",
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+	"noImplicitAny": false,
+	"paths": {
+	  "@components/*": [ "../source/components/*" ],
+	}
+  },
+  "exclude": [
+	"node_modules",
+	"release",
+  ],
+  "include": [
+	"source/*"
+  ]
+}

@@ -104,72 +104,6 @@ export const AdminLocalTable = {
 			]},
 		]
 	},		
-	"Zones": {
-		params: [
-			{ key: "name", title: "Admin::Table::Name", desc: "Admin::Table::Name", type: "text", mini: 1, params: {
-				conditions: Conditions.nameSpecial
-			}},
-			{ key: "zonex", title: "Admin::Table::ZoneX", desc: "Admin::Table::ZoneX", type: "file", params: { multiple: true } },
-			{ key: "mapx", title: "Admin::Table::MapX", desc: "Admin::Table::MapX", type: "file", params: { multiple: true } },
-			{ key: "aixm", title: "Admin::Table::Aixm", desc: "Admin::Table::Aixm", type: "file", params: { multiple: true } },
-			{ key: "aixmx", title: "Admin::Table::AixmX", desc: "Admin::Table::AixmX", type: "file", params: { multiple: true } },
-			{ key: "angles", title: "Admin::Table::Zones::Angles", desc: "Admin::Table::Zones::AnglesDesc", type: "ranges", mini: 1, newLine: true, value: [ 90, 180 ], params: { min: 0, max: 360} },
-			{ key: "description", title: "Admin::Table::Description", desc: "Admin::Table::DescriptionDesc", type: "textarea", newLine: true, 
-				params: {
-					stretch: true,
-					conditions: Conditions.text
-				}
-			}			
-		]
-	},	
-	"Locators": {
-		params: [
-			{ key: "name", title: "Admin::Table::Name", desc: "Admin::Table::Name", type: "text", mini: 1, params: {
-				conditions: Conditions.nameSpecial
-			}},
-			{ 
-				key: "type", title: "Admin::Table::Type", 
-				desc: "Admin::Table::Locators::AccessDesc", 
-				type: "select", 
-				mini: 1,
-				params: [
-					{ title: "Admin::Table::Locators::Type::ADSBStation", value: "ADSBStation" }, 
-					{ title: "Admin::Table::Locators::Type::ADSBMobile", value: "ADSBMobile" }, 
-					{ title: "Admin::Table::Locators::Type::MLAT", value: "MLAT" }, 
-				] 
-			},
-			{ key: "sac", title: "Admin::Table::Locators::Sac", desc: "Admin::Table::Locators::SacDesc", type: "ranges", mini: 1, value: [ 50 ], params: { min: 0, max: 255, single: true } },			
-			{ key: "sic", title: "Admin::Table::Locators::Sic", desc: "Admin::Table::Locators::SicDesc", type: "ranges", mini: 1, value: [ 50 ], params: { min: 0, max: 255, single: true } },			
-			{ key: "lat", title: "Admin::Table::Locators::Lat", desc: "Admin::Table::Locators::LatDesc", type: "float", value: 60, params: { min: 1, max: 20000 } },
-			{ key: "lon", title: "Admin::Table::Locators::Lon", desc: "Admin::Table::Locators::LonDesc", type: "float", value: 30, params: { min: 1, max: 20000 } },
-			{ key: "height", title: "Admin::Table::Locators::Height", desc: "Admin::Table::Locators::HeightDesc", type: "float", value: 30, params: { min: 1, max: 20000 } },
-
-			{ key: "volume_operational_km", title: "Admin::Table::Locators::VolumeOperationalKm", desc: "Admin::Table::Locators::VolumeOperationalKmDesc", type: "ranges", newLine: true, value: [ 100 ], params: { min: 0, max: 200, single: true } },	
-			{ key: "volume_tracking_km", title: "Admin::Table::Locators::VolumeTrackingKm", desc: "Admin::Table::Locators::VolumeTrackingKmDesc", type: "ranges", newLine: true, value: [ 250 ], params: { min: 0, max: 500, single: true } },	
-			{ key: "volume_operational_nm", title: "Admin::Table::Locators::VolumeOperationalNm", desc: "Admin::Table::Locators::VolumeOperationalNmDesc", type: "ranges", newLine: true, value: [ 50 ], params: { min: 0, max: 100, single: true } },	
-			{ key: "volume_tracking_nm", title: "Admin::Table::Locators::VolumeTrackingNm", desc: "Admin::Table::Locators::VolumeTrackingNmDesc", type: "ranges", newLine: true, value: [ 125 ], params: { min: 0, max: 250, single: true } },	
-
-			{ key: "tracking_zone", title: "Admin::Table::Locators::TrackingZone", desc: "Admin::Table::Locators::TrackingZoneDesc", type: "json", value: {}, newLine: true, 
-				params: { 
-					editable: true, stretch: true,
-					conditions: Conditions.json
-				} 
-			},			
-			{ key: "operational_zone", title: "Admin::Table::Locators::OperationalZone", desc: "Admin::Table::Locators::OperationalZoneDesc", type: "json", value: {}, newLine: true, 
-				params: { 
-					editable: true, stretch: true,
-					conditions: Conditions.json
-				} 
-			},
-			{ key: "auto_correct", title: "Admin::Table::Locators::AutoCorrect", desc: "Admin::Table::Locators::AutoCorrect", type: "bool", value: true },
-			{ key: "description", title: "Admin::Table::Locators::Description", desc: "Admin::Table::Locators::DescriptionDesc", type: "textarea", newLine: true, 
-				params: {
-					stretch: true,
-					conditions: Conditions.text
-				}
-			}	
-		]
-	},
 	"Users": {
 		params: [
 			{ key: "redirectConfiguration", title: "Redirect", desc: "Admin::Table::Users::RedirectDesc", type: "button", mini: 1, params: { title: "Redirect" } },
@@ -335,20 +269,6 @@ export const AdminTable = {
 		]
 	}],	
 
-	Locators: [{
-		key: "Main", title: "Locators", icon: <Icons.receiver2/>,
-		list: [
-			{ key: "Table", type: "table", params: AdminLocalTable.Locators.params },
-		],
-	}],	
-
-	Zones: [{
-		key: "Main", title: "Zones", icon: <Icons.zones/>,
-		list: [
-			{ key: "Table", type: "table", params: AdminLocalTable.Zones.params },
-		],
-	}],		
-	
 	Filesystem: [{
 		key: "Main", title: "Filesystem", icon: <Icons.fileempty/>,
 		list: [
@@ -358,7 +278,7 @@ export const AdminTable = {
 
 };
 
-export const AdminSectionsList = [
+export const AdminList = [
 
 	{ title: "Admin::Module::Security", key: "SecuritySection", route: "security", icon: <Icons.key2/>, list: [
 		{ title: "Admin::Module::Logs", key: "Logs", route: "logs", icon: <Icons.table/> },	
@@ -375,8 +295,6 @@ export const AdminSectionsList = [
 
 	{ title: "Admin::Module::Applications", key: "Applications", route: "global", icon: <Icons.command/>, list: [
 		{ title: "Admin::Module::Filesystem", key: "Filesystem", route: "filesystem", icon: <Icons.fileempty/> },
-		{ title: "Admin::Module::Zones", key: "Zones", route: "zones", icon: <Icons.zones/> },
-		{ title: "Admin::Module::Locators", key: "Locators", route: "locators", icon: <Icons.receiver2/> },
 		{ title: "Admin::Module::Auth", key: "Auth", route: "global", global: true, icon: <Icons.enter/> },		
 	]},
 

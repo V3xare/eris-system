@@ -90,6 +90,62 @@ const ParseSectionInside = ( item: BuildSectionItem, sections: BuildSection ) =>
 
 };
 
+
+export class BuildCommands{
+	static joinTable( table: BuildTable | any, append: BuildTable | any ) : BuildTable{
+		
+		let result: any = { ...table };
+
+		for( let key in append ){
+
+			if( !result[ key ] )
+				result[ key ] = append[ key ];
+			else{
+				let array: BuildTableItem[] = result[ key ].list;
+				result[ key ] = append[ key ];
+				result[ key ].list = array && append[ key ].list ? [ ...array, ...append[ key ].list ] : append[ key ].list;
+			}
+
+		};
+
+		return result;
+	};
+	static joinList( table: BuildSectionItem[] | any, append: BuildSectionItem[] | any ) : BuildSectionItem[]{
+		
+		let result: BuildSectionItem[] = [];
+
+		for( let item of table ){
+			result.push({ ...item });
+		};
+
+		for( let item of append ){
+
+			let needleIndex = result.findIndex(( f: any ) => f.key == item.key );
+
+			if( needleIndex < 0 ){
+				result.push( item );
+				continue;
+			};
+
+			if( result[ needleIndex ].list && item.list )
+				result[ needleIndex ].list = [ ...result[ needleIndex ].list, ...item.list ];
+			else
+				result[ needleIndex ].list = item.list;
+
+			for( let key in item ){
+
+				if( key == "list" )
+					continue;
+
+				result[ needleIndex ][ key ] = item[ key ];
+			};	
+
+		};
+
+		return result;
+	};	
+};
+
 export const BuildInside = ( 
 	props: { 
 		currentLang?: string, 

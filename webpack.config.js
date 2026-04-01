@@ -17,7 +17,7 @@ module.exports = {
 		//publicPath: "/",
 		filename: "[name].js"
 	},
-	devtool: 'source-map',
+	devtool: 'eval-source-map',
 	module: {
 		rules: [
 			{
@@ -56,7 +56,7 @@ module.exports = {
 	devServer: {
 		hot: false,
 		liveReload: false,
-		port: 8080,
+		port: 8090,
 		devMiddleware: {
 			writeToDisk: true,
 		},

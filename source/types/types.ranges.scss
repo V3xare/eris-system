@@ -1,0 +1,145 @@
+@import "../functions.scss";
+
+.ranges{
+	position: relative;
+    user-select: none;
+    padding: 0px 0px;
+    width: 100%;
+    box-sizing: border-box;
+
+	&-wrap{
+		width: 100%;
+		position: relative;
+		padding-bottom: 18px;
+	}
+
+	&-gridless > &-wrap{
+		padding-bottom: 0px;
+	}	
+	&-separated &-item-bg{
+		background: transparent;
+	}
+	&-inactive &-item, &-inactive &-line, &-inactive &-grid, &-inactive &-value, &-inactive &-list{
+		display: none !important;
+	}
+
+	&-bg{
+		position: absolute;
+		left: 0px;
+		top: 0px;
+		right: -9px;
+		bottom: 0px;
+		z-index: 3;
+	}
+
+	&-list{
+		position: relative;
+		display: flex;
+		height: 16px;
+		padding: 0px 0px;
+		margin: 0px 6px 0px 7px;
+		flex-wrap: nowrap;
+		justify-content: flex-start;
+		align-items: center;
+		z-index: 1;
+	}
+
+	&-value{
+		position: absolute;
+		color: mix( var( --element-bg ), var( --element-accent2 ), calc(90% * var(--element-text-multi-main)), 100% );
+		left: 0%;
+		margin-left: 14px;
+		margin-top: 1px;
+
+		&-flip{
+			margin-left: -36px;
+		}
+		&-hidden{
+			display: none;
+		}
+
+	}
+
+	&-item{
+		position: absolute;
+		flex-shrink: 0;
+		flex-grow: 0;
+		box-sizing: border-box;
+		top: 2px;
+
+		&-dot{
+			position: relative;
+			left: 0%;
+			//border: 6px solid #ff00008f;
+			width: 16px;
+			height: 16px;
+			margin-left: -8px;
+			top: -2px;
+			left: 0px;
+			cursor: pointer;
+			z-index: 1;
+			transition: 120ms ease-in-out;
+
+			& > span{
+				background: mix( var( --element-bg ), var( --element-accent2 ), calc(90% * var(--element-text-multi-main)), 100% );
+				position: absolute;
+				left: 0px;
+				top: 0px;
+				right: 0px;
+				bottom: 0px;
+				margin: 2px;
+				border-radius: 50%;
+			}
+
+		}
+		&-dot:hover > span{
+			background-color: mix( var( --element-bg ), var( --element-accent2 ), calc(50% * var(--element-text-multi-main)), 100% );
+		}
+		&-bg{
+			background-color: mix( var( --element-bg ), var( --element-accent2 ), calc(90% * var(--element-text-multi-main)), 50% );
+			position: absolute;
+			height: 4px;
+			width: 100%;
+			top: 4px;
+		}
+
+	}
+	&-line{
+		background: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 14% );
+		position: absolute;
+		height: 4px;
+		width: 100%;
+		top: 6px;
+		left: 0px;
+		z-index: 0;
+	}
+	&-grid{
+		position: absolute;
+		left: 0px;
+		right: 0px;
+		height: 8px;
+		z-index: 0;
+		top: 10px;
+		margin-left: 5px;
+		margin-right: 8px;
+
+		&-mark{
+			position: absolute;
+			left: 0%;
+			border-left: 2px solid mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 14% );
+			height: 100%;
+			top: 0px;
+
+			& > span{
+				position: relative;
+				margin-left: -50%;
+				left: -1px;
+				top: 9px;
+				opacity: 0.5;
+			}
+
+		}
+
+	}
+
+}

@@ -1,0 +1,209 @@
+@import "../functions.scss";
+
+.eris-content{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	height: 100%;
+}
+
+.eris{
+
+	&-line {
+		position: relative;
+
+		&-toggle {
+			position: relative;
+			float: right;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+		}
+
+	}
+
+	&-parameter>.row:nth-child(2) {
+		margin-top: 8px;
+		align-items: center;
+	}
+
+
+	&-parameter-changed {
+		border-radius: 32px;
+		width: 8px;
+		height: 8px;
+		top: -1px;
+		margin-left: 0px;
+		background-color: mix(var(--element-bg), var(--element-accent2), calc(90% * var(--element-text-multi-main)), 100%);
+		display: inline-block;
+		position: relative;
+		opacity: 0;
+		width: 0px;
+		pointer-events: none;
+		transition: all 0.15s ease-in-out;
+
+		&-active {
+			margin-left: 15px;
+			width: 8px;
+			opacity: 1;
+			pointer-events: all;
+		}
+
+	}
+
+	&-parameter-revert {
+		display: inline-block;
+		position: relative;
+		margin-left: 0px;
+		top: -1px;
+		color: mix(var(--element-bg), var(--element-accent2), calc(90% * var(--element-text-multi-main)), 100%);
+		cursor: pointer;
+		opacity: 0;
+		width: 0px;
+		pointer-events: none;
+		transition: all 0.15s ease-in-out;
+
+		&-active {
+			width: auto;
+			margin-left: 6px;
+			opacity: 1;
+			pointer-events: all;
+		}
+
+	}
+
+	&-parameter-booltype {
+		display: flex;
+		flex-wrap: nowrap;
+		flex-direction: row-reverse;
+		justify-content: flex-end;
+		align-items: center;
+		margin-top: 2px;
+	}
+
+	&-parameter-booltype>.row:nth-child(2) {
+		margin-top: 0px;
+		align-items: center;
+	}
+
+	&-parameter-override {
+		margin-left: 6px;
+		color: mix(var(--element-text-flat), var(--element-accent), calc(60% * var(--element-text-multi-text)), 80%);
+		opacity: 0;
+		transition: all 0.15s ease-in-out;
+	}
+
+	&-parameter-clear {
+		margin-left: 14px;
+		opacity: 0;
+		transition: all 0.15s ease-in-out;
+		color: mix(var(--element-bg), var(--element-accent), calc(90% * var(--element-text-multi-main)), 100%);
+		display: none;
+		cursor: pointer;
+
+		&-active {
+			display: inline-block;
+		}
+
+	}
+
+	&-content-wrap {
+		overflow-y: auto;
+		position: absolute;
+		left: 0px;
+		right: 0px;
+		top: 0px;
+		bottom: 0px;
+		padding-top: 90px;
+		padding-bottom: 320px;
+		z-index: 1;
+	}
+	&-content-live{
+		display: flex;
+		width: 100%;
+		position: relative;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+	}
+	&-content-live-params{
+		position: relative;
+		width: 100%;
+	}
+	&-content-live-result{
+		margin: 8px 8px 0px 8px;
+		padding: 17px 15px 0px 0px;
+		width: 50%;
+		position: relative;
+		display: flex;
+		flex-grow: 0;
+		justify-content: flex-start;
+		flex-direction: column;
+		align-items: flex-end;
+		background: #616060;
+	}
+
+	&-content-card>.card-body {
+		padding: 0px 0px;
+	}
+
+}
+
+.eris-content-header {
+	//background: mix( var( --element-bg ), var( --element-accent ), calc(20% * var(--element-text-multi-main)), 40% );
+	//background: var( --gloss );
+	//background-color: mix( var( --element-bg ), var( --element-accent ), calc(50% * var(--element-text-multi-main)), 13% ) !important;
+	color: mix(var(--element-text-flat), var(--element-accent), calc(7.5% * var(--element-text-multi-text)), 70%);
+	//box-shadow: 0 0 14px mix( var( --element-shadow ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), 40% );
+	background: var(--bg);
+	box-shadow: 20px 6px 16px 8px mix(var(--element-shadow), var(--element-accent), calc(0% * var(--element-text-multi-shadow)), calc(12% * var(--header-multi-shadow)));
+	border: 0px;
+	padding: 24px 80px 25px 13px;
+	margin-left: 8px;
+	z-index: 2;
+	position: relative;
+	min-height: 79px;
+	box-sizing: border-box;
+
+	&-padding {
+		padding-left: 9px;
+	}
+
+}
+
+.eris-content-selector {
+	padding: 0px 0px 0px;
+	box-sizing: border-box;
+}
+
+.eris .card .card:hover .eris-parameter-override {
+	opacity: 1;
+}
+
+.eris .card .card:hover .eris-parameter-clear {
+	opacity: 1;
+}
+
+.eris .card:hover .eris-line-toggle .eris-parameter-clear {
+	opacity: 1;
+}
+
+.eris *::-webkit-scrollbar-track {
+	background: radial-gradient(100% 121.87% at 0% 100%, rgba(255, 255, 255, 0.03) 0%, rgba(3, 0, 20, 0) 100%);
+}
+
+.eris *::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+	background: transparent;
+}
+
+.eris *::-webkit-scrollbar-thumb {
+	background-color: #c3bbff21;
+}
+
+.eris *::selection {
+	background: mix(var(--element-text-flat), var(--element-accent2), calc(80% * var(--element-text-multi-text)), 40%);
+}

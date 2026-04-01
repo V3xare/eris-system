@@ -4,6 +4,13 @@
 	color: #efedfdb3;
 	background: #22182dfa;
 
+	&-container{
+		position: fixed;
+		bottom: 15px;
+		right: 48px;
+		z-index: 25;
+	}
+
 	&-hidden{
 		display: none;
 	}
@@ -87,6 +94,6 @@
 }
 
 
-.eris-notifications *::selection{
+.eris .notifications *::selection{
 	background: #553f70;
 }

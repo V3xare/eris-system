@@ -1,7 +1,14 @@
 import React, { useReducer, useState, useEffect, useMemo, useContext, useRef } from "react";
+import { Common, LangContext, Props, Space, useAnimation, Icons } from "v-eris";
 
 import "./notifications.scss"
-import { Common, LangContext, Props, Space, useAnimation, Icons } from "v-eris";
+
+export interface NotificationsMessage{
+	code?: number,
+	desc?: string,
+	description?: string,
+	tokens?: string[], //Error codes
+};
 
 export function NotificationsReducer( state: any, [ type, data, lang ] : any ){
 
@@ -84,7 +91,14 @@ export function NotificationsReducer( state: any, [ type, data, lang ] : any ){
 	return state;
 };
 
-export const NotificationsContext = React.createContext({});
+export const NotificationsContext = React.createContext({
+	state: {},
+	list: [],
+	dispatch: () => {},
+	alert: ( data: NotificationsMessage[] ) => {},
+	read: ( token: string ) => {},
+	emptyReaded: () => {},
+});
 
 export const NotificationsModuleInit = () => {
 
@@ -94,20 +108,20 @@ export const NotificationsModuleInit = () => {
 	});
 	const lang: any = useContext( LangContext );
 
-	const alert = ( data: any ) => {
+	const alert = ( data: NotificationsMessage[] ) => {
 		dispatch([ "alert", data, lang ]);		
 	};
-	const read = ( token: any ) => {
+	const read = ( token: string ) => {
 		dispatch([ "read", token, lang ]);		
 	};	
 	const emptyReaded = ( token: any ) => {
 		dispatch([ "emptyReaded", lang ]);		
 	};
 
-	return { state, dispatch, list: state.list, alert: alert, read: read, emptyReaded: emptyReaded };
+	return { state, dispatch, list: state.list, alert: alert, read: read, emptyReaded: emptyReaded, context: NotificationsContext };
 };
 
-export const Notifications = ( props: any ) => {
+export const Notifications = ( props: { container: boolean } ) => {
 	const lang: any = useContext( LangContext );
 	const module: any = useContext( NotificationsContext );
 	const [ hovered, setHovered ] = useState( false );
@@ -145,37 +159,42 @@ export const Notifications = ( props: any ) => {
 		return result;
 	}, [ module.state.list ]);
 
+	let content = useMemo(() => {
+		return (
+		<div className={ Props.className( "eris-notifications", { hovered: hovered, hidden: !module.state.list.length }) } 
+			onMouseOver={( e ) => { 
+				clearTimeout( asyncSaveRefTimer.current ); 
+				setHovered( true );
+			}} 
+			onMouseOut={( e ) => { 
+				clearTimeout( asyncSaveRefTimer.current ); 
+				setHovered( false ); 
+			}} 
+		>
+			<div className={ "eris-notifications-frame" } ref={ childrenElem }>
+			{
+				module.state.list.map(( item: any ) => {
+					return (
+					<div className={ Props.className( "eris-notifications-line", { alert: !item.readed }) } key={ item.token } onMouseOver={( e ) => { module.read( item.token ) }} >
+						<div className={ "eris-notifications-line-index" }>{ item.index }</div>
+						<div className={ "eris-notifications-line-desc" }>{ item.desc }</div>
+						<div className={ "eris-notifications-line-code" }><span>{ "code" }</span><span>{ item.code }</span></div>
+					</div>
+					);
+				})
+			}
+			</div>
+			<div className={ "eris-notifications-button" }>
+				<Icons.notification/>
+				<Space/>
+				{ lang.get( "Core::Notifications" ) }
+				<Space/>
+				<span className={ Props.className( "eris-notifications-length", { alert: freshNotices > 0 }) }>{ "( " + (freshNotices) +  " )" }</span>
+			</div>
+		</div>);
+	}, [ module.state.list, hovered ]);
+
 	return (
-	<div className={ Props.className( "eris-notifications", { hovered: hovered, hidden: !module.state.list.length }) } 
-		onMouseOver={( e ) => { 
-			clearTimeout( asyncSaveRefTimer.current ); 
-			setHovered( true );
-		}} 
-		onMouseOut={( e ) => { 
-			clearTimeout( asyncSaveRefTimer.current ); 
-			setHovered( false ); 
-		}} 
-	>
-		<div className={ "eris-notifications-frame" } ref={ childrenElem }>
-		{
-			module.state.list.map(( item: any ) => {
-				return (
-				<div className={ Props.className( "eris-notifications-line", { alert: !item.readed }) } key={ item.token } onMouseOver={( e ) => { module.read( item.token ) }} >
-					<div className={ "eris-notifications-line-index" }>{ item.index }</div>
-					<div className={ "eris-notifications-line-desc" }>{ item.desc }</div>
-					<div className={ "eris-notifications-line-code" }><span>{ "code" }</span><span>{ item.code }</span></div>
-				</div>
-				);
-			})
-		}
-		</div>
-		<div className={ "eris-notifications-button" }>
-			<Icons.notification/>
-			<Space/>
-			{ lang.get( "Core::Notifications" ) }
-			<Space/>
-			<span className={ Props.className( "eris-notifications-length", { alert: freshNotices > 0 }) }>{ "( " + (freshNotices) +  " )" }</span>
-		</div>
-	</div>
+		props.container ? (<div className={ "eris-notifications-container" }>{ content }</div>) : (content)
 	);
 };

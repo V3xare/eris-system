@@ -1,0 +1,56 @@
+@import "../functions.scss";
+
+.theme{
+	position: relative;
+	display: flex;
+	flex-direction: row;
+
+	&-item{
+		display: flex;
+		border: 3px solid transparent;
+		position: relative;
+		width: 80px;
+		height: 80px;
+		//box-sizing: border-box;
+		overflow: hidden;
+		margin: 10px;
+		padding: 9px;
+		border-radius: 12%;
+		background: var(--gloss);
+		background-color: var(--bg);
+		box-shadow: 0 0 10px mix( var( --element-shadow ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), 14% );
+		user-select: none;
+
+		&-selected{
+			border: 3px solid mix( var( --element-bg ), var( --element-accent2 ), calc(50% * var(--element-text-multi-main)), 100% );
+		}
+
+	}
+
+	& .card, & .card .card, & .card-body{
+		padding: 0px !important;
+		margin: 0px !important;
+		border: 0px !important;
+		width: 100% !important;
+	}
+	& .row{
+		margin: 0px 0px 3px !important;
+		line-height: 1 !important;
+		white-space: nowrap !important;
+	}
+
+	&-title{
+		text-align: center;
+		padding-top: 8px;
+	}
+	&-bg{
+		left: 0px;
+		top: 0px;
+		right: 0px;
+		bottom: 0px;
+		position: absolute;
+		z-index: 1;
+		cursor: pointer;
+	}
+
+}

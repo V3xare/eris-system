@@ -1,0 +1,120 @@
+
+@import "../../functions";
+
+
+.eris-routes-menu{
+
+	&-container{
+		right: 0px;
+		top: 0px;
+		margin: 17px 15px 0px 0px;
+		position: fixed;
+		z-index: 10;
+	}
+
+	& > .row{
+		height: 100%;
+	}
+
+	&-profile{
+		text-align: center;
+
+		&-user{
+			//background-image: url( "../img/user.png" );
+			border-radius: 32px;
+			width: 36px;
+			height: 36px;
+			background-size: cover;
+			background-position: center;
+			cursor: pointer;
+			border: 2px solid var( --bg );
+			box-shadow: 0 0 10px mix( var( --element-shadow ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), calc(30% * var(--header-multi-shadow)) );
+		}
+
+	}
+
+	&-list .autocomplete-suggestions{
+		flex-direction: row;
+	};
+	&-list{
+		position: absolute;
+		flex-direction: column;
+		display: none;
+		top: 0px;
+		right: 0px;
+		margin: 52px 0px 0px 0px;
+		min-width: 240px;
+		//background-color: mix( var( --element-bg ), var( --element-accent ), 0% );
+		background-color: var( --bg );
+		color: mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 100% );
+		box-shadow: 0px 0px 14px 0px #0000001f;
+		border-radius: 4px;
+		padding: 0px 8px;
+
+		&-bg{
+			background: var( --gloss );
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			right: 0px;
+			bottom: 0px;
+			border-radius: inherit;
+		}
+
+		&-expanded{
+			display: flex;
+		}
+
+		&-line{
+			padding: 10px 0px;
+
+			& .row{
+				padding: 4px 4px;
+			}
+
+			&-title{
+				padding-right: 14px;
+				color: mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 70% );
+			}
+			&-value{}
+
+		}
+		&-bottom{
+			//background-color: mix( var( --element-bg ), var( --element-accent ), calc(5% * var(--element-text-multi-sub)) );
+			border-radius: 4px;
+		}
+
+	}
+
+	&-list .select{
+		margin: 4px 0px 5px;
+	}
+
+	&-deny{
+		color: #ffffff99;
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		right: 0px;
+		bottom: 0px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 24px;
+		background: radial-gradient(96.87% 167.08% at 50% 0%, rgba(5, 5, 30, 0) 0%, rgba(92, 73, 144, .04) 33.33%, rgba(254, 139, 187, .08) 66.67%, rgba(255, 189, 122, .12) 99.99%, rgba(255, 189, 122, 0) 100%), rgba(226, 232, 255, .01);
+	}
+
+	&-mirror{
+		padding: 4px 7px;
+		background-color: #f6f6f6;
+		color: #535353;
+		border-radius: 7px;
+
+		& .button-wrap{
+			font-size: 14px;
+			padding: 3px 7px 4px 5px;
+		}
+
+	}
+
+}

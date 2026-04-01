@@ -1,0 +1,17 @@
+@function mix( $a, $b, $percent: 0, $opacity: 100 ){	
+	$opacity: unquote( ($opacity) );
+	$percent: unquote( ($percent) );
+	@return color-mix( in srgb, #{'rgb(from ' + $a + ' r g b / ' + $opacity + ')'}, #{'rgb(from ' + $b + ' r g b / ' + $opacity + ')'} $percent );
+}
+@function color2( $color, $opacity ){	
+	$percent: unquote( ($opacity) + "%" );
+	@return color-mix( in srgb, $color $percent, transparent );
+}
+@function color3( $color, $opacity ){	
+	$percent: unquote( ($opacity * 100) + "%" );
+	$percentInverse: unquote( (100 - ($opacity * 100)) + "%" );
+	@return color-mix( in srgb, $color $percent, transparent );
+}
+@function color( $color, $opacity ){	
+	@return #{'rgb(from ' + $color + ' r g b / ' + $opacity + '%)'};
+}

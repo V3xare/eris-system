@@ -14,6 +14,7 @@
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir release/cjs",
     "tsc2": "tsc && tsc -m es6 --outDir release && webpack --mode development",
+    "dev": "webpack --mode development --watch",
     "tsc": "tsc",
     "tsc3": "tsc --emitDeclarationOnly",
     "test": "echo \"Error: no test specified\" && exit 1",

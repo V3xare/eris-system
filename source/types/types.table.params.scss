@@ -1,0 +1,81 @@
+.settings-type-params .input-inactive, .settings-type-params .select-inactive{
+	background: transparent;
+}
+
+.settings-type-params{
+
+	position: relative;
+
+	&-tools, &-tools-mini{
+		display: flex;
+		justify-content: space-between;
+		overflow: hidden;
+		position: relative;
+		transition: 160ms ease-in-out;
+
+		& > *{
+			cursor: pointer;
+			box-shadow: 0 0 0;
+		}
+
+	}
+	&-tools{
+		margin-top: 10px;
+	}
+
+	&-modal > .modal-content{
+		margin: 0px;
+		padding: 0px;
+		overflow: visible;
+		min-width: 420px;
+	}
+	&-mini &-tools{
+		display: none;
+	}
+	&-tools-mini{
+		display: none !important;
+	}
+	&-mini &-tools-mini{
+		display: flex !important;
+	}
+	&-system &-tools-mini > *:last-child, &-system &-tools > *:last-child{
+		display: none;
+	}
+	&-mini .settings-type-text, &-mini .settings-type-code{
+		width: 100%;
+		white-space: pre-wrap;
+		max-width: 100%;
+	}
+
+	&-modal .settings-type-params{
+		margin: 0px;
+	}
+	&-modal .card-body .row{
+		line-height: 2.4;
+		display: flex;
+		//justify-content: space-between;
+		align-items: center;
+		min-height: 24px;
+		font-size: 14px;
+	}	
+	&-modal .card-header{
+		padding-bottom: 11px;
+		padding-top: 10px;
+	}
+	&-modal .card{
+		padding: 6px 4px;
+		margin: 0;
+	}
+
+	&-left{
+		width: 240px;
+	}
+	&-right{
+		width: 240px;
+	}
+	&-left > *, &-right > *{
+		width: 100%;
+	}
+
+}
+

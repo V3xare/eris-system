@@ -1,0 +1,227 @@
+
+.eris-auth-wrap{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 9;
+	background: linear-gradient(to bottom, #232f6b 0%, #ad88cb 40%, #dda7cc 70%, #614a6e 100%);
+}
+.eris-auth-sun{
+	background: #fee6ee52;
+	width: 340px;
+	height: 340px;
+	position: fixed;
+	left: 40%;
+	top: 50%;
+	border-radius: 360px;
+	box-shadow: 0 0 420px #fff0f5e0;
+	z-index: 4;
+	pointer-events: none
+}
+.eris-auth-ground{
+	width: 100%;
+	height: 30%;
+	bottom: 0px;
+	left: 0px;
+	position: fixed;
+	box-shadow: 0 0 420px #fff0f5e0;
+	pointer-events: none;
+	z-index: 5;
+
+	//box-shadow: 0 0 420px #f90053;
+	//background: #ec5691;
+}
+.eris-auth-profile{
+    color: #f0cfe2;
+    position: absolute;
+    padding: 10px 13px;
+    right: 10px;
+    top: 13px;
+}
+
+.eris-auth{
+	background: #816cad;
+	box-shadow: 0 0 40px #6b5d9d;
+	width: 420px;
+	left: 50%;
+	top: 50%;
+	margin-left: -200px;
+	margin-top: -200px;
+	position: fixed;
+	z-index: 1;
+	flex-wrap: wrap;
+	flex-flow: column;
+	border-radius: 6px;
+	color: #f0cfe2;
+	font-family: source-regular, sans-serif;
+	font-size: 16px;
+	transition: 400ms;
+	user-select: none;
+
+	&-line{
+		display: flex;
+		flex-wrap: wrap;
+		flex-flow: row;
+		background: #7866a6;
+		border-radius: 6px 6px 0px 0px;
+		height: 32px;
+	}
+
+	&-tab{
+		//background: #7866a6;
+		background: #7564a4;
+		width: 100%;
+		margin-bottom: 1px;
+		padding: 4px;
+    	padding-top: 8px;		
+		text-align: center;
+		cursor: pointer;
+		border-radius: 6px 6px 0px 0px;
+		transition: 400ms;
+	}
+	&-tab:hover{
+		//background: $bg4;
+		//color: $text4;
+	}
+	&-tab-selected{
+		background: #816cad;
+		cursor: default;
+		margin-top: -4px;
+		border-radius: 6px 6px 0px 0px;
+		top: 1px;
+		width: 120%;
+		position: relative;
+	}
+	&-tab-selected:hover{
+		background: #816cad;
+	}
+
+	&-notice{
+		position: relative;
+		padding: 10px;
+		margin: 3px 0px 7px;
+		//color: #363b78;
+		//font-weight: bold;
+		background: #7765a6;
+
+		&-error{
+			color: #af99d5;
+			padding: 0px 0px 6px 0px;
+		}
+
+	}
+	
+	&-content{
+
+		position: relative;
+		padding: 14px 10px 10px;
+		
+		& > input{
+            color: #ffd8f1;
+			border: 0px;
+			width: 100%;
+			padding: 5px 10px 5px 25px;
+			margin: 0px 4px 0px;
+			position: relative;
+			background: transparent;
+			cursor: default;
+			outline: none;
+		}
+		& > input::placeholder{
+			color: #f0cfe2c6;
+		}
+		& > select{
+			color: #ffd8f1;
+			border: 0px;
+			width: 100%;
+			padding: 3px 10px 5px 22px;
+			margin: 0px 4px 0px;
+			position: relative;
+			background: transparent;
+			cursor: default;
+			outline: none;
+		}	
+		& option{
+			color: #ffd8f1;
+			background: #816cad;
+   			box-shadow: 0 0 40px #6b5d9d;			
+    		border: 0px;
+    		outline: 0px;			
+		}
+		& select:focus{
+    		border: 0px;
+    		outline: 0px;
+		}
+		
+	}
+
+	&-button{
+		background: #8f75b7;
+		padding: 4px 10px 4px;
+		margin-top: 10px;
+		text-align: center;
+		border-radius: 2px;
+		cursor: pointer;
+		transition: 400ms;
+	}
+	&-button:hover{
+		background: #9d7ec0;
+		//border: 1px solid $el2-hover-border;
+		//color: $text1;
+	}
+	&-loading{
+		position: relative;
+		cursor: default;
+	}
+	&-loading:before{
+		width: 100%;
+		height: 100%;
+		left: 0px;
+		top: 0px;
+		position: absolute;
+		content: "";
+		border-radius: 2px;
+		box-sizing: border-box;
+		background: #8f75b7;
+	}
+	&-loading:after{
+		position: absolute;
+		content: "\e97f";
+		font-family: icomoon;
+		left: 50%;
+		margin-left: -10px;
+		font-size: 20px;
+		animation-name: loading;
+		animation-direction: reverse;
+		animation-duration: 1.45s;
+		animation-iteration-count: infinite;
+		animation-timing-function: ease-in-out;
+	}
+
+	&-name:before, &-password:before, &-email:before, &-configurations:before{
+		font-family: icomoon;
+		position: absolute;
+		margin-top: -1px;
+		margin-left: 4px;
+		display: block;
+		font-size: 20px;
+	}
+
+	&-name:before{
+		content: "\e971";
+	}	
+	&-email:before{
+		content: "\ea82";
+		font-size: 16px;
+		margin-top: 2px;
+		margin-left: 5px;
+	}
+	&-password:before{
+		content: "\e98f";
+		margin-left: 7px;
+	}
+	&-configurations:before{
+		content: "\e91c";
+	}	
+
+}

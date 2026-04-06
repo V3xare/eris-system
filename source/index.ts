@@ -1,33 +1,33 @@
 
 //Components
-import { Auth, AuthContext, AuthModuleInit } from "@components/Auth/auth";
+import { Auth, AuthContext, AuthModuleInit } from "./components/Auth/auth";
 export { Auth, AuthContext, AuthModuleInit }
 
-import { BodyContainer } from "@components/Body/body";
+import { BodyContainer } from "./components/Body/body";
 export { BodyContainer } 
 
-import { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem } from "@components/Build/build";
+import { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem } from "./components/Build/build";
 export { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem }
 
-import { Loader, LoaderContext, LoaderContextType, LoaderModuleInit, LoaderMessage } from "@components/Loader/loader";
+import { Loader, LoaderContext, LoaderContextType, LoaderModuleInit, LoaderMessage } from "./components/Loader/loader";
 export { Loader, LoaderContext, LoaderContextType, LoaderModuleInit, LoaderMessage } 
 
-import { Notifications, NotificationsContext, NotificationsContextType, NotificationsModuleInit } from "@components/Notifications/notifications";
+import { Notifications, NotificationsContext, NotificationsContextType, NotificationsModuleInit } from "./components/Notifications/notifications";
 export { Notifications, NotificationsContext, NotificationsContextType, NotificationsModuleInit }
 
-import { RoutesMenu } from "@components/RoutesMenu/routes.menu";
+import { RoutesMenu } from "./components/RoutesMenu/routes.menu";
 export { RoutesMenu } 
 
-import { RoutesWrap } from "@components/RoutesWrap/routes.wrap";
+import { RoutesWrap } from "./components/RoutesWrap/routes.wrap";
 export { RoutesWrap } 
 
-import { Search } from "@components/Search/search";
+import { Search } from "./components/Search/search";
 export { Search } 
 
-import { Sidebar } from "@components/Sidebar/sidebar";
+import { Sidebar } from "./components/Sidebar/sidebar";
 export { Sidebar }
 
-import { Tools } from "@components/Tools/tools";
+import { Tools } from "./components/Tools/tools";
 export { Tools } 
 //^
 

@@ -1,13 +1,13 @@
 import React, { JSX, useContext, useEffect, useMemo } from "react";
 import { LangContext, Lang, LangContextType } from "v-eris";
 
-import "../../styles/themes.scss"
-import "../../styles/eris.scss"
-import "../../styles/core.scss"
-import "../../styles/components.scss"
+import "../../../assets/styles/themes.scss"
+import "../../../assets/styles/eris.scss"
+import "../../../assets/styles/core.scss"
+import "../../../assets/styles/components.scss"
 
-import { AuthContext, AuthContextType } from "@components/Auth/auth";
-import { useSettings, SettingsInitType } from "@utility/use.settings";
+import { AuthContext, AuthContextType } from "../Auth/auth";
+import { useSettings, SettingsInitType } from "../../utility/use.settings";
 
 export interface BuildTableItem{
 	key: string, 

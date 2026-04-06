@@ -1,9 +1,9 @@
 import React, { useContext, useMemo, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route, useNavigate, useLocation, Link } from "react-router-dom";
-import { Notifications, NotificationsContext, NotificationsModuleInit } from "@components/Notifications/notifications";
-import { Auth, AuthContext, AuthModuleInit } from "@components/Auth/auth";
-import { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem } from "@components/Build/build";
-import { BodyContainer } from "@components/Body/body";
+import { Notifications, NotificationsContext, NotificationsModuleInit } from "./components/Notifications/notifications";
+import { Auth, AuthContext, AuthModuleInit } from "./components/Auth/auth";
+import { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem } from "./components/Build/build";
+import { BodyContainer } from "./components/Body/body";
 import { AppRoute } from "./routes/AppRoute/app.route";
 import { AdminRoute } from "./routes/AdminRoute/admin.route";
 import { SettingsRoute } from "./routes/SettingsRoute/settings.route";

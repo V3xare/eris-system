@@ -92,7 +92,7 @@ export const LoaderModuleInit = () => {
 		dispatch([ "success", data ]);
 	};
 
-	return { state, dispatch, active: state.active, list: state.list, start, success, failed };
+	return { state, dispatch, active: state.active, list: state.list, start, success, failed, context: LoaderContext };
 };
 
 export const Loader = ( props: { active?: boolean, size?: number, container?: boolean } ) => {

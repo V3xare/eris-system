@@ -1,12 +1,12 @@
 import React, { JSX, useContext, useEffect, useMemo } from "react";
-import { LangContext, Lang } from "v-eris";
+import { LangContext, Lang, LangContextType } from "v-eris";
 
 import "../../styles/themes.scss"
 import "../../styles/eris.scss"
 import "../../styles/core.scss"
 import "../../styles/components.scss"
 
-import { AuthContext } from "@components/Auth/auth";
+import { AuthContext, AuthContextType } from "@components/Auth/auth";
 import { useSettings, SettingsInitType } from "@utility/use.settings";
 
 export interface BuildTableItem{
@@ -17,6 +17,13 @@ export interface BuildTableItem{
 };
 export interface BuildTable{
 	[key: string]: BuildTableItem[]
+};
+
+export interface BuildLang{
+	[key: string]: string
+};
+export interface BuildTypes{
+	[key: string]: React.JSX.Element
 };
 
 
@@ -55,27 +62,18 @@ export interface BuildRouteSimple{
 	table?: BuildTable,
 };
 
-
-export interface BuildContext{
-	routes: { [pathname: string]: BuildRoute },
-	settings: SettingsInitType,
-	settingsTable: BuildTable,
-	route: string,
-	currentLang: string,
-	currentTheme: string,
-	types: { [typeName: string]: JSX.Element }, 
-	denyAccess: boolean,
-};
-
-export const BuildContext = React.createContext({
+const BuildContextDefault = {
 	routes: {} as { [pathname: string]: BuildRoute },
 	settings: {} as SettingsInitType,
 	settingsTable: {} as BuildTable,
 	currentLang: "",
 	currentTheme: "",	
 	route: "",
+	types: {} as { [typeName: string]: JSX.Element }, 
 	denyAccess: false,
-} as BuildContext);
+};
+export type BuildContextType = typeof BuildContextDefault; 
+export const BuildContext = React.createContext( BuildContextDefault );
 
 const ParseSectionInside = ( item: BuildSectionItem, sections: BuildSection ) => {
 
@@ -92,6 +90,14 @@ const ParseSectionInside = ( item: BuildSectionItem, sections: BuildSection ) =>
 
 
 export class BuildCommands{
+	static joinLang( table: BuildLang, append: BuildLang ) : BuildLang{
+		let result: any = { ...table, ...append };
+		return result;
+	};		
+	static joinTypes( table: BuildTypes, append: BuildTypes ) : BuildTypes{
+		let result: any = { ...table, ...append };
+		return result;
+	};		
 	static joinTable( table: BuildTable | any, append: BuildTable | any ) : BuildTable{
 		
 		let result: any = { ...table };
@@ -158,8 +164,8 @@ export const BuildInside = (
 	} 
 ) => {
 	const { children, languages, currentLang, routes, types } = props;
-	const lang: any = useContext( LangContext );
-	const auth: any = useContext( AuthContext );
+	const lang: LangContextType = useContext( LangContext );
+	const auth: AuthContextType = useContext( AuthContext );
 	const userToken = window.localStorage.getItem( "RoleMirror" ) || "self";
 	const settings = useSettings({ 
 		token: "users:" + userToken,
@@ -218,6 +224,9 @@ export const BuildInside = (
 			};
 
 		};
+
+		if( !newRoutes[ "" ] && newRoutes[ firstRoute ] )
+			newRoutes[ "" ] = { ...newRoutes[ firstRoute ], hidden: true };
 
 	};
 

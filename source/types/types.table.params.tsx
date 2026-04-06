@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo, Fragment, useContext } from "react";
 import { Button, Card, Column, Common, Props, Row, Space, Text, Toggle, Tooltip, useAnimation, VMath } from "v-eris";
-import { BuildContext } from "../components/Build/build";
+import { BuildContext, BuildContextType } from "../components/Build/build";
 
 import "./types.table.params.scss"
 
@@ -13,7 +13,7 @@ export const TypeTableParams = ( props: any ) => {
 		{ title: title, minHeight: "1px" } 
 	);
 
-	const build: BuildContext = useContext( BuildContext );
+	const build: BuildContextType = useContext( BuildContext );
 
 	if( !value )
 		value = {};	

@@ -728,6 +728,8 @@ export type SettingsInitType = {
 	isExclusionOverride: any, 
 	checkValue: Function,
 	getValue: Function,
+	keyExist: Function,
+	setValueAsync: Function,
 	getSecureValue: Function,
 	getExclusionValue: Function,
 	getOverride: Function,

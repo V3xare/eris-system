@@ -28,7 +28,20 @@
 			background-position: center;
 			cursor: pointer;
 			border: 2px solid var( --bg );
-			box-shadow: 0 0 10px mix( var( --element-shadow ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), calc(30% * var(--header-multi-shadow)) );
+			box-shadow: 0 0 8px mix( var( --element-bg ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), calc(20% * var(--header-multi-shadow)) );
+			background: mix( var( --element-bg ), var( --element-accent ), calc(0% * var(--element-text-multi-main)), 100% );
+		}
+
+		&-user::after{
+			position: absolute;
+			content: "\e971";
+			font-family: icomoon;
+			left: 50%;
+			top: 50%;
+			margin-left: -10px;
+			margin-top: -12px;
+			font-size: 20px;
+			color: mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 70% );
 		}
 
 	}

@@ -1,23 +1,21 @@
 import React, { useReducer, useState, useEffect, useMemo, useContext, useRef } from "react";
-import { Card, List, Icons, LangContext, Common, Cookie, Row, Icon, Button, useAsync, Column, Select, Space, Props, Tooltip, Toggle, Text } from "v-eris";
-import { AuthContext } from "../../components/Auth/auth";
+import { Card, List, Icons, LangContext, Common, Cookie, Row, Icon, Button, useAsync, Column, Select, Space, Props, Tooltip, Toggle, Text, LangContextType } from "v-eris";
 import { ContentMenu } from "../../placeholders/ContentMenu/content.menu";
 import { ContentContainer } from "../../placeholders/ContentContainer/content.container";
 import { SettingParamToKey, SettingParamToKey3, useSettings } from "../../utility/use.settings";
 import { BrowserRouter, Routes, Route, useNavigate, useLocation, Link, NavigateFunction, Location } from "react-router-dom";
-import { BuildContext, BuildRoute, BuildSectionItem, BuildTableItem } from "../../components/Build/build";
+import { BuildContext, BuildContextType, BuildRoute, BuildSectionItem, BuildTableItem } from "../../components/Build/build";
 
 export const SettingsRoute = () => {
 
-    const auth = useContext( AuthContext );
-	const lang: any = useContext( LangContext );
+	const lang: LangContextType = useContext( LangContext );
 	const nav = useNavigate();
 	const location = useLocation();
 	const qs = Common.parseQuery( location );
 	const qsRef = useRef({});
 	const isSelf = useRef( false );
 	const [ altered, setAltered ] = useState( false );
-	const build: BuildContext = useContext( BuildContext );
+	const build: BuildContextType = useContext( BuildContext );
 	const route: BuildRoute = build.routes[ "settings" ];
 
 	let alterListener = ( e: any ) => {
@@ -168,7 +166,7 @@ export const SettingsRoute = () => {
 					if( parameter.bindless )
 						return null;
 
-					return <Card className={ "dark-card" } key={ key } header={ 
+					return <Card key={ key } header={ 
 						<div>							
 							{ lang.get( parameter.title ) }
 							<span className={ Props.className( "eris-parameter-changed", { active: settings.isChanged( key ) } ) }></span>
@@ -207,7 +205,7 @@ export const SettingsRoute = () => {
 								}</span>		
 							</Tooltip>
 							<Space/>
-							<Tooltip className={ "dark-tooltip" } content={ lang.get( "Settings::ClearOverride" ) }>
+							<Tooltip content={ lang.get( "Settings::ClearOverride" ) }>
 								<Icons.redo 
 									transition 
 									className={ Props.className( "eris-parameter-clear", { 
@@ -236,7 +234,7 @@ export const SettingsRoute = () => {
 									settings.change( key, e.value, keyIndex );
 								} 
 							} ) }
-								<Tooltip className={ "dark-tooltip" } content={ lang.get( "Settings::ClearOverride" ) }>
+								<Tooltip content={ lang.get( "Settings::ClearOverride" ) }>
 									<Icons.redo 
 										transition 
 										className={ Props.className( "eris-parameter-clear", { 
@@ -332,7 +330,7 @@ export const SettingsRoute = () => {
 					/>					
 				</span>
 				<div style={{ float: "right" }}>
-					<Button className={ "dark-button" + (qs.type == "user" && !self ? "" : " hidden") } onClick={() => {
+					<Button className={ (qs.type == "user" && !self ? "" : " hidden") } onClick={() => {
 //						let needle = storage.list.find(( f ) => f.token == storage.getToken() );
 //
 //						if( !needle )
@@ -341,7 +339,7 @@ export const SettingsRoute = () => {
 //						window.localStorage.setItem( "RoleMirrorName", needle.title );
 					}}>{ lang.get( "Settings::Mirror" ) }</Button>
 					<Space/>
-					<Button className={ "dark-button" }onClick={() => {
+					<Button onClick={() => {
 						settings.save();
 					}}>{ lang.get( "Settings::Save" ) }</Button>
 				</div>

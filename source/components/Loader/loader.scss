@@ -1,0 +1,141 @@
+$eris-rotation-speed: 400ms;
+
+.eris-loader{
+	position: relative;
+	transform: scale(0.0);
+	transition: transform 240ms ease-in-out;
+	pointer-events: none;
+	transform-origin: left top;
+
+	&-active{
+		transform: scale(0.7);
+	}
+	&-container{
+		position: absolute;
+		z-index: 3;		
+		right: -29px;
+		bottom: 210px;
+	}
+
+	@keyframes rotation1 {
+		0% {
+		  transform: rotate(0deg);
+		}
+		100% {
+		  transform: rotate(7.2deg);
+		}
+	} 
+	@keyframes rotation2 {
+		0% {
+		  transform: rotate(0deg);
+		}
+		100% {
+		  transform: rotate(12.85deg);
+		}
+	} 
+	@keyframes rotation3 {
+		0% {
+		  transform: rotate(0deg);
+		}
+		100% {
+		  transform: rotate(22.5deg);
+		}
+	} 
+	@keyframes rotation4 {
+		0% {
+		  transform: rotate(0deg);
+		}
+		100% {
+		  transform: rotate(36deg);
+		}
+	} 
+	@keyframes rotation5 {
+		0% {
+		  transform: rotate(0deg);
+		}
+		100% {
+		  transform: rotate(90deg);
+		}
+	} 
+
+	@keyframes sizing {
+		0% {
+		  transform: scale(0.6);
+		}
+		25% {
+			transform: scale(1.2);
+		}		
+		35% {
+			transform: scale(1.0);
+		}		
+		75% {
+			transform: scale(1.0);
+		}				
+		100% {
+		  transform: scale(0.6);
+		}
+	} 
+
+	& > div{
+		width: 248px;
+		height: 248px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-wrap: nowrap;
+		flex-direction: row;	
+		transform: scale( 1.0 );
+		animation: sizing 5000ms cubic-bezier(0.5, 0, 0.5, 1) infinite;	
+	}
+	&-1{
+		position: absolute;
+		width: 80%;
+		height: 80%;
+		border: 6px dotted #FFF;
+		border-radius: 50%;
+		display: inline-block;
+		box-sizing: border-box;
+		animation: rotation1 $eris-rotation-speed cubic-bezier(0.5, 0, 0.5, 1) infinite;
+	}
+	&-2{
+		position: absolute;
+		width: 68%;
+		height: 68%;
+		border: 9px dotted #FFF;
+		border-radius: 50%;
+		display: inline-block;
+		box-sizing: border-box;
+		animation: rotation2 $eris-rotation-speed cubic-bezier(0.5, 0, 0.5, 1) infinite;
+	}
+	&-3{
+		position: absolute;
+		width: 54%;
+		height: 54%;
+		border: 12px dotted #FFF;
+		border-radius: 50%;
+		display: inline-block;
+		box-sizing: border-box;
+		animation: rotation3 $eris-rotation-speed cubic-bezier(0.5, 0, 0.5, 1) infinite;
+	}
+	&-4{
+		position: absolute;
+		width: 40%;
+		height: 40%;
+		border: 14px dotted #FFF;
+		border-radius: 50%;
+		display: inline-block;
+		box-sizing: border-box;
+		animation: rotation4 $eris-rotation-speed cubic-bezier(0.5, 0, 0.5, 1) infinite;
+	}
+	&-5{
+		position: absolute;
+		width: 25%;
+		height: 25%;
+		border: 18px dotted #FFF;
+		border-radius: 50%;
+		display: inline-block;
+		box-sizing: border-box;
+		animation: rotation5 $eris-rotation-speed cubic-bezier(0.5, 0, 0.5, 1) infinite;
+	}
+
+}

@@ -101,7 +101,7 @@ export function AuthReducer( state: any, [ type, data ] : any ){
 	return state;
 };
 
-export const AuthContext = React.createContext({
+const AuthContextDefault = {
 	state: {} as any,
 	dispatch: ( args: any ) => {},
 
@@ -128,7 +128,9 @@ export const AuthContext = React.createContext({
 		init: {} as any,
 		logout: {} as any,
 	}
-});
+};
+export type AuthContextType = typeof AuthContextDefault;
+export const AuthContext = React.createContext( AuthContextDefault );
 
 export const AuthModuleInit = () => {
 

@@ -1,0 +1,266 @@
+@import "../../functions.scss";
+
+
+.tools-module{
+    background: var(--bg);
+    color: mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 70% );
+    font-size: 140%;
+    padding: 9px 14px 9px;
+    border-radius: 8px;
+    user-select: none;
+    box-shadow: 0 0 10px mix( var( --element-shadow ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), 14% );
+	position: relative;
+
+	&-simple{
+		font-size: 100%;
+		padding: 4px 4px;
+	}
+	&-simple .autocomplete-suggestions{
+		padding: 2px 3px;
+	}
+	&-simple .autocomplete-item{
+		padding: 2px 8px;
+	}
+
+	&-newline{
+		margin: 7px 0px;
+		border-bottom: 1px solid mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 13% );
+	}
+
+	&-hidden{
+		display: none;
+	}
+
+	&-item{
+		cursor: pointer;
+		transition: 240ms ease-in-out;
+		text-align: center;
+		align-self: center;
+
+		&-hidden{
+			display: none !important;
+		}
+
+	}
+	&-item:hover{
+		//color: #56b7ff;
+		//background-color: #f6f6f6;
+	}
+	&-item-active > div > .icon, &-item-active > .column > div > .icon{
+		color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 80% );
+		//background-color: #f6f6f6;
+	}
+	&-item-active > div > .icon:hover, &-item-active > .column > div > .icon:hover{
+		color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 100% );
+	}	
+	&-item-active{
+		//color: $icons-accent;
+	}	
+	&-item-display{
+		color: #535353;
+		cursor: default;
+	}
+	&-item-display:hover{
+		color: #535353;
+	}
+
+	&-children{
+		top: -10000px;
+		margin-top: 46px;
+		margin-right: 0px;
+		right: 0px;
+		position: absolute;
+		background: var(--bg);
+		color: mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 70% );
+		padding: 6px 0px 6px;
+		border-radius: 8px;
+		user-select: none;
+		box-shadow: 0 0 10px mix( var( --element-shadow ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), 14% );
+		opacity: 0;
+		transition: opacity 240ms ease-in-out;
+	}
+
+	&-children &-item{
+		font-size: 80%;
+		padding: 0px 8px;
+	}
+	&-children &-item .icon{
+		padding: 4px 2px 4px 4px;
+		border-radius: 4px;
+		min-width: 19px;
+		font-size: 15px;
+	}	
+
+	&-children &-item-extraPadding{
+		padding-top: 4px;
+	}		
+	&-children &-item-disabled{
+		cursor: default;
+	}		
+	&-children &-item-disabled &-line:hover{
+		background-color: transparent;
+	}	
+
+	&-children-active{
+		top: 0;
+		opacity: 1;
+	}
+
+	&-line > .typography{
+		display: none;
+	}
+
+	&-line-settings{
+		position: absolute;
+		right: 5px;
+		top: 6px;
+		cursor: pointer;
+		display: none;
+
+		&-hidden{
+			display: none !important;
+		}
+
+		&:hover{
+			color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 80% );
+		}
+
+	}
+
+	&-item-selector &-line > .typography{
+		display: flex;
+		margin-left: 8px;
+	}	
+
+	&-children &-line, &-children &-text{
+		column-gap: 9px;
+		display: flex;
+		align-items: center;
+		padding: 5px 4px;
+		white-space: nowrap;
+		padding-right: 28px;
+	}
+	&-text{
+		cursor: default;
+	}	
+	&-clickable{
+		cursor: pointer;
+	}		
+	&-buttons{
+		cursor: default;
+	}
+	&-buttons &-line-settings{
+		display: block;
+	}
+	&-text:hover &-line-settings{
+		display: block;
+	}
+	&-line-simple{
+		//font-size: 140%;
+		padding: 4px;
+
+		&:hover{
+			color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 100% );
+		}
+		
+	}
+
+	&-children &-line:hover &-line-settings{
+		display: block;
+	}
+
+	&-children &-line  .typography{
+		font-size: 15px;
+		display: flex;
+	}
+	&-children &-line:hover{
+		background-color: mix( var( --element-bg ), var( --element-accent ), calc(0% * var(--element-text-multi-main)), 100% );
+		border-radius: 4px;
+	}
+
+	&-slider{
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 13% );
+		color: mix( var( --element-text ), var( --element-accent ), calc(50% * var(--element-text-multi-text)), 100% );
+		padding: 3px 3px 3px;
+		margin: 5px 0px 5px;
+		border-radius: 4px;
+
+		&-item{
+			position: relative;
+			flex-grow: 10;
+			padding: 4px 11px;
+			white-space: nowrap;
+		}
+		&-item:hover{
+			//background-color: #797979;
+			//color: #56b7ff;
+		}
+		&-item-active{
+			position: relative;
+			/* color: #000; */
+			background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 10% );
+			/* color: #58b7fd; */
+			/* color: #42afff; */
+			border-radius: 5px;
+			height: 100%;
+			//box-shadow: 0 0 6px #00000014;
+			/* background: #56b7ff; */
+			/* text-shadow: 0 0 3px #5e5e5e1c; */
+			cursor: default;
+		}
+		&-item-active:hover{
+			//color: #535353;
+		}
+
+	}
+
+}
+
+.tools-module:before, .tools-module-children:before{
+	background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 10% );
+	position: absolute;
+	z-index: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: inherit;
+	content: "";
+}
+.tools-module .row{
+	z-index: 1;
+	position: relative;
+}
+
+.tools-module-item .multiselect-headerless .multiselect-suggestions{
+	flex-direction: row;
+}
+.tools-module-item .multiselect-headerless .multiselect-suggestions-item{
+	margin: 0px 3px 0px 0px;
+}
+.tools-module-item .multiselect-headerless .multiselect-suggestions-item > .typography{
+	display: none;
+}
+.tools-module-item .multiselect-headerless .multiselect-suggestions-item-checkbox{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	background-color: transparent;
+	color: transparent;
+	border: 0px;
+}
+.tools-module-item .multiselect-headerless .multiselect-suggestions-item-selected .icon{
+	color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 80% );
+}
+.tools-module-item .multiselect-headerless{
+	margin-bottom: 1px;
+}
+
+.tools-module-item .multiselect-suggestions-item{
+	background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 15% );
+}

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { AdminAccess } from "../../utility/access";
 import { BrowserRouter, Routes, Route, useNavigate, useLocation, Link } from "react-router-dom";
 import { Auth, AuthContext,AuthModuleInit } from "../Auth/auth";
-import { BuildContext } from "../Build/build";
+import { BuildContext, BuildContextType } from "../Build/build";
 import { Button, LangContext, Column, Row, Props, Select } from "v-eris";
 
 import "./routes.menu.scss"
@@ -13,7 +13,7 @@ export const RoutesMenu = ( props: any ) => {
 	const coreListWrap = useRef<HTMLDivElement>( null );
 	const auth = useContext( AuthContext );
 	const lang: any = useContext( LangContext );
-	const build: BuildContext = useContext( BuildContext );
+	const build: BuildContextType = useContext( BuildContext );
 	const nav = useNavigate();
 
 	let routesList = Object.keys( build.routes ).map(( key ) => {

@@ -10,7 +10,7 @@ export interface NotificationsMessage{
 	tokens?: string[], //Error codes
 };
 
-export function NotificationsReducer( state: any, [ type, data, lang ] : any ){
+export function NotificationsReducer( state: any, [ type, data, lang ]: any ){
 
 	if( type == "alert" ){
 

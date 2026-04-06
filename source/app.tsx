@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route, useNavigate, useLocation, Link } from "re
 import { Notifications, NotificationsContext, NotificationsModuleInit } from "@components/Notifications/notifications";
 import { Auth, AuthContext,AuthModuleInit } from "@components/Auth/auth";
 import { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem } from "@components/Build/build";
-import { RoutesMenu } from "@components/RoutesMenu/routes.menu";
-import { RoutesWrap } from "@components/RoutesWrap/routes.wrap";
+import { BodyContainer } from "@components/Body/body";
+import { AppRoute } from "./routes/AppRoute/app.route";
 import { AdminRoute } from "./routes/AdminRoute/admin.route";
 import { SettingsRoute } from "./routes/SettingsRoute/settings.route";
 import { Types } from "./types/types";
@@ -15,25 +15,12 @@ import { Button, LangContext, Column, Row, Props, Select, Icons } from "v-eris";
 import "./app.scss"
 
 import EN from "./lang/en"
+import ENTest from "./lang/en.test"
 import RU from "./lang/ru"
 
 const Languages = {
 	"ru": RU,
 	"en": EN,
-};
-
-const Header = Row, Wrap = Row, Footer = Row;
-
-export const BodyContainer = () => {
-
-	return (
-		<div className={ "eris-core" }>
-			<Wrap flex={ 9 }>
-				<RoutesMenu/>
-				<RoutesWrap/>
-			</Wrap>
-		</div>
-	);
 };
 
 export const App = () => {
@@ -89,17 +76,17 @@ export const App = () => {
 	return <div>
 		<Build 
 			languages={{
-				"ru": Languages.ru,
-				"en": Languages.en,
+				"ru": BuildCommands.joinLang( Languages.ru, {} ),
+				"en": BuildCommands.joinLang( Languages.en, ENTest ),
 			}}
 			modules={[
 				NotificationsModuleInit,
 				AuthModuleInit
 			]}
-			types={ Types }
+			types={ BuildCommands.joinTypes( Types, {} ) }
 			settingsTable={ settingsSections.table }
 			routes={{
-				"radar": { icon: <Icons.earth/>, access: 5, title: "Radar", element: (<div>hello 1</div>) },
+				"app": { icon: <Icons.earth/>, access: 5, title: "App", element: (<AppRoute/>) },
 				"admin": { icon: <Icons.users/>, access: 9, title: "Admin", element: <AdminRoute/>, list: adminSections.list, table: adminSections.table },
 				"settings": { icon: <Icons.cog/>, access: 5, title: "Settings", element: <SettingsRoute/>, list: settingsSections.list, table: settingsSections.table },				
 			}}

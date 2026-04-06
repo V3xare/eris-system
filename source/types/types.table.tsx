@@ -5,7 +5,7 @@ import { Types } from "./types";
 import { TypeTableParams } from "./types.table.params";
 import { useStorage, StorageContext, StorageInitType } from "../utility/use.storage";
 import { ParseWhere } from "./types.appendix";
-import { BuildContext } from "../components/Build/build";
+import { BuildContext, BuildContextType } from "../components/Build/build";
 
 
 export const TypeTable = ( props: any ) => {
@@ -27,7 +27,7 @@ export const TypeTable = ( props: any ) => {
 	const [ selectedLine, setSelectedLine ] = useState( null );
 	const [ selectedToken, setSelectedToken ] = useState( null );
 	const routeStorage: StorageInitType = useContext( StorageContext );
-	const build: BuildContext = useContext( BuildContext );
+	const build: BuildContextType = useContext( BuildContext );
 	const nav = useNavigate();
 	const location = useLocation();
 

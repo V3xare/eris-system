@@ -1,0 +1,79 @@
+
+@import "../../functions";
+
+
+.eris-sidebar{
+	z-index: 4;
+	position: fixed;
+	left: -420px;
+	top: 0px;
+	width: 420px;
+	height: 100%;
+	//background-color: #ffffff;
+	box-shadow: 10px 0px 12px #00000021;
+	transition: 240ms ease-in-out;
+	background: var(--bg-overlay);
+	background-color: var(--bg);
+	color: mix(var(--element-text-flat), var(--element-accent), calc(7.5% * var(--element-text-multi-text)), 100%);
+
+	&-active {
+		left: 0px;
+	}
+
+}
+
+.eris-sidebar-toggle{
+	width: 24px;
+	height: 32px;
+	top: 23px;
+	right: -38px;
+	margin-left: 10px;
+	background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 10% );
+	position: absolute;
+	z-index: 4;
+	transition: 240ms ease-in-out;
+	cursor: pointer;
+	box-shadow: 0px 14px 20px -14px #0000005c, 0px -6px 7px -6px #00000036;
+	border-radius: 4px;
+	display: block;
+
+	&-hidden{
+		display: none;
+	}
+	&-static{
+		position: fixed;
+		right: auto;
+		left: 440px;
+	}
+
+}
+
+.eris-sidebar-toggle::after{
+	width: 0;
+	height: 0;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	border-left: 0px solid white;
+	border-right: 8px solid white;
+	left: 8px;
+	top: 10px;
+	display: block;
+	position: absolute;
+	//transition: 240ms ease-in-out;
+	content: '';
+}
+
+.eris-sidebar-toggle-hidden::after{
+	width: 0;
+	height: 0;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	border-left: 8px solid white;
+	border-right: 0px solid white;
+	left: 9px;
+	top: 10px;
+	display: block;
+	position: absolute;
+	//transition: 240ms ease-in-out;
+	content: '';
+}

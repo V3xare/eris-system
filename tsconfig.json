@@ -8,7 +8,7 @@
     "declarationDir": "types", // explicit directory
     "sourceMap": true, // generate source maps, need hide to production
     "rootDir": "./source",
-	"baseUrl": "./source",
+    "baseUrl": "./source",
     "outDir": "./release/esm",
     "strict": true,
     "noImplicitReturns": true,

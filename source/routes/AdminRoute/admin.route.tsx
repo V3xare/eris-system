@@ -1,10 +1,10 @@
 import React, { useReducer, useState, useEffect, useMemo, useContext } from "react";
-import { Card, List, LangContext, Common, Button, useAsync, Space, Column, Row, Props } from "v-eris";
+import { Card, List, LangContext, Common, Button, useAsync, Space, Column, Row, Props, LangContextType } from "v-eris";
 import { ContentMenu } from "../../placeholders/ContentMenu/content.menu";
 import { ContentContainer } from "../../placeholders/ContentContainer/content.container";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useStorage, StorageContext } from "../../utility/use.storage";
-import { BuildContext, BuildRoute, BuildSectionItem } from "../../components/Build/build";
+import { BuildContext, BuildContextType, BuildRoute, BuildSectionItem } from "../../components/Build/build";
 
 const AdminCreateLine = ( route: BuildRoute, types: any, props: any, updateTable: any ) => {
 	let { k, parameter, lang, qs, nav, location, section, value, storage, paramsOverride } = props;
@@ -40,11 +40,11 @@ const AdminCreateLine = ( route: BuildRoute, types: any, props: any, updateTable
 };
 
 export const AdminRoute = () => {
-	const lang: any = useContext( LangContext );
+	const lang: LangContextType = useContext( LangContext );
 	const nav = useNavigate();
 	const location = useLocation();
 	const qs = Common.parseQuery( location );
-	const build: BuildContext = useContext( BuildContext );
+	const build: BuildContextType = useContext( BuildContext );
 	const route: BuildRoute = build.routes[ "admin" ];
 
 	qs.section = Common.string( qs.section || "" );

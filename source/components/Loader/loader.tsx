@@ -63,24 +63,17 @@ const LoaderModuleReducer = ( state: any, [ type, data ]: any ) => {
 	return state;
 };
 
-
-export interface LoaderContext{
-	list: LoaderMessage[],
-	active: boolean,
-	dispatch: () => {},
-	start: ( data: LoaderMessage ) => {},
-	success: ( data: LoaderMessage ) => {},
-	failed: ( data: LoaderMessage ) => {},
-};
-
-export const LoaderContext = React.createContext({
+const LoaderContextDefault = {
 	list: [] as LoaderMessage[],
 	active: false,
 	dispatch: () => {},
 	start: ( data: LoaderMessage ) => {},
 	success: ( data: LoaderMessage ) => {},
 	failed: ( data: LoaderMessage ) => {},
-} as LoaderContext );
+}
+export type LoaderContextType = typeof LoaderContextDefault; 
+export const LoaderContext = React.createContext( LoaderContextDefault );
+
 
 export const LoaderModuleInit = () => {
 
@@ -103,7 +96,7 @@ export const LoaderModuleInit = () => {
 };
 
 export const Loader = ( props: { active?: boolean, size?: number, container?: boolean } ) => {
-	const module: LoaderContext = useContext( LoaderContext );
+	const module: LoaderContextType = useContext( LoaderContext );
 	const active = props.active === undefined ? module.active : props.active;
 	const size = props.size ? Common.uint( props.size ) : 176;
 

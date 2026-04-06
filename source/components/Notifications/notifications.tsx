@@ -7,6 +7,7 @@ export interface NotificationsMessage{
 	code?: number,
 	desc?: string,
 	description?: string,
+	readed?: boolean,
 	tokens?: string[], //Error codes
 };
 
@@ -91,14 +92,17 @@ export function NotificationsReducer( state: any, [ type, data, lang ]: any ){
 	return state;
 };
 
-export const NotificationsContext = React.createContext({
+export const NotificationsContextDefault = {
 	state: {},
-	list: [],
+	list: [] as NotificationsMessage[],
 	dispatch: () => {},
 	alert: ( data: NotificationsMessage[] ) => {},
 	read: ( token: string ) => {},
 	emptyReaded: () => {},
-});
+	index: 0,
+}
+export type NotificationsContextType = typeof NotificationsContextDefault; 
+export const NotificationsContext = React.createContext( NotificationsContextDefault );
 
 export const NotificationsModuleInit = () => {
 
@@ -118,37 +122,37 @@ export const NotificationsModuleInit = () => {
 		dispatch([ "emptyReaded", lang ]);		
 	};
 
-	return { state, dispatch, list: state.list, alert: alert, read: read, emptyReaded: emptyReaded, context: NotificationsContext };
+	return { state, dispatch, list: state.list, index: state.index, alert: alert, read: read, emptyReaded: emptyReaded, context: NotificationsContext };
 };
 
 export const Notifications = ( props: { container: boolean } ) => {
 	const lang: any = useContext( LangContext );
-	const module: any = useContext( NotificationsContext );
+	const module: NotificationsContextType = useContext( NotificationsContext );
 	const [ hovered, setHovered ] = useState( false );
 	const childrenElem = useAnimation.Expand( hovered );
-	const asyncSaveRef = useRef( module.state.index );
+	const asyncSaveRef = useRef( module.index );
 	const asyncSaveRefTimer : any = useRef( undefined );
 
 	useEffect(() => {
 
-		if( asyncSaveRef.current == module.state.index )
+		if( asyncSaveRef.current == module.index )
 			return;
 
 		setHovered( true );
 
 		clearTimeout( asyncSaveRefTimer.current );
 		asyncSaveRefTimer.current = setTimeout(() => {
-			asyncSaveRef.current = module.state.index;
+			asyncSaveRef.current = module.index;
 			setHovered( false );
 		}, 3500 );
 
-	}, [ module.state.index ]);
+	}, [ module.index ]);
 
 	let freshNotices = useMemo(() => {
 
 		let result = 0;
 
-		for( let item of module.state.list ){
+		for( let item of module.list ){
 
 			if( item.readed )
 				continue;
@@ -157,11 +161,11 @@ export const Notifications = ( props: { container: boolean } ) => {
 		};
 
 		return result;
-	}, [ module.state.list ]);
+	}, [ module.list ]);
 
 	let content = useMemo(() => {
 		return (
-		<div className={ Props.className( "eris-notifications", { hovered: hovered, hidden: !module.state.list.length }) } 
+		<div className={ Props.className( "eris-notifications", { hovered: hovered, hidden: !module.list.length }) } 
 			onMouseOver={( e ) => { 
 				clearTimeout( asyncSaveRefTimer.current ); 
 				setHovered( true );
@@ -173,7 +177,7 @@ export const Notifications = ( props: { container: boolean } ) => {
 		>
 			<div className={ "eris-notifications-frame" } ref={ childrenElem }>
 			{
-				module.state.list.map(( item: any ) => {
+				module.list.map(( item: any ) => {
 					return (
 					<div className={ Props.className( "eris-notifications-line", { alert: !item.readed }) } key={ item.token } onMouseOver={( e ) => { module.read( item.token ) }} >
 						<div className={ "eris-notifications-line-index" }>{ item.index }</div>
@@ -192,7 +196,7 @@ export const Notifications = ( props: { container: boolean } ) => {
 				<span className={ Props.className( "eris-notifications-length", { alert: freshNotices > 0 }) }>{ "( " + (freshNotices) +  " )" }</span>
 			</div>
 		</div>);
-	}, [ module.state.list, hovered ]);
+	}, [ module.list, hovered ]);
 
 	return (
 		props.container ? (<div className={ "eris-notifications-container" }>{ content }</div>) : (content)

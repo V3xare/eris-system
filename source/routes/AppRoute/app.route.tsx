@@ -6,8 +6,8 @@ import { Tools } from "../../components/Tools/tools";
 import { Loader } from "../../components/Loader/loader";
 import { MeasurementsTools, Tools1, Tools2 } from "../../components/Tools/tools.test";
 import { SettingsInitType } from "@utility/use.settings";
-import { Sidebar } from "../../components/Sidebar/Sidebar";
-import { Search } from "../../components/Search/Search";
+import { Sidebar } from "../../components/Sidebar/sidebar";
+import { Search } from "../../components/Search/search";
 
 export const AppRoute = () => {
 	const nav = useNavigate();

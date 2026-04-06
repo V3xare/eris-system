@@ -1,6 +1,6 @@
 {
   "name": "v-eris-system",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "bootstrapVersion": 3,
   "styleLoaders": [],
@@ -31,8 +31,7 @@
     "release/*",
     "types/*"
   ],
-  "imports": {
-  },
+  "imports": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/V3xare/eris-system.git"

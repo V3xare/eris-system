@@ -6,8 +6,8 @@ export { Auth, AuthContext, AuthModuleInit }
 import { BodyContainer } from "./components/Body/body";
 export { BodyContainer } 
 
-import { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem } from "./components/Build/build";
-export { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem }
+import { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem, BuildLang, BuildTypes, BuildContext, BuildContextType, BuildRoute, BuildRouteSimple } from "./components/Build/build";
+export { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem, BuildLang, BuildTypes, BuildContext, BuildContextType, BuildRoute, BuildRouteSimple }
 
 import { Loader, LoaderContext, LoaderContextType, LoaderModuleInit, LoaderMessage } from "./components/Loader/loader";
 export { Loader, LoaderContext, LoaderContextType, LoaderModuleInit, LoaderMessage } 
@@ -127,8 +127,8 @@ export { PolicyResistance, PolicyParams }
 import { Socket, SocketState } from "./utility/socket"
 export { Socket, SocketState }
 
-import { SettingParamToKey, SettingParamToKey3, useSettings } from "./utility/use.settings";
-export { SettingParamToKey, SettingParamToKey3, useSettings }
+import { SettingParamToKey, SettingParamToKey3, useSettings, SettingsInitType } from "./utility/use.settings";
+export { SettingParamToKey, SettingParamToKey3, useSettings, SettingsInitType }
 
 import { useStorage, StorageContext, StorageInitType } from "./utility/use.storage";
 export { useStorage, StorageContext, StorageInitType }

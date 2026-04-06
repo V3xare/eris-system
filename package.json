@@ -1,6 +1,6 @@
 {
   "name": "v-eris-system",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "",
   "bootstrapVersion": 3,
   "styleLoaders": [],
@@ -10,7 +10,7 @@
   "scripts": {
     "webpack": "webpack --mode development",
     "auto": "tsc -watch - tsconfig.json",
-    "build": "yarn build:esm && yarn build:cjs && yarn copy && yarn copy2 && yarn copy3",
+    "build": "yarn build:esm && yarn build:cjs && yarn copy1 && yarn copy2 && yarn copy3 && yarn copy4 && yarn copy5 && yarn copy6",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir release/cjs",
     "tsc2": "tsc && tsc -m es6 --outDir release && webpack --mode development",
@@ -20,9 +20,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development",
     "production": "webpack --mode production",
-    "copy": "copyfiles -u 2 \"./source/components/**/*.{css,scss}\" \"./release/cjs/components\"",
-    "copy2": "copyfiles -u 2 \"./assets/**/*.{scss,css}\" \"./release/assets/styles/\"",
-    "copy3": "copyfiles -u 2 \"./assets/**/*.{woff,woff2,ttf}\" \"./release/assets/fonts/\"",
+    "copy1": "copyfiles -u 2 \"./assets/**/*.{scss,css}\" \"./release/assets/styles/\"",
+    "copy2": "copyfiles -u 2 \"./assets/**/*.{woff,woff2,ttf}\" \"./release/assets/fonts/\"",
+    "copy3": "copyfiles -u 2 \"./source/components/**/*.{css,scss}\" \"./release/cjs/components\"",
+    "copy4": "copyfiles -u 2 \"./source/placeholders/**/*.{css,scss}\" \"./release/cjs/placeholders\"",
+    "copy5": "copyfiles -u 2 \"./source/routes/**/*.{css,scss}\" \"./release/cjs/routes\"",
+    "copy6": "copyfiles -u 2 \"./source/types/**/*.{css,scss}\" \"./release/cjs/types\"",
     "pub": "tsc && npm version patch --force && npm publish --access public"
   },
   "files": [

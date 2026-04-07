@@ -287,3 +287,34 @@ export const Build = (
 	</>
 	);
 };
+
+export const BuildModules = (
+	props: { 
+		modules: any[], 
+		children?: any 
+	} 
+) => {
+	
+	const { modules, children } = props;
+
+	const providers = (( inside: any ) => {
+
+		let n = modules.length - 1;
+		let list: any = <>{ inside }</>;
+
+		for( ; n > -1; n-- ){
+			const { context, ...r } = modules[ n ]();
+			list = <context.Provider value={ r }>{ list }</context.Provider>;
+		};
+
+		return list;
+	});
+
+	return (
+	<>
+	{
+		providers( children )
+	}
+	</>
+	);
+};

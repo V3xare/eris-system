@@ -6,8 +6,8 @@ export { Auth, AuthContext, AuthModuleInit }
 import { BodyContainer } from "./components/Body/body";
 export { BodyContainer } 
 
-import { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem, BuildLang, BuildTypes, BuildContext, BuildContextType, BuildRoute, BuildRouteSimple } from "./components/Build/build";
-export { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem, BuildLang, BuildTypes, BuildContext, BuildContextType, BuildRoute, BuildRouteSimple }
+import { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem, BuildLang, BuildTypes, BuildContext, BuildModules, BuildContextType, BuildRoute, BuildRouteSimple } from "./components/Build/build";
+export { Build, BuildCommands, BuildSection, BuildSectionItem, BuildTable, BuildTableItem, BuildLang, BuildTypes, BuildContext, BuildModules, BuildContextType, BuildRoute, BuildRouteSimple }
 
 import { Loader, LoaderContext, LoaderContextType, LoaderModuleInit, LoaderMessage } from "./components/Loader/loader";
 export { Loader, LoaderContext, LoaderContextType, LoaderModuleInit, LoaderMessage } 

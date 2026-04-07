@@ -101,7 +101,7 @@ export const Loader = ( props: { active?: boolean, size?: number, container?: bo
 	const size = props.size ? Common.uint( props.size ) : 176;
 
 	return (
-		<div className={ Props.className( "eris-loader", { active: active, container: props.container }) } style={{ transform: "scale(calc(" + size + " / 248))"}}>
+		<div className={ Props.className( "eris-loader", { active: active, container: props.container }) } style={{ transform: active ? "scale(calc(" + size + " / 248))" : "scale( 0.0 )" }}>
 			<div>
 				<div className={ "eris-loader-1" }></div>
 				<div className={ "eris-loader-2" }></div>

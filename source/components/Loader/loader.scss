@@ -2,7 +2,7 @@ $eris-rotation-speed: 400ms;
 
 .eris-loader{
 	position: relative;
-	transform: scale(0.0) !important;
+	transform: scale(0.0);
 	transition: transform 240ms ease-in-out;
 	pointer-events: none;
 	transform-origin: center center;

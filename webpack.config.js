@@ -56,7 +56,7 @@ module.exports = {
 	devServer: {
 		hot: false,
 		liveReload: false,
-		port: 8090,
+		port: 8091,
 		devMiddleware: {
 			writeToDisk: true,
 		},

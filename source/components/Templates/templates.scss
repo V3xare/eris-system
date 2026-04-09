@@ -1,0 +1,152 @@
+@import "../../../assets/styles/functions.scss";
+
+.templates{
+	position: relative;
+
+	&-header{
+		position: relative;
+		padding: 0px 6px;
+	}
+
+	&-title{
+		font-size: 140%;
+		padding-bottom: 7px;
+	}	
+	&-section-title{
+		font-size: 120%;
+		padding: 0px 0px 6px;
+
+		&-hidden{
+			display: none;
+		}
+
+		& > .icon{
+			padding: 0px 2px 0px 1px;
+		}
+
+	}
+
+	&-item{
+		display: flex;
+		align-items: center;
+		gap: 0px;
+		margin-bottom: 2px;
+		padding: 0px 6px;
+		justify-content: space-between;
+		//background: #232323;
+		background: mix( var( --element-bg ), var( --element-accent ), calc(7.5% * var(--element-text-multi-sub)), 13% );
+	
+		&-key{
+			position: relative;
+			//white-space: nowrap;
+			padding: 1px 1px;
+			flex-shrink: 1;
+			color: mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 100% );
+		}
+		&-value{
+			position: relative;
+			margin-left: 6px;
+			//background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 9% );
+			color: mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 70% );
+			padding: 1px 1px;
+			display: flex;
+			flex-wrap: nowrap;
+			flex-direction: row;
+			letter-spacing: 0.3px;
+			flex-shrink: 10;
+			text-align: right;
+		}
+		&-value >  *{
+			display: flex;
+			flex-wrap: nowrap;
+		}
+		&-value >  input{
+			box-sizing: border-box;
+			outline: 0px !important;
+			border: 0px !important;
+			background-color: transparent;
+			padding: 0px;
+			margin: 0px;
+			font-family: inherit;
+			font-size: inherit;
+		}
+		&-value-active{
+			cursor: pointer;
+		}
+		&-value-active:hover{
+			color: mix( var( --element-text-flat ), var( --element-accent ), calc(50.0% * var(--element-text-multi-text)), 70% );
+		}
+	
+		&-more{
+			color: mix( var( --element-text-flat ), var( --element-accent ), calc(50.0% * var(--element-text-multi-text)), 70% );
+			font-weight: bold;
+		}
+	
+	}
+
+	&-block{
+		position: relative;
+	}
+	&-back{
+		position: relative;
+		padding: 0px;
+		margin: 0px 6px 10px 6px;
+		color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 100% );
+		gap: 10px;
+		height: 0px;
+		overflow: hidden;
+		display: flex;
+		cursor: pointer;
+		align-items: center;
+		transition: 240ms ease-in-out;
+	}
+	&-select{
+		position: relative;
+		gap: 10px;
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+		padding: 0px 6px;
+		color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 100% );
+	}
+	&-block-selected > &-back{
+		display: flex;
+		height: 20px;
+	}
+	&-block-selected > &-select{
+		display: none;
+	}
+	&-block-alone > &-select{
+		display: none;
+	}	
+	&-block-alone > &-back{
+		display: none;
+	}
+
+}
+
+.templates .card{
+	box-shadow: none;
+	background: transparent;
+	padding: 0px;
+	margin: 0px;		
+}
+
+.templates .card .card{
+	margin-left: 0px;
+}
+
+.templates .card-body{
+	padding: 6px 2px;
+}
+.templates .card-header{
+	padding: 12px 0px 0px 2px;
+}
+.templates > .card > .card-header{
+	padding: 0px 0px 0px 2px;
+}
+
+.templates .card .multiselect{
+	width: 100%;
+    max-width: 100%;
+}

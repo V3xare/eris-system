@@ -52,9 +52,9 @@
 	height: 0;
 	border-top: 6px solid transparent;
 	border-bottom: 6px solid transparent;
-	border-left: 0px solid white;
-	border-right: 8px solid white;
-	left: 8px;
+	border-left: 8px solid white;
+	border-right: 0px solid white;
+	left: 9px;
 	top: 10px;
 	display: block;
 	position: absolute;
@@ -62,14 +62,14 @@
 	content: '';
 }
 
-.eris-sidebar-toggle-hidden::after{
+.eris-sidebar-toggle-active::after{
 	width: 0;
 	height: 0;
 	border-top: 6px solid transparent;
 	border-bottom: 6px solid transparent;
-	border-left: 8px solid white;
-	border-right: 0px solid white;
-	left: 9px;
+	border-left: 0px solid white;
+	border-right: 8px solid white;
+	left: 8px;
 	top: 10px;
 	display: block;
 	position: absolute;

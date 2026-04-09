@@ -11,7 +11,7 @@ export const Search = ( props: {
 	const lang: LangContextType = useContext( LangContext );
 	const placeholder = props.placeholder ? props.placeholder : lang.get( "Search::input" );
 	const expanded = !!props.active;
-	const tools = [];
+	const tools = props.tools ? props.tools : [];
 
 	return (
 		<div className={ Props.className( "eris-search", { overlay: expanded, reduced: !expanded }) }>

@@ -174,8 +174,8 @@ export const BuildInside = (
 		user: auth.token 
 	});
 
-	let selectedLang = (currentLang ? currentLang : settings.getSecureValue( "General:Language:CurrentLanguage" )) || "en";
-	const currentTheme = (props.currentTheme ? props.currentTheme : settings.getSecureValue( "General:Theme:CurrentTheme" )) || "white";
+	let selectedLang = (currentLang ? currentLang : settings.getSecureValue( "General::Language::CurrentLanguage" )) || "en";
+	const currentTheme = (props.currentTheme ? props.currentTheme : settings.getSecureValue( "General::Theme::CurrentTheme" )) || "white";
 
 	useEffect(() => {
 

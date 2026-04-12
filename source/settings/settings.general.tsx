@@ -22,7 +22,7 @@ export const SettingsTableGeneral = [
 			{ key: "CurrentLanguage", title: "General::Language::CurrentLanguage", desc: "General::Language::CurrentLanguage::Desc", type: "select", 
 				value: "en",
 				button: "General::Language::CurrentLanguage::Button",
-				secure: "General:Language:EnabledLanguages",
+				secure: "General::Language::EnabledLanguages",
 				icon: <Icons.language/>,
 				params: [
 					{ title: "General::Language::CurrentLanguage::ru", value: "ru" },
@@ -71,7 +71,7 @@ export const SettingsTableGeneral = [
 				title: "General::Mouse::CurrentMouseWheelOrientation",
 				desc: "General::Mouse::CurrentMouseWheelOrientation::Desc", type: "select", 
 				value: "Standart",
-				secure: "General:Mouse:MouseWheelOrientationEnabled",
+				secure: "General::Mouse::MouseWheelOrientationEnabled",
 				icon: <Icons.mousewheel/>,
 				params: [
 					{ title: "General::Mouse::CurrentMouseWheelOrientation::Standart", value: "Standart" },

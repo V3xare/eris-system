@@ -1,18 +1,18 @@
 export default {
     //#region Appearance Language
-    "Appearance:language:CurrentLanguage:en": "En",
-    "Appearance:language:CurrentLanguage:ru": "Ru",
-    "Appearance:language:CurrentLanguage:de": "De",
-    "Appearance:language:CurrentLanguage:kz": "Kz",
+    "Appearance::language::CurrentLanguage::en": "En",
+    "Appearance::language::CurrentLanguage::ru": "Ru",
+    "Appearance::language::CurrentLanguage::de": "De",
+    "Appearance::language::CurrentLanguage::kz": "Kz",
 	//#endregion
 	
     //test git 
     
     //#region Accessibility Layers
     //TODO use?
-    //"Accessibility:Layers:LayersModuleDefault:OSM": "OSM",
-    //"Accessibility:Layers:LayersModuleDefault:OSM Dark": "OSM Dark",
-    //"Accessibility:Layers:LayersModuleDefault:None": "Off",
+    //"Accessibility::Layers::LayersModuleDefault::OSM": "OSM",
+    //"Accessibility::Layers::LayersModuleDefault::OSM Dark": "OSM Dark",
+    //"Accessibility::Layers::LayersModuleDefault::None": "Off",
 	//#endregion
 	
     //#region Auth

@@ -797,7 +797,7 @@ export const useSettings = ( props: any ) => {
 
 	reconstructData.current = state.reconstructData;
 	changedData.current = state.changed;
-	liveUpdates.current = SettingsGetSecureValue( state.table, state.changed, "General:Others:LiveUpdates" ) !== false;
+	liveUpdates.current = SettingsGetSecureValue( state.table, state.changed, "General::Others::LiveUpdates" ) !== false;
 
 	useEffect(() => {
 

@@ -155,7 +155,7 @@ export const Templates = ( props: {
 				nav( Common.setQuery( location, { section: v.value, subsection: s && s.children && s.children[ 0 ] ? s.children[ 0 ].name : "", cluster: "" } ) );
 			}} list={ headerElements }/>
 			<Divider style={{ display: headerElements.length > 1 ? undefined : "none" }} ></Divider>	
-			{ dynamic.clusters && dynamic.list.length ? 
+			{ dynamic.clusters && dynamic.list.length > 1 ? 
 				(
 				<div>
 					<Select stretch headerless row value={ qs.cluster } onSelect={( v: any ) => {

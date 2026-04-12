@@ -4,6 +4,8 @@ import { TemplatesListType, TemplatesTable, TemplatesTableType } from "./templat
 import { TemplatesBlock } from "./templates.block";
 import { BrowserRouter, Routes, Route, useNavigate, useLocation, Link } from "react-router-dom";
 
+import "./templates.scss"
+
 export const Templates = ( props: { 
 	className?: string,
 	value: TemplatesListType,

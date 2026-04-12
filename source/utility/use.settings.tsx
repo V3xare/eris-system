@@ -394,7 +394,7 @@ const SettingsInheritance = ( tree: any, full?: boolean ) => {
 				continue;
 
 			for( let parameter of inside.list ){
-				let key = SettingParamToKey( sectionKey, inside.key, parameter.key );
+				let key = SettingsParamToKey( sectionKey, inside.key, parameter.key );
 				result[ key ] = full ? parameter : parameter.value;
 			};	
 
@@ -421,10 +421,10 @@ const SettingsExclusionInheritance = ( tree: any, full?: boolean ) => {
 			if( !inside.list )
 				continue;
 
-			result[ SettingParamToKey3( sectionKey, inside.key ) ] = true;
+			result[ SettingsParamToKey3( sectionKey, inside.key ) ] = true;
 
 			for( let parameter of inside.list ){
-				let key = SettingParamToKey( sectionKey, inside.key, parameter.key );
+				let key = SettingsParamToKey( sectionKey, inside.key, parameter.key );
 				result[ key ] = true;
 			};	
 
@@ -660,7 +660,7 @@ export const SettingGetAllParameters = ( tree: any ) => {
 				continue;
 
 			for( let parameter of inside.list ){
-				let key = SettingParamToKey( sectionKey, inside.key, parameter.key );
+				let key = SettingsParamToKey( sectionKey, inside.key, parameter.key );
 				list.push({ ...parameter, key: key });
 			};
 
@@ -751,13 +751,13 @@ export type SettingsInitType = {
 	inheritanceStack: any,
 	async: { get: any, add: any, edit: any, remove: any, list: any }
 };
-export const SettingParamToKey3 = ( sectionItem: string, partitionKey: string ) => {
+export const SettingsParamToKey3 = ( sectionItem: string, partitionKey: string ) => {
 	//return (sectionKey || "") + ":" + (sectionItem || "") + ":" + partitionKey;
-	return (sectionItem || "") + ":" + partitionKey;
+	return (sectionItem || "") + "::" + partitionKey;
 };
-export const SettingParamToKey = ( sectionItem: string, partitionKey: string, itemKey: string ) => {
+export const SettingsParamToKey = ( sectionItem: string, partitionKey: string, itemKey: string ) => {
 	//return (sectionKey || "") + ":" + (sectionItem || "") + ":" + partitionKey + ":" + itemKey;
-	return (sectionItem || "") + ":" + partitionKey + ":" + itemKey;
+	return (sectionItem || "") + "::" + partitionKey + "::" + itemKey;
 };
 export const useSettings = ( props: any ) => {
 

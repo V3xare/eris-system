@@ -166,9 +166,6 @@ export type StorageInitType = {
 	it: number,
 	async: { get: any, add: any, edit: any, remove: any, list: any }
 };
-export const StorageParamToKey = ( sectionKey: string, partitionKey: string, itemKey: string ) => {
-	return (sectionKey || "") + ":" + partitionKey + ":" + itemKey;
-};
 
 export const useStorage = ( props: any ) => {
 

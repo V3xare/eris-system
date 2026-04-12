@@ -29,6 +29,12 @@ export { Sidebar }
 
 import { Tools } from "./components/Tools/tools";
 export { Tools } 
+
+import { TemplatesListType, TemplatesTableType } from "./components/Templates/templates.table";
+export { TemplatesListType, TemplatesTableType }
+
+import { Templates } from "./components/Templates/templates";
+export { Templates } 
 //^
 
 //Icons

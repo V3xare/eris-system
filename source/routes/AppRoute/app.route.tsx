@@ -8,7 +8,7 @@ import { MeasurementsTools, Tools1, Tools2 } from "../../components/Tools/tools.
 import { SettingsInitType } from "../../utility/use.settings";
 import { Sidebar } from "../../components/Sidebar/sidebar";
 import { Search } from "../../components/Search/search";
-import { TemplatesModule } from "../../components/Templates/templates";
+import { Templates } from "../../components/Templates/templates";
 import { TemplatesTable } from "@components/Templates/templates.table";
 
 export const AppRoute = () => {
@@ -37,7 +37,7 @@ export const AppRoute = () => {
 
 			<Search active={ sidebarActive }/>
 			<Sidebar active={ sidebarActive } hasSearch onClick={() => { console.log( sidebarActive ); setSidebarActive( !sidebarActive ) }}>
-				<TemplatesModule templates={ TemplatesTable } value={ templatesList }/>
+				<Templates templates={ TemplatesTable } value={ templatesList }/>
 			</Sidebar>
 
 			<Overlay margin={[ 70, 19 ]} direction={[ 1, 1 ]} style={{ zIndex: 2 }}>

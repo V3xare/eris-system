@@ -35,7 +35,7 @@ export const TemplatesBlock = memo(( props: {
 			return (
 				<div key={ item.name }>
 					{ item.title ? (
-						<div className={ "templates-header" }>
+						<div className={ "eris-templates-header" }>
 							<div>{lang.get( item.title ) }</div>
 							<Space/>
 						</div>
@@ -56,9 +56,9 @@ export const TemplatesBlock = memo(( props: {
 		if( Array.isArray( section.headerParams ) ){
 			return section.headerParams.map(( name: any ) => {
 				let value = data[ name ];
-				return <Row className={ "templates-item" } key={ name }>
-					<Text className={ "templates-item-key" }>{ lang.get( "AeroInfo::" + name ) || name }{ ": " }</Text>
-					<Text className={ "templates-item-value" }>{ value }</Text>
+				return <Row className={ "eris-templates-item" } key={ name }>
+					<Text className={ "eris-templates-item-key" }>{ lang.get( "AeroInfo::" + name ) || name }{ ": " }</Text>
+					<Text className={ "eris-templates-item-value" }>{ value }</Text>
 				</Row>
 			});
 		};
@@ -71,13 +71,13 @@ export const TemplatesBlock = memo(( props: {
 	}, [ data, section.headerParams ]);
 
 	return (
-	<div className={ Props.className( "templates-block", { selected: selected, alone: alone } ) }>
-		<div className={ "templates-back" } onClick={() => {
+	<div className={ Props.className( "eris-templates-block", { selected: selected, alone: alone } ) }>
+		<div className={ "eris-templates-back" } onClick={() => {
 			nav( Common.setQuery( location, { section: qs.section, subsection: qs.subsection, token: undefined } ) );
 		}}><Icons.exit/>{ lang.get( "TemplatesModuleBlock::Back" ) }</div>
 		{ elements }
 		<Space/>
-		<div className={ "templates-select" } onClick={() => {
+		<div className={ "eris-templates-select" } onClick={() => {
 			nav( Common.setQuery( location, { section: qs.section, subsection: qs.subsection, token: token } ) );
 		}}><Icons.info/>{ lang.get( "TemplatesModuleBlock::More" ) }</div>
 		{ selected || alone ? (

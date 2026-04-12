@@ -150,7 +150,7 @@ export const TemplatesTable: TemplatesTableType = {
 	},
 	"settings": {
 		key: "settings",
-		featureless: true,
+		empty: true,
 		module: WidgetSimple
 	}
 };

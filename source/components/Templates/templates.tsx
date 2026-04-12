@@ -4,9 +4,7 @@ import { TemplatesListType, TemplatesTable, TemplatesTableType } from "./templat
 import { TemplatesBlock } from "./templates.block";
 import { BrowserRouter, Routes, Route, useNavigate, useLocation, Link } from "react-router-dom";
 
-import "./templates.scss"
-
-export const TemplatesModule = ( props: { 
+export const Templates = ( props: { 
 	className?: string,
 	value: TemplatesListType,
 	templates: TemplatesTableType 
@@ -28,7 +26,7 @@ export const TemplatesModule = ( props: {
 
 			const item = props.templates[ templateKey ];
 
-			if( !props.value[ qs.section ] || !props.value[ qs.section ].length )
+			if( !props.value[ item.key ] || !props.value[ item.key ].length )
 				continue;
 
 			qs.section = item.key ;
@@ -107,15 +105,13 @@ export const TemplatesModule = ( props: {
 			});
 		};
 
-		console.log( result );
-
 		return result;
 	}, [ 
 		props.value,
 	]);
 	let sectionInfo = useMemo(() => {
 
-		if( section.featureless ){
+		if( section.empty ){
 			return dynamic.data.map(( item: any, index: number ) => (
 				<div key={ item.id  + ":" + index }>{
 					React.createElement( section.module, { data: item } )
@@ -151,7 +147,7 @@ export const TemplatesModule = ( props: {
 	}, [ qs, value ]);	
 
 	return (
-		<div className={ Props.className( "templates" ) } style={{ top: "100px" }}>
+		<div className={ Props.className( "eris-templates-container" ) }>
 			<Select style={{ display: headerElements.length > 1 ? undefined : "none" }} stretch headerless row value={ qs.section } onSelect={( v: any ) => {
 				let s = props.templates[ v.value as string ];
 				nav( Common.setQuery( location, { section: v.value, subsection: s && s.children && s.children[ 0 ] ? s.children[ 0 ].name : "", cluster: "" } ) );
@@ -177,9 +173,9 @@ export const TemplatesModule = ( props: {
 					( sectionInfo ) 
 					: 
 					(
-					<div className={ Props.className( "templates" ) }>
+					<div className={ Props.className( "eris-templates" ) }>
 						<Card header={ 
-							<div className={ "templates-title" }>
+							<div className={ "eris-templates-title" }>
 								{ section.icon }<Space/>{ lang.get( section.name ) }
 							</div>
 						}>

@@ -1,6 +1,10 @@
 @import "../../../assets/styles/functions.scss";
 
-.templates{
+.eris-templates-container{
+	position: relative;
+}
+
+.eris-templates{
 	position: relative;
 
 	&-header{
@@ -125,28 +129,28 @@
 
 }
 
-.templates .card{
+.eris-templates .card{
 	box-shadow: none;
 	background: transparent;
 	padding: 0px;
 	margin: 0px;		
 }
 
-.templates .card .card{
+.eris-templates .card .card{
 	margin-left: 0px;
 }
 
-.templates .card-body{
+.eris-templates .card-body{
 	padding: 6px 2px;
 }
-.templates .card-header{
+.eris-templates .card-header{
 	padding: 12px 0px 0px 2px;
 }
-.templates > .card > .card-header{
+.eris-templates > .card > .card-header{
 	padding: 0px 0px 0px 2px;
 }
 
-.templates .card .multiselect{
+.eris-templates .card .multiselect{
 	width: 100%;
     max-width: 100%;
 }

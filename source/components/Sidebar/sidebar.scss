@@ -15,8 +15,21 @@
 	background-color: var(--bg);
 	color: mix(var(--element-text-flat), var(--element-accent), calc(7.5% * var(--element-text-multi-text)), 100%);
 
-	&-active {
+	&-active{
 		left: 0px;
+	}
+
+	&-content{
+		margin-top: 0px;
+		overflow-y: scroll;
+		padding: 20px 20px 20px;
+		height: 100%;
+		z-index: 10;
+		background: var(--gloss);		
+	}
+
+	&-hasSearch &-content{
+		margin-top: 90px;
 	}
 
 }

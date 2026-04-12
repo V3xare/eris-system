@@ -2,7 +2,7 @@ import React, { useReducer, useState, useEffect, useMemo, useContext, useRef } f
 import { Card, List, Icons, LangContext, Common, Cookie, Row, Icon, Button, useAsync, Column, Select, Space, Props, Tooltip, Toggle, Text, LangContextType } from "v-eris";
 import { ContentMenu } from "../../placeholders/ContentMenu/content.menu";
 import { ContentContainer } from "../../placeholders/ContentContainer/content.container";
-import { SettingParamToKey, SettingParamToKey3, useSettings } from "../../utility/use.settings";
+import { SettingsParamToKey, SettingsParamToKey3, useSettings } from "../../utility/use.settings";
 import { BrowserRouter, Routes, Route, useNavigate, useLocation, Link, NavigateFunction, Location } from "react-router-dom";
 import { BuildContext, BuildContextType, BuildRoute, BuildSectionItem, BuildTableItem } from "../../components/Build/build";
 
@@ -106,7 +106,7 @@ export const SettingsRoute = () => {
 
 		return keys.map(( key ) => {
 			const item = sectionTable[ key ];
-			let keySection = SettingParamToKey3( qs.item as string, item.key );
+			let keySection = SettingsParamToKey3( qs.item as string, item.key );
 			let overrideSection = settings.getExclusionOverride( keySection );
 			let visibleSection = settings.getExclusionValue( keySection );
 			//console.log( keySection, visibleSection, settings );
@@ -158,7 +158,7 @@ export const SettingsRoute = () => {
 			}>{
 
 				item.list.map(( parameter ) => {
-					let key = SettingParamToKey( qs.item as string, item.key, parameter.key );
+					let key = SettingsParamToKey( qs.item as string, item.key, parameter.key );
 					let override = settings.getOverride( key );
 					let stringify = "";
 					try{ stringify = JSON.stringify( settings.getSecureValue( key ), null, " " ) }catch( e ){ stringify = ""; };

@@ -133,8 +133,8 @@ export { PolicyResistance, PolicyParams }
 import { Socket, SocketState } from "./utility/socket"
 export { Socket, SocketState }
 
-import { SettingParamToKey, SettingParamToKey3, useSettings, SettingsInitType } from "./utility/use.settings";
-export { SettingParamToKey, SettingParamToKey3, useSettings, SettingsInitType }
+import { SettingsParamToKey, SettingsParamToKey3, useSettings, SettingsInitType } from "./utility/use.settings";
+export { SettingsParamToKey, SettingsParamToKey3, useSettings, SettingsInitType }
 
 import { useStorage, StorageContext, StorageInitType } from "./utility/use.storage";
 export { useStorage, StorageContext, StorageInitType }

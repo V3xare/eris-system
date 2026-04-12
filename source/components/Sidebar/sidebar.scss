@@ -40,7 +40,7 @@
 	top: 23px;
 	right: -38px;
 	margin-left: 10px;
-	background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 10% );
+	background-color: mix( var( --element-bg ), var( --element-accent ), calc(40% * var(--element-text-multi-main)), 60% );
 	position: absolute;
 	z-index: 4;
 	transition: 240ms ease-in-out;

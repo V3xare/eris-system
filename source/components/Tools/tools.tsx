@@ -2,15 +2,17 @@ import React, { useMemo, useContext, useEffect, useRef, useState } from "react";
 import { Row, Tooltip, Icons, Column, Props, Text, LangContext, Select, MultiSelect, Common, Space, Icon, LangContextType } from "v-eris";
 import { Color } from "../../types/types.color";
 import { BuildContext, BuildContextType } from "../Build/build";
+import { SettingsInitType } from "../../utility/use.settings";
+import { AuthContext, AuthContextType } from "../../components/Auth/auth";
 
 import "./tools.scss"
-import { SettingsInitType } from "@utility/use.settings";
 
 export const Tools = ( props: any ) => {
 	let { className, column, cycle, simple, style, onChange, value, list, ...rest } = props;
 	const lang: LangContextType = useContext( LangContext );
 	const wrapElem: any = useRef( null );
 	const build: BuildContextType = useContext( BuildContext );
+	const auth: AuthContextType = useContext( AuthContext );
 	const [ state, setState ] = useState({});
 	let settings: SettingsInitType = build.settings;
 
@@ -113,9 +115,13 @@ export const Tools = ( props: any ) => {
 		let data = { ...item, value: event.value };
 		data.key = key;
 
-		if( settings.keyExist( key ) )
-			settings.setValueAsync( key, data.value, true );
-		else
+		if( settings.keyExist( key ) ){
+			if( auth.access < 5 ){
+				settings.change( key, data.value );
+			}else{
+				settings.setValueAsync( key, data.value, true );
+			};
+		}else
 			setToolValue( data );
 
 	};

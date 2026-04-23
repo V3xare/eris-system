@@ -301,7 +301,7 @@ export const SettingsRoute = () => {
 						length = 0;
 
 						for( let item of sectionTable ){
-							let keySection = SettingsParamToKey3( qs.item as string, item.key );
+							let keySection = SettingsParamToKey3( data.key as string, item.key );
 							let visibleSection = settings.getExclusionValue( keySection );
 
 							if( !visibleSection )
@@ -318,7 +318,7 @@ export const SettingsRoute = () => {
 				}</List.Item>
 			);
 		})
-	}, [ route.table, build.currentLang, settings.iteration ]);
+	}, [ route.table, route.list, build.currentLang, settings.iteration ]);
 
 	return (
 	<div className={ "eris-content eris-content-selector" }>

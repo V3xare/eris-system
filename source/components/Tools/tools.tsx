@@ -4,6 +4,7 @@ import { Color } from "../../types/types.color";
 import { BuildContext, BuildContextType } from "../Build/build";
 
 import "./tools.scss"
+import { SettingsInitType } from "@utility/use.settings";
 
 export const Tools = ( props: any ) => {
 	let { className, column, cycle, simple, style, onChange, value, list, ...rest } = props;
@@ -11,7 +12,7 @@ export const Tools = ( props: any ) => {
 	const wrapElem: any = useRef( null );
 	const build: BuildContextType = useContext( BuildContext );
 	const [ state, setState ] = useState({});
-	let settings = build.settings;
+	let settings: SettingsInitType = build.settings;
 
 	if( !list )
 		list = [];
@@ -223,6 +224,7 @@ export const Tools = ( props: any ) => {
 						headerless
 						stretch
 						style={{ display: subVisibility === false ? "none" : null }}
+						className={ (params || []).length < 2 ? "hidden" : "" }
 						onChange={( event: any ) => { 
 
 							let v = { ...secureTable };
@@ -281,6 +283,7 @@ export const Tools = ( props: any ) => {
 						headerless
 						stretch
 						style={{ display: subVisibility === false ? "none" : null }}
+						className={ (params || []).length < 2 ? "hidden" : "" }
 						{ ...extra }
 						onChange={( v: any ) => makeEvent( {}, item, depth, { list: v.value, sort: v.sort, defaultValue: v.defaultValue } ) } 
 						suggestions={(Array.isArray( params ) ? params : []).map(( child ) => {
@@ -319,6 +322,7 @@ export const Tools = ( props: any ) => {
 						minWidth={ depth > 0 ? undefined : "20px" } 
 						value={ secureValue } 
 						style={{ display: subVisibility === false ? "none" : null }}
+						className={ (params || []).length < 2 ? "hidden" : "" }
 						{ ...extra }
 						onSelect={( v: any ) => makeEvent( {}, item, depth, v.value ) } 
 						list={(Array.isArray( params ) ? params : []).map(( child ) => {

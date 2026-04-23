@@ -97,6 +97,7 @@ export default {
     "Admin::Table::Users::StatusSelect::archived": "Archived",
     "Admin::Table::Users::StatusSelect::active": "Active",
     "Admin::Table::Users::AccessSelect::registered": "Self-registered",
+    "Admin::Table::Users::AccessSelect::guest": "Guest",
     "Admin::Table::Users::AccessSelect::user": "User",
     "Admin::Table::Users::AccessSelect::moderator": "Moderator",
     "Admin::Table::Users::AccessSelect::admin": "Administrator",

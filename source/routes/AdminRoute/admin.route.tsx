@@ -22,6 +22,7 @@ const AdminCreateLine = ( route: BuildRoute, types: any, props: any, updateTable
 		params: parameter.params,
 		extra: parameter.extra,
 		filter: parameter.filter,
+		dynamic: parameter.dynamic,
 		paramsOverride: paramsOverride,
 		value: v,
 		qs: qs,
@@ -73,7 +74,7 @@ export const AdminRoute = () => {
 	});	
 	useEffect(() => {
 		roles.fetch();
-	}, []);
+	}, [ qs.section ]);
 
 	const policy = useAsync({
 		method: "POST",
@@ -84,7 +85,7 @@ export const AdminRoute = () => {
 	});	
 	useEffect(() => {
 		policy.fetch();
-	}, []);	
+	}, [ qs.section ]);	
 	
 	const configurations = useAsync({
 		method: "POST",
@@ -95,7 +96,7 @@ export const AdminRoute = () => {
 	});	
 	useEffect(() => {
 		configurations.fetch();
-	}, []);
+	}, [ qs.section ]);
 
 
 	let paramsOverride = {

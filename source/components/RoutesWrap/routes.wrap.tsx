@@ -14,7 +14,7 @@ export const RoutesWrap = ( props: any ) => {
 	const build = useContext( BuildContext );
 
 	const tryAccess = ( element: any ) => {
-		return auth.access < 5 ? 
+		return auth.access < 3 ? 
 		(<div className={ "core-deny" }>{ lang.get( auth.access < 1 ? "Server::Banned" : "Server::NeedConfirmation" ) }</div>) 
 		: 
 		(build.denyAccess ? (<div className={ "core-deny" }>{ lang.get( "Server::Deny" ) }</div>) : element)

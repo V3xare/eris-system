@@ -344,7 +344,7 @@ export const Auth = ( props: any ) => {
 	}catch( e ){};
 
 	//
-	if( state.access >= 1 && (state.passwordAlert >= 0 || data.persona || state.access >= 9) ){
+	if( state.access >= 3 && (state.passwordAlert >= 0 || data.persona || state.access >= 9) ){
 		return (
 			<div></div>
 		);
@@ -356,6 +356,11 @@ export const Auth = ( props: any ) => {
 		<div className={ "eris-auth-wrap fullscreen" }>
 			<div className={ "eris-auth-sun" }></div>
 			<div className={ "eris-auth-ground" }></div>
+			<div>{
+				state.access < 3 && !data.persona ? (
+					<div className={ "eris-auth-deny" }>{ lang.get( state.access < 1 ? "Server::Banned" : "Server::NeedConfirmation" ) }</div>
+				) : (null)	
+			}</div>			
 			<div className={ "eris-auth" }>
 				<div className={ "eris-auth-line" }>
 					{

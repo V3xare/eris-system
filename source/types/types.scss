@@ -49,12 +49,14 @@
 .settings-type-table{
 
 	overflow-y: auto;
+	//padding-left: 8px;
 	padding-right: 4px;
 	background: var(--gloss);
+	width: 100%;
 
 	&-mini{
 	    max-height: 500px;
-		padding-right: 8px;
+		padding-right: 0px;
 	}
 
 	& > table{
@@ -72,7 +74,7 @@
 
 		& > th{
 			display: table-cell;
-			padding: 9px 10px 16px;
+			padding: 9px 10px 10px;
 			line-height: 1.0;
 			text-align: left;
 		}
@@ -80,6 +82,14 @@
 			padding-left: 15px;
 		}
 
+	}
+
+	&-modal{
+		background: transparent;
+		box-shadow: none;
+	}
+	&-modal > .modal-content{
+		padding: 0;
 	}
 
 	& > .button{
@@ -102,16 +112,22 @@
 	}
 	&-row-selected:hover{
 		background-color: transparent;
+	}	
+	&-row-hovered{
+		background-color: mix( var( --element-bg ), var( --element-accent2 ), calc(40% * var(--element-text-multi-main)), 100% );
+		color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(70% * var(--element-text-multi-text)), 80% );
 	}
 
 	&-cell{
 		display: table-cell;
-		padding: 2px 1px 2px;
+		//padding: 2px 1px 2px;
 		line-height: 1.0;
-		min-width: 40px;
+		min-width: 20px;
 	}
 	&-cell:first-child{
 		padding-left: 6px;
+		padding-right: 6px;
+		text-align: center;	
 	}
 
 	&-row-selected > &-cell{

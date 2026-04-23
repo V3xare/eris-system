@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo, Fragment, useContext } from "react";
-import { Button, Card, Column, Common, Props, Row, Space, Text, Toggle, Tooltip, useAnimation, VMath } from "v-eris";
+import { Button, Card, Column, Common, Props, Row, Space, Text, Toggle, Tooltip, useAnimation, VMath, Modal } from "v-eris";
 import { BuildContext, BuildContextType } from "../components/Build/build";
+import { TypeRemove } from "../types/types.remove";
 
 import "./types.table.params.scss"
 
@@ -106,10 +107,10 @@ export const TypeTableParams = ( props: any ) => {
 					)
 					:
 					(
-						<Row key={ item.key }>
+						<Column key={ item.key }>
 							<div className={ "settings-type-params-left" }>{ title }{ title ? ":" : "" }</div>
 							<div className={ "settings-type-params-right" }>{ element }</div>
-						</Row>
+						</Column>
 					)
 				})			
 			}
@@ -119,8 +120,8 @@ export const TypeTableParams = ( props: any ) => {
 			</Row>		
 			<Row className={ "settings-type-params-tools" }>
 				<Button success onClick={() => { onSave({ value: value }) }}>Save</Button>
-				<Button danger onClick={ onRemove }>Remove</Button>
-			</Row>
+				<TypeRemove onClick={ onRemove } isText/>							
+ 			</Row>
 		</Card>
 		);
 	}, [ lang, params, icon, title, forceSelected, mini, selected, value, storage ? storage.changed : null ]);

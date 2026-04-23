@@ -1,0 +1,44 @@
+@import "../../assets/styles/functions.scss";
+
+.eris-pagination{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	gap: 4px;
+	padding: 8px 0px;
+
+	&-hidden{
+		display: none;
+	}
+
+	&-input{
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-content: center;
+		justify-content: center;
+		align-items: center;
+		gap: 9px;
+		margin-left: 10px;
+
+		& .input{
+			width: 48px;
+    		min-height: 26px;
+		
+			& input{
+				width: 100%;
+			}
+		
+		}
+
+	}
+
+	& .button-warning > .button-wrap{
+		background-color: mix( var( --element-bg ), var( --element-accent2 ), calc(50% * var(--element-text-multi-main)), 100% );
+		color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(70% * var(--element-text-multi-text)), 80% );
+	}
+
+}

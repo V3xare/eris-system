@@ -4,18 +4,6 @@ import { Icons, IconsExtended } from "../../icons/icons.extend";
 import { Conditions } from "../../utility/conditions";
 import { PolicyResistance } from "../../utility/policy";
 
-export const AdminSectonsAccess = {
-	"access::1": "Admin::Table::Users::AccessSelect::registered",
-	"access::5": "Admin::Table::Users::AccessSelect::user",
-	"access::7": "Admin::Table::Users::AccessSelect::moderator",
-	"access::9": "Admin::Table::Users::AccessSelect::admin"
-};
-export const AdminSectonsStatus = {
-	"access::0": "Admin::Table::Users::AccessSelect::banned", 
-	"access::1": "Admin::Table::Users::AccessSelect::archived",
-	"access::7": "Admin::Table::Users::AccessSelect::active",
-};
-
 export const AdminLocalTable = {
 	"Access": {
 		params: [
@@ -49,7 +37,7 @@ export const AdminLocalTable = {
 	},	
 	"Configurations": {
 		params: [
-			{ key: "redirectConfiguration", title: "Redirect", desc: "Admin::Table::Users::RedirectDesc", type: "button", mini: 1, params: { title: "Redirect" } },
+			{ key: "redirectConfiguration", title: "", desc: "Admin::Table::Users::RedirectDesc", type: "button", mini: 1, params: { title: <Icons.cog/> } },
 			{ key: "name", title: "Admin::Table::Configurations::Name", desc: "Admin::Table::Configurations::NameDesc", type: "text", mini: 1, params: { 
 				conditions: Conditions.name
 			}},
@@ -106,7 +94,7 @@ export const AdminLocalTable = {
 	},		
 	"Users": {
 		params: [
-			{ key: "redirectConfiguration", title: "Redirect", desc: "Admin::Table::Users::RedirectDesc", type: "button", mini: 1, params: { title: "Redirect" } },
+			{ key: "redirectConfiguration", title: "", desc: "Admin::Table::Users::RedirectDesc", type: "button", mini: 1, params: { title: <Icons.cog/> } },
 			{ key: "login", title: "Admin::Table::Users::Login", desc: "Admin::Table::Users::LoginDesc", type: "text", params: {
 				conditions: Conditions.login
 			}},
@@ -128,6 +116,7 @@ export const AdminLocalTable = {
 				mini: 1,
 				params: [
 					{ title: "Admin::Table::Users::AccessSelect::registered", value: 1 }, 
+					{ title: "Admin::Table::Users::AccessSelect::guest", value: 3 }, 
 					{ title: "Admin::Table::Users::AccessSelect::user", value: 5 }, 
 					{ title: "Admin::Table::Users::AccessSelect::moderator", value: 7 }, 
 					{ title: "Admin::Table::Users::AccessSelect::admin", value: 9 }
@@ -154,7 +143,7 @@ export const AdminLocalTable = {
 	},
 	"Roles": {
 		params: [
-			{ key: "redirectConfiguration", title: "Redirect", desc: "Admin::Table::Users::RedirectDesc", type: "button", mini: 1, params: { title: "Redirect" } },
+			{ key: "redirectConfiguration", title: "", desc: "Admin::Table::Users::RedirectDesc", type: "button", mini: 1, params: { title: <Icons.cog/> } },
 			{ key: "name", title: "Admin::Table::Roles::Name", desc: "Admin::Table::Roles::NameDesc", type: "text", mini: 1, params: { 
 				conditions: Conditions.name
 			}},
@@ -253,11 +242,13 @@ export const AdminTable = {
 				right: [
 					{ key: "persona_configuration", title: "Admin::Table::Users::Configuration", type: "querytable", value: "default",
 						params: { 
+							none: true,
 							route: "configurations"
 						} 
 					},
 					{ key: "persona_token", title: "Admin::Table::Global::Guest", type: "querytable", 
 						params: { 
+							none: true,
 							filter: { configuration: ":persona_configuration" },
 							route: "users"
 						} 
@@ -272,7 +263,7 @@ export const AdminTable = {
 	Filesystem: [{
 		key: "Main", title: "Filesystem", icon: <Icons.fileempty/>,
 		list: [
-			{ key: "Table", type: "table", params: AdminLocalTable.Filesystem.params },
+			{ key: "Table", type: "table", dynamic: false, params: AdminLocalTable.Filesystem.params },
 		],
 	}],	
 
@@ -288,7 +279,7 @@ export const AdminList = [
 	]},		
 	
 	{ title: "Admin::Module::Configurations", key: "ConfigurationsSection", route: "configurations", icon: <Icons.configurations/>, list: [
-		{ title: "Admin::Module::List", key: "Configurations", route: "configurations", icon: <Icons.list/> },
+		{ title: "Admin::Module::Configurations", key: "Configurations", route: "configurations", icon: <Icons.list/> },
 		{ title: "Admin::Module::Roles", key: "Roles", route: "roles", icon: <Icons.roles/> },
 		{ title: "Admin::Module::Users", key: "Users", route: "users", icon: <Icons.user/> },
 	]},			

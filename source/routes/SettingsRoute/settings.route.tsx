@@ -9,14 +9,12 @@ import { BuildContext, BuildContextType, BuildRoute, BuildSectionItem, BuildTabl
 export const SettingsRoute = () => {
 
 	const lang: LangContextType = useContext( LangContext );
-	const nav = useNavigate();
-	const location = useLocation();
-	const qs = Common.parseQuery( location );
 	const qsRef = useRef({});
 	const isSelf = useRef( false );
 	const [ altered, setAltered ] = useState( false );
 	const build: BuildContextType = useContext( BuildContext );
 	const route: BuildRoute = build.routes[ "settings" ];
+	const qs = build.query;
 
 	let alterListener = ( e: any ) => {
 
@@ -48,7 +46,26 @@ export const SettingsRoute = () => {
 	
 	const section: string = qs.section as string;
 	const sectionItem = route.sections[ section ] || {};
-	let sectionTable: BuildTableItem[] = route.table[ qs.item ];
+	let sectionTable: BuildTableItem[] | null = route.table[ qs.item ];
+
+	if( sectionTable && isSelf.current ){
+
+		let length = 0;
+
+		for( let item of sectionTable ){
+			let keySection = SettingsParamToKey3( qs.item as string, item.key );
+			let visibleSection = build.settings.getExclusionValue( keySection );
+
+			if( !visibleSection )
+				continue;
+
+			length++;
+		};
+
+		if( !length )
+			sectionTable = null;
+
+	};
 
 	if( !sectionTable ){
 		qs.item = sectionItem.list && sectionItem.list[ 0 ] ? sectionItem.list[ 0 ].key : "";	
@@ -102,10 +119,7 @@ export const SettingsRoute = () => {
 
 	let contentList = useMemo(() => {
 
-		let keys = Object.keys( sectionTable );
-
-		return keys.map(( key ) => {
-			const item = sectionTable[ key ];
+		return sectionTable.map(( item: any ) => {
 			let keySection = SettingsParamToKey3( qs.item as string, item.key );
 			let overrideSection = settings.getExclusionOverride( keySection );
 			let visibleSection = settings.getExclusionValue( keySection );
@@ -267,27 +281,52 @@ export const SettingsRoute = () => {
 		});
 	}, [ isLive, settings.iteration ]);
 
+	const treeList = useMemo(() => {
+
+		return route.list.map(( item ) => {
+
+			if( !item.list )
+				return;
+
+			let length: number = 0;
+
+			return (
+				<List.Item icon={ item.icon } key={ item.key } title={ lang.get( item.title ) }>{
+					item.list.map(( data ) => {
+						let sectionTable: BuildTableItem[] = route.table[ data.key ];
+
+						if( !sectionTable )
+							return;
+
+						length = 0;
+
+						for( let item of sectionTable ){
+							let keySection = SettingsParamToKey3( qs.item as string, item.key );
+							let visibleSection = settings.getExclusionValue( keySection );
+
+							if( !visibleSection )
+								continue;
+
+							length++;
+						};
+
+						if( !length && isSelf.current )
+							return null;
+
+						return <List.Item icon={ data.icon } title={ lang.get( data.title ) } key={ data.key } value={ build.buildQuery({ section: item.key, item: data.key }) }>{ "" }</List.Item>
+					})
+				}</List.Item>
+			);
+		})
+	}, [ route.table, build.currentLang, settings.iteration ]);
+
 	return (
 	<div className={ "eris-content eris-content-selector" }>
 		<ContentMenu>
-			<List value={ Common.setQuery( location, { section: qs.section, item: qs.item } ) } onChange={( event ) => {
-					nav( event.value );
+			<List value={ build.buildQuery( { section: qs.section, item: qs.item } ) } onChange={( event ) => {
+					build.setQueryString( event.value );
 				}} padding={[ 3, 6, 3, 8 ]}>
-				{
-					route.list.map(( item ) => {
-
-						if( !item.list )
-							return;
-
-						return (
-							<List.Item icon={ item.icon } key={ item.key } title={ lang.get( item.title ) }>{
-								item.list.map(( data ) => {
-									return <List.Item icon={ data.icon } title={ lang.get( data.title ) } key={ data.key } value={ Common.setQuery( location, { section: item.key, item: data.key } ) }>{ "" }</List.Item>
-								})
-							}</List.Item>
-						);
-					})
-				}
+				{ treeList }
 			</List>
 		</ContentMenu>
 		<ContentContainer>
@@ -296,7 +335,7 @@ export const SettingsRoute = () => {
 					<Button onClick={() => {
 
 						if( isSelf.current ){
-							nav( "/" );
+							build.setQueryString( "/" );
 							return;
 						};
 
@@ -310,7 +349,7 @@ export const SettingsRoute = () => {
 						if( qs.filter )
 							string += "&filter=" + qs.filter;
 
-						nav( string );
+						build.setQueryString( string );
 					}}>{ "Back" }</Button>
 					<Space/>		
 					<Space/>		
@@ -325,7 +364,7 @@ export const SettingsRoute = () => {
 							return { icon: item.icon, value: item.token, title: item.name };
 						})} 
 						onChange={( e: any ) => {
-							nav( Common.setQuery( location, { type: e.value } ) );
+							build.setQuery({ type: e.value } );
 						}}
 					/>					
 				</span>

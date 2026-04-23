@@ -50,14 +50,24 @@
 	&-modal .settings-type-params{
 		margin: 0px;
 	}
-	&-modal .card-body .row{
-		line-height: 2.4;
+	&-modal .card-body > .row{
+		//line-height: 2.4;
 		display: flex;
 		//justify-content: space-between;
 		align-items: center;
-		min-height: 24px;
+		min-height: 32px;
 		font-size: 14px;
+		line-height: 2.1;
 	}	
+	&-modal .card-body > .column{
+		display: flex;
+		align-items: flex-start;
+		min-height: 32px;
+		font-size: 14px;
+		flex-direction: column;
+		flex-wrap: nowrap;
+		line-height: 2.1;
+	}		
 	&-modal .card-header{
 		padding-bottom: 11px;
 		padding-top: 10px;
@@ -68,10 +78,16 @@
 	}
 
 	&-left{
-		width: 240px;
+		white-space: nowrap;
+		//width: 240px;
 	}
 	&-right{
-		width: 240px;
+		//width: 240px;
+		width: 100%;
+		//margin-left: 10px;
+	}
+	&-right .input, &-right .multiselect{
+		width: 100%;
 	}
 	&-left > *, &-right > *{
 		width: 100%;

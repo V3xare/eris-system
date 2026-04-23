@@ -1,5 +1,6 @@
 export const AdminAccess = {
 	"access::1": "Admin::Table::Users::AccessSelect::registered",
+	"access::3": "Admin::Table::Users::AccessSelect::guest",
 	"access::5": "Admin::Table::Users::AccessSelect::user",
 	"access::7": "Admin::Table::Users::AccessSelect::moderator",
 	"access::9": "Admin::Table::Users::AccessSelect::admin"

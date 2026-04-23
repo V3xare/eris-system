@@ -86,7 +86,7 @@ export const App = () => {
 			types={ BuildCommands.joinTypes( Types, {} ) }
 			settingsTable={ settingsSections.table }
 			routes={{
-				"app": { icon: <Icons.earth/>, access: 5, title: "App", element: (<AppRoute/>) },
+				"app": { icon: <Icons.earth/>, access: 3, title: "App", element: (<AppRoute/>) },
 				"admin": { icon: <Icons.users/>, access: 9, title: "Admin", element: <AdminRoute/>, list: adminSections.list, table: adminSections.table },
 				"settings": { icon: <Icons.cog/>, access: 5, title: "Settings", element: <SettingsRoute/>, list: settingsSections.list, table: settingsSections.table },				
 			}}

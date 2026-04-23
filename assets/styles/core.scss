@@ -190,20 +190,20 @@
 	opacity: 1;
 }
 
-.eris *::-webkit-scrollbar-track {
+.eris *::-webkit-scrollbar-track, .modal *::-webkit-scrollbar-track, .modal-bg *::-webkit-scrollbar-track {
 	background: radial-gradient(100% 121.87% at 0% 100%, rgba(255, 255, 255, 0.03) 0%, rgba(3, 0, 20, 0) 100%);
 }
 
-.eris *::-webkit-scrollbar {
+.eris *::-webkit-scrollbar, .modal *::-webkit-scrollbar, .modal-bg *::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
 	background: transparent;
 }
 
-.eris *::-webkit-scrollbar-thumb {
+.eris *::-webkit-scrollbar-thumb, .modal *::-webkit-scrollbar-thumb, .modal-bg *::-webkit-scrollbar-thumb  {
 	background-color: #c3bbff21;
 }
 
-.eris *::selection {
+.eris *::selection, .modal *::selection, .modal-bg *::selection {
 	background: mix(var(--element-text-flat), var(--element-accent2), calc(80% * var(--element-text-multi-text)), 40%);
 }

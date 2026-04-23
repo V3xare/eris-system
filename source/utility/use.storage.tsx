@@ -1,5 +1,5 @@
-import React, { useReducer, useEffect, useContext } from "react";
-import { useAsync } from "v-eris";
+import React, { useReducer, useEffect, useContext, useRef } from "react";
+import { Common, useAsync, useDelta } from "v-eris";
 import { NotificationsContext } from "../components/Notifications/notifications";
 
 const StorageReducer = (state: any, [ type, data, rewrite, sort ] : any ) => {
@@ -104,10 +104,12 @@ const StorageReducer = (state: any, [ type, data, rewrite, sort ] : any ) => {
 
 		let list: any[] = [];
 		let precomputed: any = null;
+		let table = data.data;
+		let length = data.length;
 
-		for( let it in data ){
+		for( let it in table ){
 
-			let item = data[ it ];
+			let item = table[ it ];
 			let result: any = { key: item.token };
 
 			for( let key in item ){
@@ -137,7 +139,8 @@ const StorageReducer = (state: any, [ type, data, rewrite, sort ] : any ) => {
 		return {
 			...state,
 			iteration: ++state.iteration,
-			list: list
+			list: list,
+			length: length
 		};
 	};
 
@@ -150,6 +153,7 @@ export type StorageInitType = {
 	changed: any, 
 	table: any, 
 	list: any[], 
+	length: number,
 	isChanged: any, 
 	isCleared: any, 
 	getToken: Function,
@@ -169,7 +173,7 @@ export type StorageInitType = {
 
 export const useStorage = ( props: any ) => {
 
-	let { token, section, current, getFromLast, params, sort, where, whereAny, ignoreList, rewrite, ...rest } = props;
+	let { token, section, current, getFromLast, params, sort, where, offset, limit, pagination, whereAny, ignoreList, rewrite, ...rest } = props;
 	const notifications = useContext( NotificationsContext );
 
 	if( !whereAny )
@@ -188,6 +192,7 @@ export const useStorage = ( props: any ) => {
 
 	const [ state, dispatch ] = useReducer( StorageReducer, {
 		list: [],
+		length: 0,
 		table: {},
 		changed: {},
 		overwrite: {},
@@ -198,13 +203,36 @@ export const useStorage = ( props: any ) => {
 		token = state.list[ 0 ] ? state.list[ 0 ].key : "";	
 	};
 
+	const currentPagination = !!pagination;
+	const currentOffset = Common.uint( offset ) || 0;
+	const currentLimit = (Common.uint( limit ) || 20);
+
 	const list = useAsync({
 		method: "POST",
 		url: "./" + section + "/list/"
-	}, { where: where, whereAny: whereAny });
+	}, { where: where, whereAny: whereAny, pagination: currentPagination, offset: currentOffset, limit: currentLimit });
 	list.onResponse(( response: any ) => {
-		dispatch([ "list", response.data, rewrite, sort ]);
+		dispatch([ "list", response, rewrite, sort ]);
 	});
+
+	useEffect(() => {
+		
+		if( ignoreList )
+			return;
+
+		list.fetch({ ...params, ...{ where: where, whereAny: whereAny, pagination: currentPagination, offset: currentOffset, limit: currentLimit } });		
+	}, [ section, offset, limit ]);	
+	
+	useDelta(() => {
+
+		if( ignoreList )
+			return;
+
+		if( (!where && !whereAny) || (!Object.keys( where ).length && !Object.keys( whereAny ).length) )
+			return;
+
+		list.fetch({ ...params, ...{ where: where, whereAny: whereAny, pagination: currentPagination, offset: currentOffset, limit: currentLimit } });		
+	}, [ section, offset, limit, whereAny.token, where ], where );	
 
 	const add = useAsync({
 		method: "POST",
@@ -236,16 +264,19 @@ export const useStorage = ( props: any ) => {
 		url: "./" + section + "/get/"
 	}, {});
 
-	useEffect(() => {
 
-		if( !current || ignoreList )
-			return;
+//	useEffect(() => {
+//
+//		if( !current || ignoreList )
+//			return;
+//
+//		//if( where && !Object.keys( where ).length )
+//		//	return;
+//
+//		list.fetch({ ...params, ...{ where: where, whereAny: whereAny, pagination: currentPagination, offset: currentOffset, limit: currentLimit } });		
+//	}, []);
 
-		//if( where && !Object.keys( where ).length )
-		//	return;
 
-		list.fetch({ ...params, ...{ where: where, whereAny: whereAny } });		
-	}, []);
 	useEffect(() => {
 
 		if( !token || !current )
@@ -319,7 +350,7 @@ export const useStorage = ( props: any ) => {
 						list.fetch({ token: token }, { 
 							ignore: true,
 							success: ( listResponse: any ) => {
-								dispatch([ "list", listResponse.data, rewrite, sort ]);
+								dispatch([ "list", listResponse, rewrite, sort ]);
 								dispatch([ "construct", getResponse.data, getFromLast ]);
 							}
 						});
@@ -366,7 +397,7 @@ export const useStorage = ( props: any ) => {
 				list.fetch({ token: token }, { 
 					ignore: true,
 					success: ( listResponse: any ) => {
-						dispatch([ "list", listResponse.data, rewrite, sort ]);
+						dispatch([ "list", listResponse, rewrite, sort ]);
 						if( callback )
 							callback( response );
 					}
@@ -392,7 +423,7 @@ export const useStorage = ( props: any ) => {
 				list.fetch({ token: token }, { 
 					ignore: true,
 					success: ( listResponse: any ) => {
-						dispatch([ "list", listResponse.data, rewrite, sort ]);
+						dispatch([ "list", listResponse, rewrite, sort ]);
 						if( callback )
 							callback( response );
 					}
@@ -414,6 +445,7 @@ export const useStorage = ( props: any ) => {
 		table: state.table, 
 		changed: state.changed, 
 		list: state.list,
+		length: state.length,
 		getToken: getToken,
 		getValue: getValue,
 		requestList: () => {},

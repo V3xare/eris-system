@@ -133,7 +133,7 @@ export const TypeSelectTableQuery = ( props: any ) => {
 		storage.async.list.fetch();
 	}, [ route, where ], where );
 
-	let paramsOverride = params.none ? [ { key: "none", token: "none", name: "None" }, ...storage.list || [] ] : storage.list;
+	let paramsOverride = params.none ? [ { key: "", token: "none", name: "None" }, ...storage.list || [] ] : storage.list;
 	
 	return <TypeEnum { ...props } paramsOverride={ paramsOverride }/>
 };

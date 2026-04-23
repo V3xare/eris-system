@@ -1,13 +1,15 @@
 import React, { JSX, useContext, useEffect, useMemo } from "react";
-import { LangContext, Lang, LangContextType } from "v-eris";
+import { LangContext, Lang, LangContextType, Common } from "v-eris";
 
 import "../../../assets/styles/themes.scss"
 import "../../../assets/styles/eris.scss"
 import "../../../assets/styles/core.scss"
 import "../../../assets/styles/components.scss"
+import "../../../assets/styles/fixes.scss"
 
 import { AuthContext, AuthContextType } from "../Auth/auth";
 import { useSettings, SettingsInitType } from "../../utility/use.settings";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export interface BuildTableItem{
 	key: string, 
@@ -69,6 +71,11 @@ const BuildContextDefault = {
 	currentLang: "",
 	currentTheme: "",	
 	route: "",
+	query: {} as {[key: string]: string},
+	buildQuery: ( value: {[key: string]: any}, clear?: boolean ): string => { return ""; },
+	setQueryString: ( value: string ) => {},
+	setQuery: ( value: {[key: string]: any}, clear?: boolean ) => {},
+	clearQuery: () => {},
 	types: {} as { [typeName: string]: JSX.Element }, 
 	denyAccess: false,
 };
@@ -174,6 +181,28 @@ export const BuildInside = (
 		user: auth.token 
 	});
 
+	const location = useLocation();
+	const nav = useNavigate();
+	const qs = Common.parseQuery( location );
+	const currentQS = {};
+
+	for( const key in qs ){
+		currentQS[ key ] = Common.string( qs[ key ] || "" ) || "";
+	};
+
+	const buildQuery = ( value: {[ key: string ]: any }, clear?: boolean ) : string => {
+		return Common.setQuery( location, value, clear );
+	};	
+	const setQueryString = ( value: string ) => {
+		nav( value );
+	};		
+	const clearQuery = () => {
+		setQueryString( Common.setQuery( location, {}, true ) );
+	};
+	const setQuery = ( value: {[ key: string ]: any }, clear?: boolean ) => {
+		setQueryString( Common.setQuery( location, value, clear ) );
+	};		
+
 	let selectedLang = (currentLang ? currentLang : settings.getSecureValue( "General::Language::CurrentLanguage" )) || "en";
 	const currentTheme = (props.currentTheme ? props.currentTheme : settings.getSecureValue( "General::Theme::CurrentTheme" )) || "white";
 
@@ -244,6 +273,11 @@ export const BuildInside = (
 		settings: settings, 
 		settingsTable: props.settingsTable, 
 		denyAccess: deny, 
+		query: currentQS,
+		setQuery: setQuery,
+		buildQuery: buildQuery,
+		setQueryString: setQueryString,
+		clearQuery: clearQuery,
 		types: types || {} 
 	}}>{ children }</BuildContext.Provider>
 };

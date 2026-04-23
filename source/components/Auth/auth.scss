@@ -58,6 +58,15 @@
 	transition: 400ms;
 	user-select: none;
 
+	&-deny{
+		font-size: 18px;
+		margin: 100px auto;
+		position: relative;
+		text-align: center;
+		color: #f0cfe2;
+		font-family: source-regular, sans-serif;
+	}
+
 	&-line{
 		display: flex;
 		flex-wrap: wrap;

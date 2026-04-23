@@ -94,6 +94,7 @@ export default {
     "Admin::Table::Users::AccessDesc": "Уровень доступа\nЗарегистрированный - только созданный пользователь, пользователь - активный пользователь, администратор - имеет полный доступ к системе",
     "Admin::Table::Users::AccessSelect::banned": "Заблокированный",
     "Admin::Table::Users::AccessSelect::registered": "Самозарегистрированный",
+    "Admin::Table::Users::AccessSelect::guest": "Гость",
     "Admin::Table::Users::AccessSelect::user": "Пользователь",
     "Admin::Table::Users::AccessSelect::moderator": "Модератор",
     "Admin::Table::Users::AccessSelect::admin": "Администратор",

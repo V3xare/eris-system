@@ -5,7 +5,9 @@ import { Types } from "./types";
 import { TypeTableParams } from "./types.table.params";
 import { useStorage, StorageContext, StorageInitType } from "../utility/use.storage";
 import { ParseWhere } from "./types.appendix";
+import { Pagination } from "./types.pagination";
 import { BuildContext, BuildContextType } from "../components/Build/build";
+import { TypeRemove } from "./types.remove";
 
 
 export const TypeTable = ( props: any ) => {
@@ -16,6 +18,7 @@ export const TypeTable = ( props: any ) => {
 		value,
 		lang,
 		inactive,
+		dynamic,
 		qs,
 		route,
 		nested,
@@ -26,60 +29,67 @@ export const TypeTable = ( props: any ) => {
 
 	const [ selectedLine, setSelectedLine ] = useState( null );
 	const [ selectedToken, setSelectedToken ] = useState( null );
+	const [ offset, setOffset ] = useState( 0 );
+	const [ limit, setLimit ] = useState( 20 );
 	const routeStorage: StorageInitType = useContext( StorageContext );
 	const build: BuildContextType = useContext( BuildContext );
-	const nav = useNavigate();
-	const location = useLocation();
 
 	const whereAny = props.group ? { token: props.value } : {};
 	
-	let where = useMemo(() => {
-		return ParseWhere( filter, routeStorage );
+	let where: {[key: string]: any} = useMemo(() => {
+		return ParseWhere( filter, routeStorage );;
 	}, [ route, filter, routeStorage.it ]);
+
+	useDelta(() => {
+		setOffset( 0 );
+		setSelectedLine( null );
+		setSelectedToken( null );
+	}, [ where ], where );
+	useEffect(() => {
+		setOffset( 0 );
+		setSelectedLine( null );
+		setSelectedToken( null );
+	}, [ route] );	
+	useEffect(() => {
+		setSelectedLine( null );
+		setSelectedToken( null );
+	}, [ offset, limit ] );
 
 	let storage = useStorage({ 
 		token: selectedToken,
 		where: where,
 		whereAny: whereAny,
 		section: route, 
-		current: selectedToken ? true : false
+		offset: offset,
+		limit: limit,
+		pagination: true,
+		current: selectedToken ? true : false,
 	});
 
 	let inList = selectedToken && storage.list.findIndex(( f ) => f.token == selectedToken ) > -1;
-
-	useEffect(() => {
-		
-		if( filter )
-			return;
-
-		storage.async.list.fetch();
-	}, [ route ]);	
-
-	useEffect(() => {
-
-		if( (!filter && !whereAny) || (!Object.keys( where ).length && !Object.keys( whereAny ).length) )
-			return;
-
-		storage.async.list.fetch();
-	}, [ route, where, whereAny.token ]);
 
 	let paramsOverride = {
 		redirectConfiguration: {
 			onChange: ( e: any, params: any ) => {
 				e.stopPropagation();
-				nav( "/settings" + Common.setQuery( location, { token: route + ":" + params.token } ) );
+				build.setQueryString( "/settings" + build.buildQuery({ token: route + ":" + params.token }) );
 			}
 		}
 	} as any;
 
 	return (
 	<div className={ Props.className( "settings-type-table", { mini: nested } ) }>
-		<Button className={ inactive ? "hidden" : "" } onClick={() => {
-			storage.add({ name: "", description: "" });
-		}}>+</Button>	
 		<table>
 			<thead>
 				<tr className={ "settings-type-table-header" }>
+					<th>
+						<Button className={ inactive || dynamic === false ? "hidden" : "" } onClick={() => {
+							setOffset( 0 );
+							storage.add({ name: "", description: "" }, ( data ) => {
+								setSelectedToken( data.token );
+							});
+						}}>+</Button>	
+					</th>
 					{
 						params.map(( cell: any ) => {
 						
@@ -95,18 +105,30 @@ export const TypeTable = ( props: any ) => {
 			{
 				storage.list.map(( line ) => {
 					let isSelected = selectedLine == line.token;
+					let isSelectedToken = selectedToken == line.token;
 					return (
 						<tr 
 							key={ line.key } 
-							className={ Props.className( "settings-type-table-row", { selected: isSelected } ) }
-							onClick={() => {
+							className={ Props.className( "settings-type-table-row", { selected: isSelected, hovered: isSelectedToken } ) }
+							onClick={( e ) => {
 								
 								if( inactive )
 									return;
+
+								if( Common.insideClass( e.target as any, "button" ) )
+									return;
 								
-								setSelectedLine( line.token );
+								//setSelectedLine( line.token );
+								setSelectedToken( line.token );
 							}}
 						>
+
+							{
+							<td className={ "settings-type-table-cell" } key={ "index" }>
+								{ line.index }
+							</td>
+							}
+
 							{
 								(params.map(( cell: any ) => {
 
@@ -147,34 +169,40 @@ export const TypeTable = ( props: any ) => {
 								}))
 							}
 
+							{
+							<td className={ "settings-type-table-cell" + (inactive ? " hidden" : "") } key={ "remove" }>
+								<TypeRemove onClick={ () => storage.remove({ token: line.token }) }/>
+							</td>
+							}
+
 							{ 
 
-								<td colSpan={ isSelected ? 99 : 0 }>
-									<TypeTableParams
-										selected={ isSelected }
-										mini={ true }
-										inactive={ true }
-										title={ line.name } 
-										value={ line } 
-										icon={ icon } 
-										lang={ lang } 
-										system={ line.system }
-										qs={ qs }
-										route={ route }
-										params={ params }
-										nested={ true }
-										token={ line.token }
-										paramsOverride={ paramsOverride }
-										onEdit={() => {
-											setSelectedToken( line.token );
-											//storage.async.get.fetch({ token: line.token });
-											//nav( Common.setQuery( location, { section: qs.section, token: line.token } ) );
-										}}	
-										onRemove={() => {
-											storage.remove({ token: line.token });
-										}}	
-									/>
-								</td>
+//								<td colSpan={ isSelected ? 99 : 0 }>
+//									<TypeTableParams
+//										selected={ isSelected }
+//										mini={ true }
+//										inactive={ true }
+//										title={ line.name } 
+//										value={ line } 
+//										icon={ icon } 
+//										lang={ lang } 
+//										system={ line.system }
+//										qs={ qs }
+//										route={ route }
+//										params={ params }
+//										nested={ true }
+//										token={ line.token }
+//										paramsOverride={ paramsOverride }
+//										onEdit={() => {
+//											setSelectedToken( line.token );
+//											//storage.async.get.fetch({ token: line.token });
+//											//nav( Common.setQuery( location, { section: qs.section, token: line.token } ) );
+//										}}	
+//										onRemove={() => {
+//											storage.remove({ token: line.token });
+//										}}	
+//									/>
+//								</td>
 
 							}
 
@@ -184,6 +212,9 @@ export const TypeTable = ( props: any ) => {
 			}		
 			</tbody>
 		</table>
+		<Pagination offset={ offset } limit={ limit } length={ storage.length } autoHide={ inactive } onChange={( e ) => { 
+			setOffset( e.offset ); 
+		}}/>
 		<Modal className={ "settings-type-params-modal" } bg active={ selectedToken && inList } onClose={() => {
 			setSelectedToken( null );
 			//nav( Common.setQuery( location, { section: qs.section, token: undefined } ) );

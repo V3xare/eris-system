@@ -16,14 +16,20 @@ export const RoutesMenu = ( props: any ) => {
 	const build: BuildContextType = useContext( BuildContext );
 	const nav = useNavigate();
 
-	let routesList = Object.keys( build.routes ).map(( key ) => {
-		const item = build.routes[ key ];
+	let routesList = useMemo(() => {
+		const list: any[] = [];
 
-		if( item.access > auth.access || item.hidden )
-			return null;
+		for( const key in build.routes ){
+			const item = build.routes[ key ];
 
-		return { icon: item.icon, value: key, title: item.title };
-	});	
+			if( item.access > auth.access || item.hidden )
+				continue;
+
+			list.push({ icon: item.icon, value: key, title: item.title });
+		};			
+
+		return list;
+	}, [ build.routes ]);
 
 	useEffect(() => {
 		let fn = ( event ) => {
@@ -73,6 +79,7 @@ export const RoutesMenu = ( props: any ) => {
 				</Column>
 				<Select
 					headerless
+					className={ routesList.length < 2 ? "hidden" : "" }
 					value={ build.route } 
 					onChange={( event: any ) => nav( event.value ) }
 					list={ routesList }

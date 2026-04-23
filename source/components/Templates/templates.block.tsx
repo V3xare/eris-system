@@ -13,7 +13,7 @@ export const TemplatesBlock = memo(( props: {
 
 	let sectionElements = useMemo(() => {
 		let array = (section ? (section.children || []) : []).map(( item: any ) => {
-			return { value: item.name, title: lang.get(item.name), length: "", widgets: item.list };
+			return { value: item.key || item.name, title: lang.get(item.name), length: "", widgets: item.list };
 		});
 
 		if( array.length < 2 )

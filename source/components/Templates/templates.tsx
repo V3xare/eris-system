@@ -49,10 +49,10 @@ export const Templates = ( props: {
 	};
 
 	let value = props.value[ qs.section as string ];
-	let subsection = (section.children || []).find(( f: any ) => f.name == qs.subsection );
+	let subsection = (section.children || []).find(( f: any ) => f.key == qs.subsection );
 
 	if( !subsection ){
-		qs.subsection = section.children && section.children[ 0 ] ? section.children[ 0 ].name : "";
+		qs.subsection = section.children && section.children[ 0 ] ? section.children[ 0 ].key : "";
 		subsection = section.children ? (section.children[ 0 ] || []) : [];
 	};
 
@@ -102,6 +102,7 @@ export const Templates = ( props: {
 			result.push({ 
 				icon: item.icon, 
 				value: item.key, 
+				key: item.key, 
 				title: lang.get( item.name ), 
 				length: length || ""
 			});
@@ -152,7 +153,7 @@ export const Templates = ( props: {
 		<div className={ Props.className( "eris-templates-container" ) }>
 			<Select style={{ display: headerElements.length > 1 ? undefined : "none" }} stretch headerless row value={ qs.section } onSelect={( v: any ) => {
 				let s = props.templates[ v.value as string ];
-				nav( Common.setQuery( location, { section: v.value, subsection: s && s.children && s.children[ 0 ] ? s.children[ 0 ].name : "", cluster: "" } ) );
+				nav( Common.setQuery( location, { section: v.value, subsection: s && s.children && s.children[ 0 ] ? (s.children[ 0 ].key || s.children[ 0 ].name) : "", cluster: "" } ) );
 			}} list={ headerElements }/>
 			<Divider style={{ display: headerElements.length > 1 ? undefined : "none" }} ></Divider>	
 			{ dynamic.clusters && dynamic.list.length > 1 ? 

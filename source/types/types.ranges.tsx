@@ -3,7 +3,7 @@ import { Common, Input, Props, Tooltip, VMath } from "v-eris";
 
 import "./types.ranges.scss"
 
-const RangesToArray = ( v: any, isPairs: boolean ) => {
+const RangesToArray = ( v: any, isSingle: boolean, isPairs: boolean ) => {
 
 	if( !Array.isArray( v ) ){
 
@@ -15,21 +15,76 @@ const RangesToArray = ( v: any, isPairs: boolean ) => {
 			for( let key in v ){
 				v[ key ] = Common.uint( v[ key ] );
 			};
+
+			if( isPairs ){
+				v = [ v ];
+			};
+
 		};
 
+	}else if( isPairs ){
+
+		let s: any[] = [];
+		let p: any[] = [];
+
+		for( let item of v ){
+
+			if( Array.isArray( item ) ){
+
+				if( p.length ){
+					s.push([ ...p ]);
+					p = [];
+				};
+
+				s.push([ ...item ]);
+
+				continue;
+			};
+
+			if( p.length > 1 ){
+				s.push([ ...p ]);
+				p = [];
+			};
+
+			p.push( item );
+
+		};
+
+		if( p.length ){
+			s.push([ ...p ]);
+			p = [];
+		};
+
+		return s;
+	};
+
+	if( isSingle && v.length > 2 ){
+		v.length = 2;
+	};
+
+	if( v.length > 1 && v[ 1 ] < v[ 0 ] ){
+		let temp = v[ 0 ];
+		v[ 0 ] = v[ 1 ];
+		v[ 1 ] = temp;
 	};
 
 	return v;
 };
 
 export const Ranges = ( props: any  ) => {
-	let { className, min, max, single, grid, pairs, separated, inactive, onChange, ...rest } = props;
+	let { className, min, max, single, grid, pairs, input, separated, inactive, onChange, ...rest } = props;
 
-	let v = RangesToArray( props.value, pairs );
+	if( input !== false )
+		input = true;
+
+	const isMultiArray = pairs && !single;
+	let v = RangesToArray( props.value, single, isMultiArray );
 
 	const [ ranges, setRanges ] = useState( v );
 	const [ rangeValue, setRangeValue ] = useState( 0 );
 	const wrapRef = useRef( null );
+	const [ isFocused, setIsFocused ] = useState( false );
+	const [ focusedValue, setFocusedValue ] = useState( "" );
 	const drag = useRef({
 		dragging: false,
 		index: 0,
@@ -41,7 +96,24 @@ export const Ranges = ( props: any  ) => {
 	min = Common.int( min );
 	max = Common.int( max );
 	let distance = (max - min) * 1.0;
-	const percent = ((ranges[ 0 ] || 0) - min) / distance * 100.0;
+	const percent = isMultiArray ? 0.0 : ((ranges[ 0 ] || 0) - min) / distance * 100.0;
+
+	const parseArrays = ( array: any[] ) => {
+
+		let result: string = isMultiArray ? "" : array.join( ", " );
+
+		if( isMultiArray ){
+
+			for( let item of array ){
+				result = (Array.isArray( item ) ? item : []).join( ", " );
+			};
+
+		};
+
+		return result;
+	};
+
+	let parsedText: string = parseArrays( ranges );
 
 	useEffect(() => {
 		setRanges( v );
@@ -83,7 +155,7 @@ export const Ranges = ( props: any  ) => {
 				};
 
 			}else{
-
+				//console.log( c, index );
 			};
 
 		}else{
@@ -134,6 +206,36 @@ export const Ranges = ( props: any  ) => {
 		}
 	}, [ ranges, single ]);
 
+	const computeInput = ( value: string ) => {
+		let s = Common.string( value ).split( /([,.\s])/g );
+		let p: number[] = [];
+
+		if( isMultiArray ){
+
+		}else{
+
+			for( let item of s ){
+
+				if( !item.match( /^[0-9]+$/g ) )
+					continue;
+
+				let v = Common.uint( item );
+
+				if( v < min )
+					v = min;
+				if( v > max )
+					v = max;
+
+				p.push( v );
+			};
+
+			setRanges( p );
+
+		};
+
+		return p;
+	};
+
 	//console.log( distance, percent, ranges );
 
 	let gridElements = useMemo(() => {
@@ -159,11 +261,100 @@ export const Ranges = ( props: any  ) => {
 		return lines;
 	}, [ min, max ]);
 
+	const createDotElement = ( pair: any, v: any, index: number, subIndex: number ) => {
+		return (
+			<div className={ "ranges-item" } key={ "range:" + v + ":" + index + ":" + subIndex } style={{ 
+				left: ((v - min) / distance * 100.0) + "%",
+				width: (((subIndex + 1) < pair.length ? (pair[ subIndex + 1 ] - v) : (0)) / distance * 100.0) + "%",
+			}}>
+				<div className={ "ranges-item-dot" } 
+					onMouseDown={( e ) => {
+
+						e.stopPropagation();
+						e.preventDefault();
+
+						if( inactive )
+							return;
+
+						drag.current.dragging = true;
+						drag.current.index = index;
+						drag.current.value = v;
+						drag.current.offset = Common.offset( wrapRef.current as any );
+					}}	
+					onContextMenu={( e ) => {
+
+						if( inactive )
+							return;
+
+						e.stopPropagation();
+						e.preventDefault();
+
+						if( single )
+							return;
+
+						let array = [ ...ranges ];
+						array.splice( index, 1 );
+						setRanges( array );
+
+						if( onChange )
+							onChange({ value: array });
+
+					}}				
+				>
+					<span></span>
+				</div>
+				<div className={ "ranges-item-bg" }></div>
+			</div>
+		)
+	};
+
 	return (<div
 		className={
 			Props.className( "ranges", className, { gridless: !grid, separated: separated, inactive })
 		}
 	>
+		{ input && !inactive ? 
+			(
+			<Input className={ "ranges-input" } 
+				onChange={( e ) => { 
+					setFocusedValue( e.value );
+					let v = computeInput( e.value );
+
+					if( !onChange )
+						return;
+
+					onChange({ value: v });
+
+				 }}
+				onKeyDown={( e ) => {
+
+					if( e.event.which == 13 ){
+						let v = computeInput( e.value );
+						v = RangesToArray( v, single, isMultiArray );
+						setFocusedValue( parseArrays( v ) );
+
+						if( onChange )
+							onChange({ value: v });
+
+					};
+
+				}}
+				onFocus={( e ) => {
+					setFocusedValue( parsedText );
+					setIsFocused( true );
+				}}
+				onBlur={( e ) => {
+					setIsFocused( false );
+					if( !onChange )
+						return;
+					onChange({ value: ranges });
+				}}
+			>{ isFocused ? focusedValue : parsedText }
+			</Input>
+			) 
+			: 
+			null 
+		}
 		<Tooltip 
 			content={(
 				<div>
@@ -176,7 +367,7 @@ export const Ranges = ( props: any  ) => {
 			}}			
 		>
 		<div className={ "ranges-wrap" }>
-			{ inactive ? (<Input inactive>{ ranges.join( ", " ) }</Input>) : null }
+			{ inactive ? (<Input inactive>{ parsedText }</Input>) : null }
 			<div className={ "ranges-list" } ref={ wrapRef }
 				onMouseDown={( e ) => {
 
@@ -209,50 +400,23 @@ export const Ranges = ( props: any  ) => {
 			>
 			<span className={ Props.className( "ranges-value", { hidden: !single || pairs, flip: percent > 80 } ) } style={{ left: (percent) + "%" }}>{ single ? ranges[ 0 ] : null }</span>
 			{
-				ranges.map(( value: number, index: number ) => (
-					<div className={ "ranges-item" } key={ "range:" + value + ":" + index } style={{ 
-						left: ((value - min) / distance * 100.0) + "%",
-						width: (((index + 1) < ranges.length ? (ranges[ index + 1 ] - value) : (0)) / distance * 100.0) + "%",
-					}}>
-						<div className={ "ranges-item-dot" } 
-							onMouseDown={( e ) => {
+				ranges.map(( value: any, index: number ) => { 
 
-								e.stopPropagation();
-								e.preventDefault();
+					if( isMultiArray ){
+						let pair: number[] = value;
 
-								if( inactive )
-									return;
+						if( pair.length > 1 ){
+							return [
+								createDotElement( pair, value[ 0 ], index, 0 ),
+								createDotElement( pair, value[ 1 ], index, 1 )
+							];
+						};
 
-								drag.current.dragging = true;
-								drag.current.index = index;
-								drag.current.value = value;
-								drag.current.offset = Common.offset( wrapRef.current as any );
-							}}	
-							onContextMenu={( e ) => {
+						return createDotElement( pair, value[ 0 ], index, 0 );
+					};
 
-								if( inactive )
-									return;
-
-								e.stopPropagation();
-								e.preventDefault();
-
-								if( single )
-									return;
-
-								let array = [ ...ranges ];
-								array.splice( index, 1 );
-								setRanges( array );
-
-								if( onChange )
-									onChange({ value: array });
-
-							}}				
-						>
-							<span></span>
-						</div>
-						<div className={ "ranges-item-bg" }></div>
-					</div>
-				))
+					return createDotElement( ranges, value, index, 0 );
+				})
 			}</div>
 			<div className={ "ranges-line" }></div>
 			<div className={ "ranges-grid" }>{ gridElements }</div>

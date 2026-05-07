@@ -3,7 +3,11 @@ import { Common, Input, Props, Tooltip, VMath, Row, Text, Space } from "v-eris";
 
 import "./types.ranges.scss"
 
-const RangesToArray = ( v: any, isSingle: boolean, isPairs: boolean ) => {
+const RangesFloatType = ( value: any, isFloat: boolean ) => {
+	return isFloat ? (Common.float( value )) : Common.int( value );
+};
+
+const RangesToArray = ( v: any, isSingle: boolean, isPairs: boolean, isFloat: boolean ) => {
 
 	if( !Array.isArray( v ) ){
 
@@ -18,7 +22,7 @@ const RangesToArray = ( v: any, isSingle: boolean, isPairs: boolean ) => {
 				if( !v[ key ].length )
 					continue;
 
-				s.push( Common.uint( v[ key ] ) );
+				s.push( RangesFloatType( v[ key ], isFloat ) );
 			};
 
 			if( isPairs ){
@@ -78,13 +82,14 @@ const RangesToArray = ( v: any, isSingle: boolean, isPairs: boolean ) => {
 };
 
 export const Ranges = ( props: any  ) => {
-	let { className, min, max, single, grid, pairs, input, separated, inactive, onChange, ...rest } = props;
+	let { className, min, max, step, single, grid, pairs, input, separated, inactive, onChange, ...rest } = props;
 
 	if( input !== false )
 		input = true;
 
 	const isMultiArray = pairs && !single;
-	let v = RangesToArray( props.value, single, isMultiArray );
+	const isFloat = props.float;
+	let v = RangesToArray( props.value, single, isMultiArray, isFloat );
 
 	const [ ranges, setRanges ] = useState( v );
 	const [ rangeValue, setRangeValue ] = useState( 0 );
@@ -98,9 +103,12 @@ export const Ranges = ( props: any  ) => {
 		c: 0, //temp value
 		offset: { x: 0, y: 0 }
 	});	
+	
 
-	min = Common.int( min );
-	max = Common.int( max );
+
+	min = RangesFloatType( min, isFloat );
+	max = RangesFloatType( max, isFloat );
+	step = step === undefined ? 1 : RangesFloatType( step, isFloat );
 	let distance = (max - min) * 1.0;
 	const percent = isMultiArray ? 0.0 : ((ranges[ 0 ] || 0) - min) / distance * 100.0;
 
@@ -133,10 +141,18 @@ export const Ranges = ( props: any  ) => {
 		drag.current.dragging = false;
 	};
 	const computeValue = ( e: any, offset: any ) => {
-		let xShift = (offset.width / (distance || 1)) * 0.5;
+		let xShift = (offset.width / (distance || 1)) * (isFloat ? 0.0 : 0.5);
 		let x = VMath.clamp( e.clientX + (0 + xShift) - offset.x, 0, offset.width ) / (offset.width * 1.0);
 		let y = VMath.clamp( e.clientY - offset.y, 0, offset.height ) / (offset.height * 1.0);
-		let c = Common.uint( x * distance );		
+		let c = RangesFloatType( x * distance, isFloat );
+
+		if( isFloat ){
+			c = Common.int( (c * 100000.0) / (step * 100000.0) ) * step;
+			c = +c.toFixed( 4 );
+		}else{
+			c = Common.int( (c / step) ) * step;
+		};
+
 		c += min;
 		return { x, y, c };
 	};
@@ -213,7 +229,7 @@ export const Ranges = ( props: any  ) => {
 	}, [ ranges, single ]);
 
 	const computeInput = ( value: string ) => {
-		let s = Common.string( value ).split( /([,.\s])/g );
+		let s = Common.string( value ).split( /([,\s])/g );
 		let p: number[] = [];
 
 		if( isMultiArray ){
@@ -222,10 +238,10 @@ export const Ranges = ( props: any  ) => {
 
 			for( let item of s ){
 
-				if( !item.match( /^[0-9]+$/g ) )
+				if( !item.match( /^[0-9\.]+$/g ) )
 					continue;
 
-				let v = Common.uint( item );
+				let v = RangesFloatType( item, isFloat );
 
 				if( v < min )
 					v = min;
@@ -250,8 +266,10 @@ export const Ranges = ( props: any  ) => {
 
 		if( !grid )
 			return lines;
+
+		let s = isFloat ? (Common.uint( step ) || 1) : step;
 		
-		for( let n = min, limit = max + 1; n < limit; n++ ){
+		for( let n = min, limit = max + 1; n < limit; n += s ){
 			lines.push(
 				<div key={ n } 
 					className={ "ranges-grid-mark" } 
@@ -336,7 +354,7 @@ export const Ranges = ( props: any  ) => {
 
 						if( e.event.which == 13 ){
 							let v = computeInput( e.value );
-							v = RangesToArray( v, single, isMultiArray );
+							v = RangesToArray( v, single, isMultiArray, isFloat );
 							setFocusedValue( parseArrays( v ) );
 
 							if( onChange )

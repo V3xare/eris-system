@@ -10,6 +10,7 @@ const RangesToArray = ( v: any, isSingle: boolean, isPairs: boolean ) => {
 		if( typeof v == "number" ){
 			v = [ v ];
 		}else{
+			let s: any[] = [];
 			v = Common.string( v || "" ).split( /\,/g );
 
 			for( let key in v ){
@@ -17,13 +18,14 @@ const RangesToArray = ( v: any, isSingle: boolean, isPairs: boolean ) => {
 				if( !v[ key ].length )
 					continue;
 
-				v[ key ] = Common.uint( v[ key ] );
+				s.push( Common.uint( v[ key ] ) );
 			};
 
 			if( isPairs ){
-				v = [ v ];
+				s = [ s ];
 			};
 
+			v = s;
 		};
 
 	}else if( isPairs ){

@@ -1,4 +1,4 @@
-@import "../../assets/styles/functions.scss";
+@use "../../assets/styles/functions.color.scss" as color;
 
 .settings-type-list{
 	width: 100%;
@@ -12,7 +12,7 @@
     margin: 0px 0px 0px 0px;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-top: 1px solid mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 14% );
+    border-top: 1px solid color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 14% );
 }
 .settings-type-list > .card > .card-body, .settings-type-list > .card > .card-header{
 	padding: 10px 0px 0px 0px;
@@ -70,7 +70,7 @@
 
 	&-header{
 		display: table-row;
-		//background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 15% );
+		//background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 15% );
 
 		& > th{
 			display: table-cell;
@@ -108,14 +108,14 @@
 	}
 
 	&-row:hover{
-		background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 6% );
+		background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 6% );
 	}
 	&-row-selected:hover{
 		background-color: transparent;
 	}	
 	&-row-hovered{
-		background-color: mix( var( --element-bg ), var( --element-accent2 ), calc(40% * var(--element-text-multi-main)), 100% );
-		color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(70% * var(--element-text-multi-text)), 80% );
+		background-color: color.mix( var( --element-bg ), var( --element-accent2 ), calc(40% * var(--element-text-multi-main)), 100% );
+		color: color.mix( var( --element-text-flat ), var( --element-accent2 ), calc(70% * var(--element-text-multi-text)), 80% );
 	}
 
 	&-cell{
@@ -139,7 +139,7 @@
 	}
 	&-row-selected{
 		overflow-y: auto;
-		//background-color: mix( var( --element-bg ), var( --element-accent ), calc(5% * var(--element-text-multi-sub)) ) !important;
+		//background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(5% * var(--element-text-multi-sub)) ) !important;
 	}
 
 	&-row .card-header{
@@ -164,7 +164,7 @@
 		width: 100%;
 		border-radius: 8px;
     	margin: 10px 0px;
-		background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 13% ) !important;
+		background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 13% ) !important;
 		overflow: visible;
 	}
 
@@ -177,7 +177,7 @@
 	margin: 7px 0px;
     padding: 0px;
     box-shadow: none;
-	border-left: 1px solid mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 40% ) !important;
+	border-left: 1px solid color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 40% ) !important;
 }
 .type-file-tooltip-card .card-body{
 	padding: 2px 6px;

@@ -1,17 +1,12 @@
 $themes: (
-    white: (
-		element-bg: rgb(228, 228, 228),
+	"white": (element-bg: rgb(228, 228, 228),
 		element-text-multi-sub: 2,
 		//bg: rgb(255, 255, 255)
-    ),     
-    cold: (
-		//element-accent2: rgb(160, 147, 255)
-    ), 
-    purple: ( 
-
-    ), 
-    marine: ( 
-		bg: rgb(231, 240, 233),
+	),
+	"cold": ( //element-accent2: rgb(160, 147, 255)
+	),
+	"purple": (),
+	"marine": (bg: rgb(231, 240, 233),
 		modal-bg: rgba(3, 0, 20, 0),
 		bg-overlay: transparent,
 		gloss: radial-gradient(100% 121.87% at 0% 100%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%),
@@ -34,47 +29,45 @@ $themes: (
 		element-text-multi-sub: 1,
 		element-text-multi-text: 1,
 		element-text-multi-shadow: 1,
-		header-multi-shadow: 1
-    ), 	
-	dark: (
-    	bg: rgb(27, 27, 27),
-    	bg-overlay: transparent,
-    	gloss: radial-gradient(100% 121.87% at 0% 100%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%),
-    	element-bg: rgb(43, 43, 43),
-    	element-overlay: rgb(21, 18, 38),
-    	element-shadow: rgb(0, 0, 0),
-    	element-accent: rgb(255, 255, 255),
-    	element-accent2: rgb(255, 136, 62),
-    	element-success: rgb(106, 251, 73),
-    	element-text: rgb(112, 108, 133),
-    	element-text-flat: rgb(239, 237, 253),
-    	element-alert: rgb(199, 39, 39),
-    	element-alert-color: rgb(168, 168, 168),
-    	element-drag-bg: rgb(255, 222, 66),
-    	element-drag-border: rgb(255, 165, 0),
-    	element-default-bg: rgb(255, 222, 66),
-    	element-default-border: rgb(255, 222, 66),
-    	element-default-shadow: rgb(255, 222, 66),
-    	element-text-multi-main: 1,
-    	element-text-multi-sub: 1,
-    	element-text-multi-text: 1,
-    	element-text-multi-shadow: 1,
-    	header-multi-shadow: 2,		
-	),	
-	default: ( 
-
-    )
+		header-multi-shadow: 1),
+	"dark": (bg: rgb(27, 27, 27),
+		bg-overlay: transparent,
+		gloss: radial-gradient(100% 121.87% at 0% 100%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%),
+		element-bg: rgb(43, 43, 43),
+		element-overlay: rgb(21, 18, 38),
+		element-shadow: rgb(0, 0, 0),
+		element-accent: rgb(255, 255, 255),
+		element-accent2: rgb(255, 136, 62),
+		element-success: rgb(106, 251, 73),
+		element-text: rgb(112, 108, 133),
+		element-text-flat: rgb(239, 237, 253),
+		element-alert: rgb(199, 39, 39),
+		element-alert-color: rgb(168, 168, 168),
+		element-drag-bg: rgb(255, 222, 66),
+		element-drag-border: rgb(255, 165, 0),
+		element-default-bg: rgb(255, 222, 66),
+		element-default-border: rgb(255, 222, 66),
+		element-default-shadow: rgb(255, 222, 66),
+		element-text-multi-main: 1,
+		element-text-multi-sub: 1,
+		element-text-multi-text: 1,
+		element-text-multi-shadow: 1,
+		header-multi-shadow: 2,
+	),
+	default: ()
 );
 
-@mixin theme(){
+@mixin theme() {
 	@each $theme, $map in $themes {
-		@if $theme == "default" {
+		@if $theme =="default" {
 			:root {
 				@each $key, $value in $map {
 					--#{$key}: #{$value};
 				}
 			}
-		} @else {
+		}
+
+		@else {
 			[data-theme="#{$theme}"] {
 				@each $key, $value in $map {
 					--#{$key}: #{$value};

@@ -1,4 +1,4 @@
-@import "../../assets/styles/functions.scss";
+@use "../../assets/styles/functions.color.scss" as color;
 
 .eris-pagination{
 	display: flex;
@@ -37,8 +37,8 @@
 	}
 
 	& .button-warning > .button-wrap{
-		background-color: mix( var( --element-bg ), var( --element-accent2 ), calc(50% * var(--element-text-multi-main)), 100% );
-		color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(70% * var(--element-text-multi-text)), 80% );
+		background-color: color.mix( var( --element-bg ), var( --element-accent2 ), calc(50% * var(--element-text-multi-main)), 100% );
+		color: color.mix( var( --element-text-flat ), var( --element-accent2 ), calc(70% * var(--element-text-multi-text)), 80% );
 	}
 
 }

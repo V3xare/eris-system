@@ -1,4 +1,4 @@
-@import "functions.scss";
+@use "functions.color.scss" as color;
 
 .eris .list-title{
 	position: relative;
@@ -7,17 +7,17 @@
     align-self: center;
     top: 1px;
     opacity: 0;
-    color: mix( var( --element-text ), var( --element-accent ), calc(50% * var(--element-text-multi-text)), 100% ) !important;
+    color: color.mix( var( --element-text ), var( --element-accent ), calc(50% * var(--element-text-multi-text)), 100% ) !important;
     position: absolute;
     left: -28px;
     width: 20px;
     height: 20px;
     top: 0px;
-    background: mix( var( --element-bg ), var( --element-accent ), calc(0% * var(--element-text-multi-main)), 100% ) !important;
+    background: color.mix( var( --element-bg ), var( --element-accent ), calc(0% * var(--element-text-multi-main)), 100% ) !important;
     line-height: 1.6;
 }
 .eris .list-add:hover{
-	color: mix( var( --element-text ), var( --element-accent ), calc(50% * var(--element-text-multi-text)), 100% ) !important;
+	color: color.mix( var( --element-text ), var( --element-accent ), calc(50% * var(--element-text-multi-text)), 100% ) !important;
 }
 .eris .list-item-title:hover .list-add{
 	opacity: 1;

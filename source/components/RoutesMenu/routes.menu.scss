@@ -1,4 +1,4 @@
-@import "../../../assets/styles/functions.scss";
+@use "../../../assets/styles/functions.color.scss" as color;
 
 
 .eris-routes-menu{
@@ -27,8 +27,8 @@
 			background-position: center;
 			cursor: pointer;
 			border: 2px solid var( --bg );
-			box-shadow: 0 0 8px mix( var( --element-bg ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), calc(20% * var(--header-multi-shadow)) );
-			background: mix( var( --element-bg ), var( --element-accent ), calc(0% * var(--element-text-multi-main)), 100% );
+			box-shadow: 0 0 8px color.mix( var( --element-bg ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), calc(20% * var(--header-multi-shadow)) );
+			background: color.mix( var( --element-bg ), var( --element-accent ), calc(0% * var(--element-text-multi-main)), 100% );
 		}
 
 		&-user::after{
@@ -40,7 +40,7 @@
 			margin-left: -10px;
 			margin-top: -12px;
 			font-size: 20px;
-			color: mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 70% );
+			color: color.mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 70% );
 		}
 
 	}
@@ -56,9 +56,9 @@
 		right: 0px;
 		margin: 52px 0px 0px 0px;
 		min-width: 240px;
-		//background-color: mix( var( --element-bg ), var( --element-accent ), 0% );
+		//background-color: color.mix( var( --element-bg ), var( --element-accent ), 0% );
 		background-color: var( --bg );
-		color: mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 100% );
+		color: color.mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 100% );
 		box-shadow: 0px 0px 14px 0px #0000001f;
 		border-radius: 4px;
 		padding: 0px 8px;
@@ -86,13 +86,13 @@
 
 			&-title{
 				padding-right: 14px;
-				color: mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 70% );
+				color: color.mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 70% );
 			}
 			&-value{}
 
 		}
 		&-bottom{
-			//background-color: mix( var( --element-bg ), var( --element-accent ), calc(5% * var(--element-text-multi-sub)) );
+			//background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(5% * var(--element-text-multi-sub)) );
 			border-radius: 4px;
 		}
 

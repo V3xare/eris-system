@@ -1,4 +1,4 @@
-@import "functions.scss";
+@use "functions.color.scss" as color;
 
 .eris-content{
 	display: flex;
@@ -36,7 +36,7 @@
 		height: 8px;
 		top: -1px;
 		margin-left: 0px;
-		background-color: mix(var(--element-bg), var(--element-accent2), calc(90% * var(--element-text-multi-main)), 100%);
+		background-color: color.mix(var(--element-bg), var(--element-accent2), calc(90% * var(--element-text-multi-main)), 100%);
 		display: inline-block;
 		position: relative;
 		opacity: 0;
@@ -58,7 +58,7 @@
 		position: relative;
 		margin-left: 0px;
 		top: -1px;
-		color: mix(var(--element-bg), var(--element-accent2), calc(90% * var(--element-text-multi-main)), 100%);
+		color: color.mix(var(--element-bg), var(--element-accent2), calc(90% * var(--element-text-multi-main)), 100%);
 		cursor: pointer;
 		opacity: 0;
 		width: 0px;
@@ -90,7 +90,7 @@
 
 	&-parameter-override {
 		margin-left: 6px;
-		color: mix(var(--element-text-flat), var(--element-accent), calc(60% * var(--element-text-multi-text)), 80%);
+		color: color.mix(var(--element-text-flat), var(--element-accent), calc(60% * var(--element-text-multi-text)), 80%);
 		opacity: 0;
 		transition: all 0.15s ease-in-out;
 	}
@@ -99,7 +99,7 @@
 		margin-left: 14px;
 		opacity: 0;
 		transition: all 0.15s ease-in-out;
-		color: mix(var(--element-bg), var(--element-accent), calc(90% * var(--element-text-multi-main)), 100%);
+		color: color.mix(var(--element-bg), var(--element-accent), calc(90% * var(--element-text-multi-main)), 100%);
 		display: none;
 		cursor: pointer;
 
@@ -152,13 +152,13 @@
 }
 
 .eris-content-header {
-	//background: mix( var( --element-bg ), var( --element-accent ), calc(20% * var(--element-text-multi-main)), 40% );
+	//background: color.mix( var( --element-bg ), var( --element-accent ), calc(20% * var(--element-text-multi-main)), 40% );
 	//background: var( --gloss );
-	//background-color: mix( var( --element-bg ), var( --element-accent ), calc(50% * var(--element-text-multi-main)), 13% ) !important;
-	color: mix(var(--element-text-flat), var(--element-accent), calc(7.5% * var(--element-text-multi-text)), 70%);
-	//box-shadow: 0 0 14px mix( var( --element-shadow ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), 40% );
+	//background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(50% * var(--element-text-multi-main)), 13% ) !important;
+	color: color.mix(var(--element-text-flat), var(--element-accent), calc(7.5% * var(--element-text-multi-text)), 70%);
+	//box-shadow: 0 0 14px color.mix( var( --element-shadow ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), 40% );
 	background: var(--bg);
-	box-shadow: 20px 6px 16px 8px mix(var(--element-shadow), var(--element-accent), calc(0% * var(--element-text-multi-shadow)), calc(12% * var(--header-multi-shadow)));
+	box-shadow: 20px 6px 16px 8px color.mix(var(--element-shadow), var(--element-accent), calc(0% * var(--element-text-multi-shadow)), calc(12% * var(--header-multi-shadow)));
 	border: 0px;
 	padding: 24px 80px 25px 13px;
 	margin-left: 8px;
@@ -205,5 +205,5 @@
 }
 
 .eris *::selection, .modal *::selection, .modal-bg *::selection {
-	background: mix(var(--element-text-flat), var(--element-accent2), calc(80% * var(--element-text-multi-text)), 40%);
+	background: color.mix(var(--element-text-flat), var(--element-accent2), calc(80% * var(--element-text-multi-text)), 40%);
 }

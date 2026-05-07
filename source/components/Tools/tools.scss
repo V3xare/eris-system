@@ -1,14 +1,14 @@
-@import "../../../assets/styles/functions.scss";
+@use "../../../assets/styles/functions.color.scss" as color;
 
 
 .tools-module{
     background: var(--bg);
-    color: mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 70% );
+    color: color.mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 70% );
     font-size: 140%;
     padding: 9px 14px 9px;
     border-radius: 8px;
     user-select: none;
-    box-shadow: 0 0 10px mix( var( --element-shadow ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), 14% );
+    box-shadow: 0 0 10px color.mix( var( --element-shadow ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), 14% );
 	position: relative;
 
 	&-simple{
@@ -24,7 +24,7 @@
 
 	&-newline{
 		margin: 7px 0px;
-		border-bottom: 1px solid mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 13% );
+		border-bottom: 1px solid color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 13% );
 	}
 
 	&-hidden{
@@ -47,11 +47,11 @@
 		//background-color: #f6f6f6;
 	}
 	&-item-active > div > .icon, &-item-active > .column > div > .icon{
-		color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 80% );
+		color: color.mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 80% );
 		//background-color: #f6f6f6;
 	}
 	&-item-active > div > .icon:hover, &-item-active > .column > div > .icon:hover{
-		color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 100% );
+		color: color.mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 100% );
 	}	
 	&-item-active{
 		//color: $icons-accent;
@@ -71,11 +71,11 @@
 		right: 0px;
 		position: absolute;
 		background: var(--bg);
-		color: mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 70% );
+		color: color.mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 70% );
 		padding: 6px 0px 6px;
 		border-radius: 8px;
 		user-select: none;
-		box-shadow: 0 0 10px mix( var( --element-shadow ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), 14% );
+		box-shadow: 0 0 10px color.mix( var( --element-shadow ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), 14% );
 		opacity: 0;
 		transition: opacity 240ms ease-in-out;
 	}
@@ -122,7 +122,7 @@
 		}
 
 		&:hover{
-			color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 80% );
+			color: color.mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 80% );
 		}
 
 	}
@@ -160,7 +160,7 @@
 		padding: 4px;
 
 		&:hover{
-			color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 100% );
+			color: color.mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 100% );
 		}
 		
 	}
@@ -174,7 +174,7 @@
 		display: flex;
 	}
 	&-children &-line:hover{
-		background-color: mix( var( --element-bg ), var( --element-accent ), calc(0% * var(--element-text-multi-main)), 100% );
+		background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(0% * var(--element-text-multi-main)), 100% );
 		border-radius: 4px;
 	}
 
@@ -182,8 +182,8 @@
 		position: relative;
 		display: flex;
 		justify-content: space-between;
-		background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 13% );
-		color: mix( var( --element-text ), var( --element-accent ), calc(50% * var(--element-text-multi-text)), 100% );
+		background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 13% );
+		color: color.mix( var( --element-text ), var( --element-accent ), calc(50% * var(--element-text-multi-text)), 100% );
 		padding: 3px 3px 3px;
 		margin: 5px 0px 5px;
 		border-radius: 4px;
@@ -201,7 +201,7 @@
 		&-item-active{
 			position: relative;
 			/* color: #000; */
-			background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 10% );
+			background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 10% );
 			/* color: #58b7fd; */
 			/* color: #42afff; */
 			border-radius: 5px;
@@ -220,7 +220,7 @@
 }
 
 .tools-module:before, .tools-module-children:before{
-	background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 10% );
+	background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 10% );
 	position: absolute;
 	z-index: 0;
     left: 0;
@@ -255,12 +255,12 @@
 	border: 0px;
 }
 .tools-module-item .multiselect-headerless .multiselect-suggestions-item-selected .icon{
-	color: mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 80% );
+	color: color.mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 80% );
 }
 .tools-module-item .multiselect-headerless{
 	margin-bottom: 1px;
 }
 
 .tools-module-item .multiselect-suggestions-item{
-	background-color: mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 15% );
+	background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 15% );
 }

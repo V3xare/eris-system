@@ -1,4 +1,4 @@
-@import "../../assets/styles/functions.scss";
+@use "../../assets/styles/functions.color.scss" as color;
 
 .color{
     position: relative;
@@ -6,7 +6,7 @@
     align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
-    border: 1px solid mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 14% );
+    border: 1px solid color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 14% );
     padding: 2px 3px;
     line-height: 1;
     box-sizing: border-box;

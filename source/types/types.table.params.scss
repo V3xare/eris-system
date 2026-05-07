@@ -26,8 +26,9 @@
 	&-modal > .modal-content{
 		margin: 0px;
 		padding: 0px;
-		overflow: visible;
+		overflow: visible auto;
 		min-width: 420px;
+		max-height: 800px;
 	}
 	&-mini &-tools{
 		display: none;

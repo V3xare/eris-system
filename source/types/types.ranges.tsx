@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
-import { Common, Input, Props, Tooltip, VMath } from "v-eris";
+import { Common, Input, Props, Tooltip, VMath, Row, Text, Space } from "v-eris";
 
 import "./types.ranges.scss"
 
@@ -13,6 +13,10 @@ const RangesToArray = ( v: any, isSingle: boolean, isPairs: boolean ) => {
 			v = Common.string( v || "" ).split( /\,/g );
 
 			for( let key in v ){
+
+				if( !v[ key ].length )
+					continue;
+
 				v[ key ] = Common.uint( v[ key ] );
 			};
 
@@ -314,43 +318,47 @@ export const Ranges = ( props: any  ) => {
 		}
 	>
 		{ input && !inactive ? 
-			(
-			<Input className={ "ranges-input" } 
-				onChange={( e ) => { 
-					setFocusedValue( e.value );
-					let v = computeInput( e.value );
-
-					if( !onChange )
-						return;
-
-					onChange({ value: v });
-
-				 }}
-				onKeyDown={( e ) => {
-
-					if( e.event.which == 13 ){
+			(<Row>
+				<Input className={ "ranges-input" } 
+					onChange={( e ) => { 
+						setFocusedValue( e.value );
 						let v = computeInput( e.value );
-						v = RangesToArray( v, single, isMultiArray );
-						setFocusedValue( parseArrays( v ) );
 
-						if( onChange )
-							onChange({ value: v });
+						if( !onChange )
+							return;
 
-					};
+						onChange({ value: v });
 
-				}}
-				onFocus={( e ) => {
-					setFocusedValue( parsedText );
-					setIsFocused( true );
-				}}
-				onBlur={( e ) => {
-					setIsFocused( false );
-					if( !onChange )
-						return;
-					onChange({ value: ranges });
-				}}
-			>{ isFocused ? focusedValue : parsedText }
-			</Input>
+					}}
+					onKeyDown={( e ) => {
+
+						if( e.event.which == 13 ){
+							let v = computeInput( e.value );
+							v = RangesToArray( v, single, isMultiArray );
+							setFocusedValue( parseArrays( v ) );
+
+							if( onChange )
+								onChange({ value: v });
+
+						};
+
+					}}
+					onFocus={( e ) => {
+						setFocusedValue( parsedText );
+						setIsFocused( true );
+					}}
+					onBlur={( e ) => {
+						setIsFocused( false );
+						if( !onChange )
+							return;
+						onChange({ value: ranges });
+					}}
+				>{ isFocused ? focusedValue : parsedText }
+				</Input>
+				<Text className={ "ranges-input-params" } >
+					{ "[ " + min + ", " + max + " ]" }
+				</Text>
+			</Row>
 			) 
 			: 
 			null 

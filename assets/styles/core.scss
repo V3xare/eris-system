@@ -97,6 +97,7 @@
 
 	&-parameter-clear {
 		margin-left: 14px;
+		margin-right: 14px;
 		opacity: 0;
 		transition: all 0.15s ease-in-out;
 		color: color.mix(var(--element-bg), var(--element-accent), calc(90% * var(--element-text-multi-main)), 100%);

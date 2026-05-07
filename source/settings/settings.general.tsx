@@ -91,7 +91,7 @@ export const SettingsTableGeneral = [
 		list: [
 			{ key: "Version", title: "General::Others::Version", desc: "General::Others::Version::Desc", type: "bool", value: false },
 			{ key: "LiveUpdates", title: "General::Others::LiveUpdates", desc: "General::Others::LiveUpdates::Desc", type: "bool", value: true },
-			{ key: "Points", title: "Grid::Settings::Points", desc: "Grid::Settings::Points::Desc", type: "ranges", value: [ 10, 12 ], params: { min: 5, max: 25, single: true, pairs: true, grid: true } },
+			//{ key: "Points", title: "Grid::Settings::Points", desc: "Grid::Settings::Points::Desc", type: "ranges", value: "", params: { min: 5, max: 25, grid: true, separated: true } },
 		]
 	}
 ];

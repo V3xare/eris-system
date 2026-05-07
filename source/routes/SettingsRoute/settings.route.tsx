@@ -223,7 +223,7 @@ export const SettingsRoute = () => {
 								<Icons.redo 
 									transition 
 									className={ Props.className( "eris-parameter-clear", { 
-										active: parameter.type == "bool" && !settings.isCleared( key ) && settings.isOverride( key ) && override.length > 1 
+										active: !settings.isCleared( key ) && settings.isOverride( key ) && override.length > 1 
 									} ) }
 									onClick={() => settings.clearOverride( key ) }
 								/>
@@ -248,15 +248,6 @@ export const SettingsRoute = () => {
 									settings.change( key, e.value, keyIndex );
 								} 
 							} ) }
-								<Tooltip content={ lang.get( "Settings::ClearOverride" ) }>
-									<Icons.redo 
-										transition 
-										className={ Props.className( "eris-parameter-clear", { 
-											active: parameter.type != "bool" && !settings.isCleared( key ) && settings.isOverride( key ) && override.length > 1 
-										}) }
-										onClick={() => settings.clearOverride( key ) }
-									/>
-								</Tooltip>
 								<span>
 									<Space/>
 									{ settings.autoCorrected( key ) ? lang.get( "Settings::AutoCorrected", [ settings.autoCorrected( key ) ] ) : null }

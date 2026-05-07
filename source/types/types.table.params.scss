@@ -87,7 +87,7 @@
 		width: 100%;
 		//margin-left: 10px;
 	}
-	&-right .input, &-right .multiselect{
+	&-right * > .input, &-right > * > .multiselect{
 		width: 100%;
 	}
 	&-left > *, &-right > *{

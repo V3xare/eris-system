@@ -759,9 +759,28 @@ export const SettingsParamToKey = ( sectionItem: string, partitionKey: string, i
 	//return (sectionKey || "") + ":" + (sectionItem || "") + ":" + partitionKey + ":" + itemKey;
 	return (sectionItem || "") + "::" + partitionKey + "::" + itemKey;
 };
-export const useSettings = ( props: any ) => {
 
-	let { token, connectionless, access, replicate, watch, user, ...rest } = props;
+export type SettingsEventType = {
+	channel: Channel, 
+	action: string, 
+	value: any,
+	preventDefault: Function,
+	refresh: Function,
+	reconstruct: Function,
+};
+
+
+export const useSettings = ( props: { 
+	token?: string, 
+	connectionless?: boolean, 
+	access?: number, 
+	replicate?: any[], 
+	table?: any,
+	onEvents?: ( event: SettingsEventType ) => any,
+	user
+} ) => {
+
+	let { token, connectionless, access, replicate, onEvents, user, ...rest } = props;
 	const constructTable = props.table;
 	const [ state, dispatch ] = useReducer( SettingsReducer, {
 		table: {},
@@ -779,6 +798,9 @@ export const useSettings = ( props: any ) => {
 			{ token: "system", name: "system", value: SettingsInheritance( constructTable ) }
 		]
 	});
+
+	if( !onEvents )
+		onEvents = ( event: SettingsEventType ) => {};
 	
 	const notifications = useContext( NotificationsContext );
 	const asyncSaveRef = useRef<any>( 0 );
@@ -823,6 +845,24 @@ export const useSettings = ( props: any ) => {
 
 			//console.log( channel.token, action, value );
 
+			let prevented = false;
+
+			let event = onEvents({ 
+				channel, action, value,
+				refresh: () => {
+					return refresh();
+				},				
+				reconstruct: () => {
+					return reconstruct( channel.token, value.value, value.exclusion, value.merge );
+				},
+				preventDefault: () => {
+					prevented = true;
+				}
+			});
+
+			if( prevented )
+				return;
+
 			if( action == "config" ){
 
 				if( value.value == "refresh" )
@@ -840,12 +880,6 @@ export const useSettings = ( props: any ) => {
 			//connection.close();
 		};
 	}, [ token, access, connectionless, user ]);
-	useEffect(() => {
-
-		if( watch === undefined )
-			return;
-
-	}, [ watch ]);
 
 	useEffect(() => {
 

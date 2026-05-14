@@ -195,6 +195,10 @@ export const Ranges = ( props: any ) => {
 		};
 
 		c += min;
+
+		if( !c )
+			c = 0;
+
 		return { x, y, c };
 	};
 	const computeRange = ( c: number, alter: boolean, align?: boolean ) => {

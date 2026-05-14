@@ -774,10 +774,10 @@ export const useSettings = ( props: {
 	token?: string, 
 	connectionless?: boolean, 
 	access?: number, 
-	replicate?: any[], 
+	replicate?: any[] | null, 
 	table?: any,
 	onEvents?: ( event: SettingsEventType ) => any,
-	user
+	user?: string
 } ) => {
 
 	let { token, connectionless, access, replicate, onEvents, user, ...rest } = props;

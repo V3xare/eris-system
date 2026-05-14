@@ -2,7 +2,6 @@ import React, { useReducer, useState, useEffect, useMemo, useContext, useRef } f
 import { Card, List, Icons, LangContext, Common, Cookie, Row, Icon, Button, useAsync, Input, Select, Number, Toggle, MultiSelect, Editable, VMath, useDelta, usePrevious, Column, Tooltip, Time, Space, Props } from "v-eris";
 import { Ranges } from "./types.ranges";
 import { ZoomParams } from "./types.zoom";
-import { LocatorsParams } from "./types.locators";
 import { TypeTable } from "./types.table";
 import { TypeTheme } from "./types.theme";
 
@@ -434,111 +433,6 @@ export const TypeZoom = ( props: any ) => {
 
 	}</Column>;
 };
-export const TypeLocators = ( props: any ) => {
-
-	let { 
-		params,
-		value,
-		stack,
-		k,
-		settings,
-		inactive,
-		lang,
-		...rest 
-	} = props;	
-
-	if( !params )
-		params = {};
-
-	if( !value || !Array.isArray( value.list ) )
-		value = { list: [], table: {} };
-
-	return <Column className={ "settings-type-list" }>{
-
-		value.list.map(( v: any, index: number ) => {
-			return <LocatorsParams 
-				key={ v.key } 
-				lang={ lang } 
-				value={ v || {} } 
-				inactive={ inactive }
-				config={ value.table[ v.key ] || {} } 
-				onChange={( e: any ) =>{ props.onChange({ value: { ...value.table, [ v.token ]: e.value } }, index ) }}
-			/>
-		})
-
-	}</Column>;
-};
-
-export const TypeLocatorsToggles = ( props: any ) => {
-
-	let { 
-		params,
-		value,
-		lang,
-		extra,
-		settings,
-		secure,		
-		icon,
-		...rest 
-	} = props;	
-
-	if( !params )
-		params = {};
-	if( !extra )
-		extra = {};
-
-	let list = value ? (value.list || []) : [];
-	let table = value && value.table ? value.table : {};
-	let toggles: string[] = [];
-	let ref = settings && secure ? settings.getSecureValue( secure ) : null;
-
-	if( !ref )
-		ref = value && value.ref ? value.ref : {};
-	else
-		ref = ref.table ? ref.table : {};
-
-	for( let item of list ){
-
-		if( !table[ item.token ] || !table[ item.token ].Active )
-			continue;
-
-		toggles.push( item.token );
-	};
-
-	return (
-	<div className={ "settings-type-locatorstoggles" }>
-		<MultiSelect 
-			value={ toggles } 
-			suggestions={ list.map(( item: any ) => {
-				return { 
-					value: item.token, 
-					prefix: (
-						<span >
-							<Color simple value={ (ref[ item.token ] || {}).MarksColor }/>
-							{ Common.paddingLeft( item.sac, 3, "0" ) + ":" + Common.paddingLeft( item.sic, 3, "0" ) }
-						</span>
-					), 
-					title: item.name 
-				};
-			})} 
-			onChange={( event: any ) => { 
-				let v = { ...table };
-
-				for( let item of list ){
-					v[ item.token ].Active = false;
-				};
-
-				for( let token of event.value ){
-					v[ token ].Active = true;
-				};
-
-				props.onChange({ value: v });
-
-			}} { ...extra }></MultiSelect>
-	</div>
-	);
-};
-
 
 export const TypeList = ( props: any ) => {
 
@@ -725,7 +619,6 @@ export const TypeNone = () => {
 	return <span></span>;
 };
 
-
 export const Types = {
 	enum: <TypeEnum/>,
 	theme: <TypeTheme/>,
@@ -736,8 +629,6 @@ export const Types = {
 	float: <TypeFloat/>,
 	ranges: <TypeRanges/>,
 	zoom: <TypeZoom/>,
-	locators: <TypeLocators/>,
-	locatorsToggles: <TypeLocatorsToggles/>,
 	bool: <TypeBool/>,
 	toggle: <TypeBool/>,
 	list: <TypeList/>,

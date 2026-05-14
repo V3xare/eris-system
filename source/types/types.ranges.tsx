@@ -7,91 +7,150 @@ const RangesFloatType = ( value: any, isFloat: boolean ) => {
 	return isFloat ? (Common.float( value )) : Common.int( value );
 };
 
-const RangesToArray = ( v: any, isSingle: boolean, isPairs: boolean, isFloat: boolean ) => {
 
-	if( !Array.isArray( v ) ){
+const RangesToString = ( array: any[], isSingle: boolean ) => {
+	let result: string = "";
 
-		if( typeof v == "number" ){
-			v = [ v ];
-		}else{
+	if( isSingle )
+		return Common.string( array[ 0 ] );
+
+	for( let item of array ){
+		result += item[ 0 ] + "-" + item[ 1 ] + ", ";
+	};
+	
+	if( result.length > 2 )
+		result = result.substring( 0, result.length - 2 );
+
+	return result;
+};
+
+const RangesToArray = ( v: any, isSingle: boolean, isMulti: boolean, min: number, max: number, isFloat: boolean ) => {
+
+	let value = v;
+
+	if( !Array.isArray( value ) ){
+
+		if( typeof value == "number" ){
+			value = [ v ];
+		}else if( typeof v == "string" ){
 			let s: any[] = [];
-			v = Common.string( v || "" ).split( /\,/g );
+			let pairs = Common.string( v || "" ).split( /\,/g );
 
-			for( let key in v ){
+			for( let key in pairs ){
 
-				if( !v[ key ].length )
+				pairs[ key ] = pairs[ key ].trim();
+
+				if( !pairs[ key ].length )
 					continue;
 
-				s.push( RangesFloatType( v[ key ], isFloat ) );
-			};
-
-			if( isPairs ){
-				s = [ s ];
-			};
-
-			v = s;
-		};
-
-	}else if( isPairs ){
-
-		let s: any[] = [];
-		let p: any[] = [];
-
-		for( let item of v ){
-
-			if( Array.isArray( item ) ){
-
-				if( p.length ){
-					s.push([ ...p ]);
-					p = [];
+				if( !isMulti ){
+					s.push( RangesFloatType( pairs[ key ], isFloat ) );
+					continue;
 				};
 
-				s.push([ ...item ]);
+				let subPair = Common.string( pairs[ key ] ).split( /\-/g );
+				let subPairParsed = [
+					RangesFloatType( subPair[ 0 ], isFloat ),
+					RangesFloatType( subPair[ 1 ], isFloat ),
+				];
 
-				continue;
+				if( subPairParsed[ 1 ] < subPairParsed[ 0 ] )
+					subPairParsed[ 1 ] = subPairParsed[ 0 ];
+
+				s.push( subPairParsed );
 			};
 
-			if( p.length > 1 ){
+			value = s;
+		}else{
+			value = [];
+		};
+
+	};
+	
+	if( isSingle )
+		return [ VMath.clamp( RangesFloatType( Array.isArray( value ) ? value[ 0 ] : value, isFloat ), min, max ) ];
+
+	let s: any[] = [];
+	let p: any[] = [];
+
+	for( let item of value ){
+
+		if( Array.isArray( item ) ){
+
+			if( p.length ){
 				s.push([ ...p ]);
 				p = [];
 			};
 
-			p.push( item );
+			s.push([ ...item ]);
 
+			continue;
 		};
 
-		if( p.length ){
+		if( p.length > 1 ){
 			s.push([ ...p ]);
 			p = [];
 		};
 
-		return s;
+		p.push( item );
+
 	};
 
-	if( isSingle && v.length > 2 ){
-		v.length = 2;
+	if( p.length ){
+		s.push([ ...p ]);
+		p = [];
 	};
 
-	if( v.length > 1 && v[ 1 ] < v[ 0 ] ){
-		let temp = v[ 0 ];
-		v[ 0 ] = v[ 1 ];
-		v[ 1 ] = temp;
+	if( !isMulti && s.length > 1 ){
+		s.length = 1;
 	};
 
-	return v;
+	for( let item of s ){
+
+		item[ 0 ] = VMath.clamp( item[ 0 ], min, max );
+		item[ 1 ] = VMath.clamp( item[ 1 ], min, max );
+
+		if( item.length > 1 && item[ 1 ] < item[ 0 ] ){
+			let temp = item[ 0 ];
+			item[ 0 ] = item[ 1 ];
+			item[ 1 ] = temp;
+		};
+
+	};
+
+	s.sort(( a, b ) => a[ 0 ] - b[ 0 ] );
+
+	let prev = null;
+
+	for( let item of s ){
+
+		if( prev && prev[ 1 ] > item[ 0 ] )
+			prev[ 1 ] = prev[ 0 ];
+
+		prev = item;
+	};
+
+	return s;
 };
 
-export const Ranges = ( props: any  ) => {
-	let { className, min, max, step, single, grid, pairs, input, separated, inactive, onChange, ...rest } = props;
+export const Ranges = ( props: any ) => {
+	let { className, min, max, step, grid, input, separated, inactive, onChange, ...rest } = props;
 
 	if( input !== false )
 		input = true;
 
-	const isMultiArray = pairs && !single;
+	if( !onChange )
+		onChange = () => {};
+
+	const isSingle = props.single;
+	const isMulti = props.multi;
 	const isFloat = props.float;
-	let v = RangesToArray( props.value, single, isMultiArray, isFloat );
+	min = RangesFloatType( min, isFloat );
+	max = RangesFloatType( max, isFloat );	
+	let v = RangesToArray( props.value, isSingle, isMulti, min, max, isFloat );
 
 	const [ ranges, setRanges ] = useState( v );
+	const [ hovered, setHovered ] = useState( false );
 	const [ rangeValue, setRangeValue ] = useState( 0 );
 	const wrapRef = useRef( null );
 	const [ isFocused, setIsFocused ] = useState( false );
@@ -99,35 +158,17 @@ export const Ranges = ( props: any  ) => {
 	const drag = useRef({
 		dragging: false,
 		index: 0,
+		subIndex: 0,
 		value: 0,
 		c: 0, //temp value
 		offset: { x: 0, y: 0 }
 	});	
 	
-
-
-	min = RangesFloatType( min, isFloat );
-	max = RangesFloatType( max, isFloat );
 	step = step === undefined ? 1 : RangesFloatType( step, isFloat );
 	let distance = (max - min) * 1.0;
-	const percent = isMultiArray ? 0.0 : ((ranges[ 0 ] || 0) - min) / distance * 100.0;
+	const percent = ((ranges[ 0 ] || 0) - min) / distance * 100.0;
 
-	const parseArrays = ( array: any[] ) => {
-
-		let result: string = isMultiArray ? "" : array.join( ", " );
-
-		if( isMultiArray ){
-
-			for( let item of array ){
-				result = (Array.isArray( item ) ? item : []).join( ", " );
-			};
-
-		};
-
-		return result;
-	};
-
-	let parsedText: string = parseArrays( ranges );
+	let parsedText: string = RangesToString( ranges, isSingle );
 
 	useEffect(() => {
 		setRanges( v );
@@ -156,52 +197,91 @@ export const Ranges = ( props: any  ) => {
 		c += min;
 		return { x, y, c };
 	};
-	const computeRange = ( c: number, remove: boolean, align?: boolean ) => {
+	const computeRange = ( c: number, alter: boolean, align?: boolean ) => {
 
-		let array = single && !pairs ? [] : [ ...ranges ];
+		let array = isSingle ? [] : [ ...ranges ];
 		let index = drag.current.index;
+		let subIndex = drag.current.subIndex;
 
-		if( pairs ){
+		if( isSingle ){
 
-			if( single ){
+			if( alter )
+				array.splice( index, 1 );
+			array.push( c );
 
-				let p0 = array[ 0 ] || min;
-				let p1 = array[ 1 ] || min;
+			drag.current.value = c;
+			drag.current.index = array.indexOf( drag.current.value );
 
-				if( c < p0 ){
-					array = [ c, p1 ];
-				}else if( c > p1 ){
-					array = [ p0, c ];
-				}else{
-					array = index < 1 ? [ c, p1 ] : [ p0, c ];
-				};
+			if( drag.current.index < 0 )
+				drag.current.index = 0;
 
-			}else{
-				//console.log( c, index );
-			};
+			setRanges( array );
 
 		}else{
 
-			if( remove && !single )
-				array.splice( index, 1 );
-			array.push( c );
-			array.sort(( a, b ) => a - b );
+			if( isMulti && !alter ){
 
+				let length = array.length;
+				let inside = false;
+
+				for( let n = 0; n < length; n++ ){
+
+					const item = array[ n ];
+
+					if( c > item[ 0 ] && c < item[ 1 ] ){
+						inside = true;
+						index = n;
+						break;
+					};
+
+					if( c > item[ 1 ] ){
+						index = n + 1;
+					};
+
+				};
+
+				if( index >= length ){
+					array.push([ c, c ]);
+				}else if( !inside ){
+					array.splice( index, 0, [ c, c ] );
+				};
+
+			};
+
+			let subArray = [ ...(isMulti ? (array[ index ] || array[ 0 ]) : array[ 0 ]) ];
+			let p0 = subArray[ 0 ] || min;
+			let p1 = subArray[ 1 ] || min;
+
+			if( c < p0 ){
+				subArray = [ c, p1 ];
+				drag.current.subIndex = 0;
+			}else if( c > p1 ){
+				subArray = [ p0, c ];
+				drag.current.subIndex = 1;
+			}else{
+				subArray = subIndex < 1 ? [ c, p1 ] : [ p0, c ];
+				drag.current.subIndex = subIndex < 1 ? 0 : 1;
+			};
+
+			if( array[ index ] )
+				array[ index ] = [ ...subArray ];
+
+			drag.current.index = index;
+			drag.current.value = c;
+
+			setRanges( array );
 		};
 
-		drag.current.value = c;
-		drag.current.index = array.indexOf( drag.current.value );
-
-		if( drag.current.index < 0 )
-			drag.current.index = 0;
-
-		setRanges( array );
-
-		if( onChange )
-			onChange({ value: single && !pairs ? array[ 0 ] : array });
+		onChange({ value: isSingle ? array[ 0 ] : (isMulti ? array : array[ 0 ]) });
 
 	};
 	const moveDragging = ( e: any ) => {
+
+		if( !wrapRef.current )
+			return;
+
+		if(	!hovered && !drag.current.dragging )
+			return;
 
 		drag.current.offset = Common.offset( wrapRef.current as any );
 		let { x, y, c } = computeValue( e, drag.current.offset );
@@ -226,39 +306,7 @@ export const Ranges = ( props: any  ) => {
 		return () => {
 			window.document.removeEventListener("mousemove", moveDragging );
 		}
-	}, [ ranges, single ]);
-
-	const computeInput = ( value: string ) => {
-		let s = Common.string( value ).split( /([,\s])/g );
-		let p: number[] = [];
-
-		if( isMultiArray ){
-
-		}else{
-
-			for( let item of s ){
-
-				if( !item.match( /^[0-9\.]+$/g ) )
-					continue;
-
-				let v = RangesFloatType( item, isFloat );
-
-				if( v < min )
-					v = min;
-				if( v > max )
-					v = max;
-
-				p.push( v );
-			};
-
-			setRanges( p );
-
-		};
-
-		return p;
-	};
-
-	//console.log( distance, percent, ranges );
+	}, [ ranges, isSingle, hovered ]);
 
 	let gridElements = useMemo(() => {
 
@@ -302,6 +350,7 @@ export const Ranges = ( props: any  ) => {
 
 						drag.current.dragging = true;
 						drag.current.index = index;
+						drag.current.subIndex = subIndex;
 						drag.current.value = v;
 						drag.current.offset = Common.offset( wrapRef.current as any );
 					}}	
@@ -313,15 +362,13 @@ export const Ranges = ( props: any  ) => {
 						e.stopPropagation();
 						e.preventDefault();
 
-						if( single )
+						if( isSingle )
 							return;
 
 						let array = [ ...ranges ];
 						array.splice( index, 1 );
 						setRanges( array );
-
-						if( onChange )
-							onChange({ value: array });
+						onChange({ value: isSingle ? array[ 0 ] : (isMulti ? array : array[ 0 ]) });
 
 					}}				
 				>
@@ -342,24 +389,17 @@ export const Ranges = ( props: any  ) => {
 				<Input className={ "ranges-input" } 
 					onChange={( e ) => { 
 						setFocusedValue( e.value );
-						let v = computeInput( e.value );
-
-						if( !onChange )
-							return;
-
-						onChange({ value: v });
-
+						let array = RangesToArray( e.value, isSingle, isMulti, min, max, isFloat );
+						setRanges( array );
+						onChange({ value: isSingle ? array[ 0 ] : (isMulti ? array : array[ 0 ]) });
 					}}
 					onKeyDown={( e ) => {
 
 						if( e.event.which == 13 ){
-							let v = computeInput( e.value );
-							v = RangesToArray( v, single, isMultiArray, isFloat );
-							setFocusedValue( parseArrays( v ) );
-
-							if( onChange )
-								onChange({ value: v });
-
+							let array = RangesToArray( e.value, isSingle, isMulti, min, max, isFloat );
+							setRanges( array );
+							setFocusedValue( RangesToString( array, isSingle ) );
+							onChange({ value: isSingle ? array[ 0 ] : (isMulti ? array : array[ 0 ]) });
 						};
 
 					}}
@@ -369,9 +409,8 @@ export const Ranges = ( props: any  ) => {
 					}}
 					onBlur={( e ) => {
 						setIsFocused( false );
-						if( !onChange )
-							return;
-						onChange({ value: ranges });
+						let array = [ ...ranges ];
+						onChange({ value: isSingle ? array[ 0 ] : (isMulti ? array : array[ 0 ]) });
 					}}
 				>{ isFocused ? focusedValue : parsedText }
 				</Input>
@@ -394,7 +433,7 @@ export const Ranges = ( props: any  ) => {
 				pointerEvents: inactive ? "none" : null,
 			}}			
 		>
-		<div className={ "ranges-wrap" }>
+		<div className={ "ranges-wrap" } onMouseEnter={() => setHovered( true ) } onMouseLeave={() => setHovered( false ) }>
 			{ inactive ? (<Input inactive>{ parsedText }</Input>) : null }
 			<div className={ "ranges-list" } ref={ wrapRef }
 				onMouseDown={( e ) => {
@@ -426,11 +465,11 @@ export const Ranges = ( props: any  ) => {
 					e.preventDefault();
 				}}
 			>
-			<span className={ Props.className( "ranges-value", { hidden: !single || pairs, flip: percent > 80 } ) } style={{ left: (percent) + "%" }}>{ single ? ranges[ 0 ] : null }</span>
+			<span className={ Props.className( "ranges-value", { hidden: !isSingle, flip: percent > 80 } ) } style={{ left: (percent) + "%" }}>{ isSingle ? ranges[ 0 ] : null }</span>
 			{
 				ranges.map(( value: any, index: number ) => { 
 
-					if( isMultiArray ){
+					if( !isSingle ){
 						let pair: number[] = value;
 
 						if( pair.length > 1 ){

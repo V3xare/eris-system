@@ -1,3 +1,5 @@
+@use "../../assets/styles/functions.color.scss" as color;
+
 .input{
 	min-height: 27px;
 }
@@ -8,4 +10,57 @@
 
 .button > .button-wrap{
 	padding: 5px 9px 5px 8px;
+}
+
+.card{
+	border: 1px solid color.mix( var( --bg ), var( --light ), 50%, 100% );
+	border-radius: 5px;
+}
+
+.card .card{
+	border: none;
+}
+
+//Border-fixes
+.toggle{
+	padding: 3px 4px;
+	background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(84% * var(--element-text-multi-main)), 13% );
+}
+.autocomplete-headerless .autocomplete-suggestions .typography{
+	line-height: 1.0;
+}
+
+.select .input, 
+.input,
+.select .select-overlay, 
+.multiselect-headerless .multiselect-suggestions,
+.toggle
+{
+	border: 1px solid color.mix( var( --bg ), var( --element-light ), 25%, 100% );
+}
+
+
+//Temporal
+
+.card-header{
+	padding-left: 13px;
+}
+.eris-line .card .card-header{
+	padding-left: 7px;
+}
+.eris .card .card{
+	margin-left: 0px;
+}
+.card-body{
+	padding-left: 7px;
+}
+
+.eris-line{
+
+	& > .card-header{
+		min-height: 20px;
+		border-bottom: 1px solid color.mix( var( --bg ), var( --light ), 50%, 100% );
+		padding-bottom: 10px;
+	}
+
 }

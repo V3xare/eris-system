@@ -1,3 +1,5 @@
+@use "../../assets/styles/functions.color.scss" as color;
+
 .settings-type-params .input-inactive, .settings-type-params .select-inactive{
 	background: transparent;
 }
@@ -6,12 +8,39 @@
 
 	position: relative;
 
-	&-tools, &-tools-mini{
+	&-content{
+		overflow: visible auto;
+		min-width: 420px;
+		max-height: 800px;
+	}
+	&-header{
+		color: color.mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 100% );
+		border-bottom: 1px solid color.mix( var( --bg ), var( --light ), 50%, 100% );
 		display: flex;
 		justify-content: space-between;
 		overflow: hidden;
 		position: relative;
-		transition: 160ms ease-in-out;
+		padding: 8px 8px 8px 13px;
+		gap: 10px;
+		align-items: center;
+	}
+	&-bottom{
+		position: relative;
+		//background: #252525;
+		//border-top-left-radius: 10px;
+		//border-top-right-radius: 10px;
+		border-bottom-left-radius: 10px;
+		border-bottom-right-radius: 10px;
+		border-top: 1px solid color.mix( var( --bg ), var( --light ), 50%, 100% );
+	}
+
+	&-tools, &-tools-mini{
+		display: flex;
+		justify-content: flex-end;
+		overflow: hidden;
+		position: relative;
+		padding: 8px 8px;
+		gap: 10px;
 
 		& > *{
 			cursor: pointer;
@@ -19,16 +48,33 @@
 		}
 
 	}
-	&-tools{
-		margin-top: 10px;
+
+	&-status{
+		color: color.mix( var( --element-text-flat ), var( --element-accent ), calc(7.5% * var(--element-text-multi-text)), 50% );
+		font-size: 14px;
+		display: flex;
+    	align-items: center;
+		white-space: pre;
+
+		&-success{
+			color: color.mix( var( --element-text-flat ), var( --element-success ), calc(80.0% * var(--element-text-multi-text)), 50% );
+		}
+		&-failure{
+			color: color.mix( var( --element-text-flat ), var( --element-alert ), calc(80% * var(--element-text-multi-text)), 50% );
+		}
+
+	}
+
+	&-modal > .modal{
+		border: 1px solid var( --element-border );
+		background: var(--gloss);
+		background-color: var(--bg);
+		border-radius: 10px;
 	}
 
 	&-modal > .modal-content{
 		margin: 0px;
 		padding: 0px;
-		overflow: visible auto;
-		min-width: 420px;
-		max-height: 800px;
 	}
 	&-mini &-tools{
 		display: none;
@@ -76,6 +122,13 @@
 	&-modal .card{
 		padding: 6px 4px;
 		margin: 0;
+		border-radius: inherit;
+		background: transparent;
+		border: none;		
+		box-shadow: none;		
+	}
+	&-modal .card-body{
+		padding: 6px 10px;
 	}
 
 	&-left{

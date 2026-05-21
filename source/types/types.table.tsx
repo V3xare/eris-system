@@ -232,11 +232,17 @@ export const TypeTable = ( props: any ) => {
 					nested={ true }
 					token={ selectedToken }
 					paramsOverride={ paramsOverride }
+					onCancel={() => {
+						setSelectedToken( null );
+					}}
 					onChange={( e: any ) => {
 						//setSelectedData( e.value );
 					}}
 					onSave={( e: any ) => {
-						storage.save();
+						storage.save({ 
+							success: e && e.success ? e.success : undefined,
+							failure: e && e.failure ? e.failure : undefined,
+						});
 					}}					
 					onRemove={( e: any ) => {
 						storage.remove({ token: selectedToken }, () => { 

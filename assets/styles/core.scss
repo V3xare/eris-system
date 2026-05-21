@@ -115,10 +115,12 @@
 		position: absolute;
 		left: 0px;
 		right: 0px;
-		top: 0px;
 		bottom: 0px;
-		padding-top: 90px;
+		top: 79px;
+		padding-top: 13px;
 		padding-bottom: 320px;
+		padding-right: 12px;
+		padding-left: 12px;
 		z-index: 1;
 	}
 	&-content-live{
@@ -153,16 +155,14 @@
 }
 
 .eris-content-header {
-	//background: color.mix( var( --element-bg ), var( --element-accent ), calc(20% * var(--element-text-multi-main)), 40% );
-	//background: var( --gloss );
-	//background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(50% * var(--element-text-multi-main)), 13% ) !important;
+	box-shadow: 6px 4px 10px 8px color.mix(var(--element-shadow), var(--element-accent), calc(0% * var(--element-text-multi-shadow)), calc(12% * var(--header-multi-shadow)));
 	color: color.mix(var(--element-text-flat), var(--element-accent), calc(7.5% * var(--element-text-multi-text)), 70%);
-	//box-shadow: 0 0 14px color.mix( var( --element-shadow ), var( --element-accent ), calc(0% * var(--element-text-multi-shadow)), 40% );
-	background: var(--bg);
-	box-shadow: 20px 6px 16px 8px color.mix(var(--element-shadow), var(--element-accent), calc(0% * var(--element-text-multi-shadow)), calc(12% * var(--header-multi-shadow)));
+	//background: var(--bg);
+	background: color.mix( var(--gloss), var(--gloss), 100%, 60%);
 	border: 0px;
+	border-bottom: 1px solid color.mix( var( --bg ), var( --light ), 50%, 100% );
 	padding: 24px 80px 25px 13px;
-	margin-left: 8px;
+	margin-left: 0px;
 	z-index: 2;
 	position: relative;
 	min-height: 79px;
@@ -192,7 +192,10 @@
 }
 
 .eris *::-webkit-scrollbar-track, .modal *::-webkit-scrollbar-track, .modal-bg *::-webkit-scrollbar-track {
-	background: radial-gradient(100% 121.87% at 0% 100%, rgba(255, 255, 255, 0.03) 0%, rgba(3, 0, 20, 0) 100%);
+	//background-color: color.mix( var( --bg ), var( --element-accent ), calc(10% * var(--element-text-multi-main)), 50% );
+	background: var( --gloss );
+	border: 1px solid color.mix( var( --bg ), var( --light ), 50%, 100% );
+	border-radius: 14px;
 }
 
 .eris *::-webkit-scrollbar, .modal *::-webkit-scrollbar, .modal-bg *::-webkit-scrollbar {
@@ -202,7 +205,8 @@
 }
 
 .eris *::-webkit-scrollbar-thumb, .modal *::-webkit-scrollbar-thumb, .modal-bg *::-webkit-scrollbar-thumb  {
-	background-color: #c3bbff21;
+	background-color: color.mix( var( --bg ), var( --element-accent ), calc(80% * var(--element-text-multi-main)), 50% );
+	border-radius: 14px;
 }
 
 .eris *::selection, .modal *::selection, .modal-bg *::selection {

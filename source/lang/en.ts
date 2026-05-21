@@ -1,4 +1,15 @@
 export default {
+
+    //
+    "Apply": "Apply",
+    "Apply::Success": "Saved successfully * seconds ago",
+    "Apply::Failure": "Failed to save * seconds ago",
+    "Cancel": "Cancel",
+    "Ok": "Ok",
+    "Remove": "Remove",
+    "RemoveLine?": "Remove line?",
+    //
+
     //#region Appearance Language
     "Appearance:language:CurrentLanguage:en": "En",
     "Appearance:language:CurrentLanguage:ru": "Ru",

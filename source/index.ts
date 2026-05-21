@@ -66,9 +66,6 @@ export { ParseWhere }
 import { Color, ColorPicker } from "./types/types.color";
 export { Color, ColorPicker }
 
-import { LocatorsParams } from "./types/types.locators";
-export { LocatorsParams }
-
 import { Ranges } from "./types/types.ranges";
 export { Ranges }
 

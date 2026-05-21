@@ -303,7 +303,7 @@ export const useStorage = ( props: any ) => {
 	const revert = ( key: string, value: any ) => {
 		dispatch([ "change", { key: key, value: value } ]);
 	};	
-	const save = ( params?: { parseKeys: boolean } ) => {
+	const save = ( params?: { parseKeys: boolean, success?: Function, failure?: Function } ) => {
 
 		if( !params )
 			params = { parseKeys: false };
@@ -342,6 +342,9 @@ export const useStorage = ( props: any ) => {
 					ignore: true,
 					success: ( getResponse: any ) => {
 
+						if( params.success )
+							params.success( getResponse.data );
+
 						if( ignoreList ){
 							dispatch([ "construct", getResponse.data, getFromLast ]);
 							return;
@@ -360,6 +363,10 @@ export const useStorage = ( props: any ) => {
 			},
 			failure: ( e: any ) => {
 				notifications.alert( e.errors );
+
+				if( params.failure )
+					params.failure( e.errors );
+
 			}
 		});
 

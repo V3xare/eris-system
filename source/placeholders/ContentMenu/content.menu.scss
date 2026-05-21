@@ -1,3 +1,5 @@
+@use "../../../assets/styles/functions.color.scss" as color;
+
 .eris-content-menu{
 	width: 100%;
 	height: 100%;
@@ -6,11 +8,25 @@
 	max-width: 420px;
 	min-width: 280px;
 	z-index: 1;
-	padding: 14px 14px;
-
+	position: relative;
 	padding: 0px 0px 0px 0px;
 	//padding: 0px 4px 0px 0px;
-    background: radial-gradient(100% 146.88% at 100% 100%, rgba(255, 255, 255, .03) 0%, rgba(3, 0, 20, 0) 100%);
+    //background: radial-gradient(100% 146.88% at 100% 100%, rgba(255, 255, 255, .03) 0%, rgba(3, 0, 20, 0) 100%);
+	border: 1px solid color.mix( var( --bg ), var( --light ), 50%, 100% );
+
+	&-inside{
+		position: relative;
+	}
+
+	&-bg{
+		background: var( --gloss-reverse );
+		height: 100%;
+		width: 10px;
+		position: absolute;
+		top: 0px;
+		left: 0px;		
+	}
+
 }
 
 .eris-content-menu .list-item{
@@ -29,7 +45,8 @@
 }
 .eris-content-menu .list{
 	background: var(--gloss);
-	margin: 10px 4px 0px 10px;
+	//margin: 10px 4px 0px 10px;
+	margin: 0px -1px 0px 10px;
 }
 
 .eris-content-menu .list-item-title > .typography{

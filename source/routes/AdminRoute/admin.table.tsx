@@ -71,7 +71,7 @@ export const AdminLocalTable = {
 			{ key: "url", title: "Admin::Table::Logs::Url", desc: "Admin::Table::Logs::UrlDesc", type: "text", mini: 1 },
 			{ key: "keys", title: "Admin::Table::Logs::Keys", desc: "Admin::Table::Logs::KeysDesc", type: "text", mini: 1 },
 			{ key: "success", title: "Admin::Table::Logs::Success", desc: "Admin::Table::Logs::SuccessDesc", type: "text", mini: 1 },
-			{ key: "errors", title: "Admin::Table::Logs::Errors", desc: "Admin::Table::Logs::ErrorsDesc", type: "json", mini: 1, params: { small: true } },
+			{ key: "errors", title: "Admin::Table::Logs::Errors", desc: "Admin::Table::Logs::ErrorsDesc", type: "text", mini: 1 },
 		]
 	},	
 	"Filesystem": {

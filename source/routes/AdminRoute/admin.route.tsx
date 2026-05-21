@@ -112,7 +112,7 @@ export const AdminRoute = () => {
 		let updateTable = {};
 		let elements = sectionTable.map(( item: any ) => {
 			return (
-			<Card className={ "content-line" } key={ item.key } header={ 
+			<Card className={ "eris-line" } key={ item.key } header={ 
 				item.title ? (<span>{ item.icon }<Space/>{ lang.get( item.title ) }</span>) : null
 			}>{
 				(item.list || []).map(( parameter: any ) => {

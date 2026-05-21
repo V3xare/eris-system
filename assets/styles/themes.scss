@@ -1,12 +1,25 @@
 $themes: (
-	"white": (element-bg: rgb(228, 228, 228),
+	"white": (
+ 		light: rgb(215 215 215),
+ 		element-light: rgb(143 143 143),
+		element-bg: rgb(228, 228, 228),
 		element-text-multi-sub: 2,
 		//bg: rgb(255, 255, 255)
 	),
-	"cold": ( //element-accent2: rgb(160, 147, 255)
+	"cold": (
+		light: rgb(45 44 53),
+		element-light: rgb(153 151 177),
 	),
-	"purple": (),
-	"marine": (bg: rgb(231, 240, 233),
+	"purple": (
+		//light: rgb(66 57 91),
+		light: rgb(53 51 95),
+		element-light: rgb(183, 177, 229),
+		bg-overlay: radial-gradient(96.87% 167.08% at 50% 0%, rgba(5, 5, 30, 0) 0%, rgba(92, 73, 144, 0.04) 33.33%, rgb(44 85 121 / 8%) 66.67%, rgb(122 145 255 / 12%) 99.99%, rgba(255, 189, 122, 0) 100%),
+	),
+	"marine": (
+		light: rgb(205 205 205),
+		element-light: rgb(117 117 117),
+		bg: rgb(231, 240, 233),
 		modal-bg: rgba(3, 0, 20, 0),
 		bg-overlay: transparent,
 		gloss: radial-gradient(100% 121.87% at 0% 100%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%),
@@ -30,13 +43,16 @@ $themes: (
 		element-text-multi-text: 1,
 		element-text-multi-shadow: 1,
 		header-multi-shadow: 1),
-	"dark": (bg: rgb(27, 27, 27),
+	"dark": (
+		bg: rgb(27, 27, 27),
 		bg-overlay: transparent,
-		gloss: radial-gradient(100% 121.87% at 0% 100%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%),
+		gloss: radial-gradient(100% 121.87% at 0% 100%, rgba(201, 201, 201, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%),
+		gloss-reverse: radial-gradient(12% 100% at 0% 100%, rgba(201, 201, 201, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%),
 		element-bg: rgb(43, 43, 43),
+		element-light: rgb(179 179 179),
 		element-overlay: rgb(21, 18, 38),
 		element-shadow: rgb(0, 0, 0),
-		element-accent: rgb(255, 255, 255),
+		element-accent: rgb(220, 220, 220),
 		element-accent2: rgb(255, 136, 62),
 		element-success: rgb(106, 251, 73),
 		element-text: rgb(112, 108, 133),
@@ -54,7 +70,11 @@ $themes: (
 		element-text-multi-shadow: 1,
 		header-multi-shadow: 2,
 	),
-	default: ()
+	default: (
+		light: rgb(50 50 50),
+		gloss-reverse: radial-gradient(12% 100% at 0% 100%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%),
+		element-light: rgb( 235, 235, 235 ),
+	)
 );
 
 @mixin theme() {

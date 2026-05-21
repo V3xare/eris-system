@@ -6,13 +6,19 @@ import { TypeRemove } from "../types/types.remove";
 import "./types.table.params.scss"
 
 export const TypeTableParams = ( props: any ) => {
-	let { value, token, storage, icon, title, params, lang, roles, policy, inactive, selected, mini, onChange, onEdit, onSave, onRemove, paramsOverride, qs, route, system, ...rest } = props;
+	let { value, token, storage, icon, title, params, lang, roles, policy, inactive, selected, mini, onChange, onCancel, onEdit, onSave, onRemove, paramsOverride, qs, route, system, ...rest } = props;
 	let [ forceSelected, setForceSelected ] = useState( selected );
 	let timeout = useRef<NodeJS.Timeout>( 0 as any );
 	const childrenElem = useAnimation.Expand( 
 		selected ? forceSelected : false, //only approve animation if content already inside div
 		{ title: title, minHeight: "1px" } 
 	);
+	const statusWrap = useRef<any>( null );
+	const statusInterval = useRef<NodeJS.Timeout>( 0 as any );
+	const [ lastSave, setLastSave ] = useState({
+		date: new Date(),
+		success: 0,
+	});
 
 	const build: BuildContextType = useContext( BuildContext );
 
@@ -39,6 +45,11 @@ export const TypeTableParams = ( props: any ) => {
 
 	useEffect(() => {
 
+		setLastSave({
+			date: new Date(),
+			success: 0,
+		});
+
 		clearTimeout( timeout.current );
 
 		if( !forceSelected && selected ){
@@ -55,11 +66,81 @@ export const TypeTableParams = ( props: any ) => {
 		};
 
 	}, [ selected ]);
+
+	const save = () => {
+			
+		onSave({ 
+
+			success: ( result: any ) => {
+				setLastSave({
+					date: new Date(),
+					success: 1,
+				});
+			}, 			
+
+			failure: ( result: any ) => {
+				setLastSave({
+					date: new Date(),
+					success: -1,
+				});
+			}, 
+
+		});
+
+	};
+
+	const keyListener = ( event: KeyboardEvent ) => {
+
+		if( event.keyCode == 27 ){
+			onCancel();
+		};
+		if( event.keyCode == 13 ){
+			save();
+		};
+
+	};
+
+	const constructStatusValue = () => {
+		return (lastSave.success == 1 ? 
+					(lang.get( "Apply::Success", [ Common.uint( ((+(new Date())) - (+lastSave.date)) / 1000.0 ) ] )) 
+					: 
+				(lastSave.success == -1 ? 
+					(lang.get( "Apply::Failure", [ Common.uint( ((+(new Date())) - (+lastSave.date)) / 1000.0 ) ] ))
+					: 
+					null
+				)
+		);
+	};
+	const constructStatus = () => {
+
+		if( !statusWrap.current )
+			return;
+
+		statusWrap.current.innerHTML = constructStatusValue();
+	};
+
+	useEffect(() => {
+		clearInterval( statusInterval.current );
+		statusInterval.current = setInterval( constructStatus, 1000 );
+		return () => {
+			clearInterval( statusInterval.current );
+		};
+	}, [ lastSave.date ]);
+
 	useEffect(() => {
 		return () => {
 			clearTimeout( timeout.current );
-		}
-	}, []);
+			document.removeEventListener( "keyup", keyListener );
+			clearInterval( statusInterval.current );
+		};
+	}, []);	
+
+	useEffect(() => {
+		document.addEventListener( "keyup", keyListener );
+		return () => {
+			document.removeEventListener( "keyup", keyListener );
+		};
+	}, [ value ]);
 
 	const content = useMemo(() => {
 
@@ -68,7 +149,7 @@ export const TypeTableParams = ( props: any ) => {
 		};
 
 		return (
-		<Card header={ <span>{ icon }<Space/>{ title }</span> } headerless={ true }>
+		<Card className={ Props.className( "settings-type-params-content" ) } headerless={ true }>
 			{
 				params.map(( item: any ) => {
 
@@ -114,21 +195,28 @@ export const TypeTableParams = ( props: any ) => {
 					)
 				})			
 			}
-			<Row className={ "settings-type-params-tools-mini" }>
-				<Text success onClick={ onEdit }>Edit</Text>
-				<Text alert onClick={ onRemove }>Remove</Text>
-			</Row>		
-			<Row className={ "settings-type-params-tools" }>
-				<Button success onClick={() => { onSave({ value: value }) }}>Save</Button>
-				<TypeRemove onClick={ onRemove } isText/>							
- 			</Row>
 		</Card>
 		);
 	}, [ lang, params, icon, title, forceSelected, mini, selected, value, storage ? storage.changed : null ]);
 
 	return (
 	<div className={ Props.className( "settings-type-params", { mini: mini, system: system } ) } ref={ mini ? childrenElem : null }>
+		<div className={ Props.className( "settings-type-params-header" ) }>
+			{ title }
+			<Button onClick={() => { onCancel(); }}>{ lang.get( "Cancel" ) }</Button>
+		</div>
 		{ content }
+		<div className={ Props.className( "settings-type-params-bottom" ) }>
+
+			<Row className={ "settings-type-params-tools" }>
+				<div className={ Props.className( "settings-type-params-status", { success: lastSave.success == 1, failure: lastSave.success == -1 } ) } ref={ statusWrap }>
+					{ constructStatusValue() }
+				</div>
+				<Button success onClick={() => { save(); }}>{ lang.get( "Apply" ) }</Button>
+				<TypeRemove onClick={ onRemove } isText/>							
+ 			</Row>		
+
+		</div>
 	</div>
 	);
 };

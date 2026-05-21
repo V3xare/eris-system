@@ -1,4 +1,15 @@
 export default {
+
+    //
+    "Apply": "Применить",
+    "Apply::Success": "Успешно сохранилось\n* секунд назад",
+    "Apply::Failure": "Не смогло сохраниться\n* секунд назад",    
+    "Cancel": "Отменить",
+    "Ok": "Ок",
+    "Remove": "Удалить",
+    "RemoveLine?": "Удалить строку?",
+    //
+
     //#region Appearance Language
     "Appearance:language:CurrentLanguage:en": "En",
     "Appearance:language:CurrentLanguage:ru": "Ru",

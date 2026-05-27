@@ -30,6 +30,7 @@ export const SettingsTableGeneral = [
 					{ title: "General::Language::CurrentLanguage::kz", value: "kz" }
 				]
 			},
+			{ key: "AllowLanguageSelection", title: "General::Language::AllowLanguageSelection", desc: "General::Language::AllowLanguageSelection::Desc", type: "bool", value: true },
 		]
 	},
 	{
@@ -84,6 +85,7 @@ export const SettingsTableGeneral = [
 		title: "Settings::Module::SideBar", key: "SideBar", icon: <Icons.paintformat/>,
 		list: [
 			{ key: "SideBarExpand", title: "General::SideBar::SideBarExpand", desc: "General::SideBar::SideBarExpand::Desc", type: "bool", value: true },
+			{ key: "SearchBarEnabled", title: "General::SideBar::SearchBarEnabled", desc: "General::SideBar::SearchBarEnabled::Desc", type: "bool", value: true },
 		]
 	},
 	{

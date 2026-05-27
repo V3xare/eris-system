@@ -169,6 +169,7 @@ export const Tools2 = [
 			{ type: "newline", visibility: "General::Language::CurrentLanguage" },
 			{
 				key: "General::Language::CurrentLanguage",
+				visibility: "General::Language::AllowLanguageSelection",
 				type: "slider"
 			},				
 			{ type: "newline", visibility: "General::Language::CurrentLanguage" },

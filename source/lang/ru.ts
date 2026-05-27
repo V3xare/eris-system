@@ -354,6 +354,8 @@ export default {
     "Settings::Module::SideBar": "Информационная панель",
     "Settings::Module::Others": "Дополнительные настройки",
 
+    "General::Language::AllowLanguageSelection": "Разрешить выбор языка",
+    "General::Language::AllowLanguageSelection::Desc": "Разрешить выбор языка в меню инструментов",
     "General::Language::EnabledLanguages": "Доступные языки",
     "General::Language::EnabledLanguages::Desc": "Список всех доступных языков",
     "General::Language::EnabledLanguages::ru": "Русский",
@@ -386,7 +388,9 @@ export default {
 
     "General::SideBar::SideBarExpand": "Включить боковую панель",
     "General::SideBar::SideBarExpand::Desc": "Разрешает использование боковой панели",    
-    
+    "General::SideBar::SearchBarEnabled": "Включить строку поиска",
+    "General::SideBar::SearchBarEnabled::Desc": "Разрешает использование строкой поиска",    
+
     "General::Others::Version": "Отображение версии",
     "General::Others::Version::Desc": "Отображает версию аппликации в меню настройки",
     "General::Others::LiveUpdates": "Динамически обновлять изменения страницы",

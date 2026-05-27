@@ -395,15 +395,7 @@ export const Tools = ( props: any ) => {
 		};
 
 		return { hidden: itemHidden, elem: (
-			<Tooltip 
-				content={ depth > 0 ? lang.get( inheritedDesc ) : lang.get( inheritedTitle ) } 
-				key={ (item.key || index) + ":" + item.secure } 
-				free={ depth > 0 ? false : true }
-				style={{ 
-					opacity: hidden ? "0" : null,
-					pointerEvents: hidden ? "none" : null,
-				}}
-			>
+
 				<div 
 				className={ 
 					Props.className( "tools-module-item", { 
@@ -429,7 +421,20 @@ export const Tools = ( props: any ) => {
 					makeEvent( e, item, depth );
 				}}
 				>
-					{ value }
+
+					<Tooltip 
+						content={ depth > 0 ? lang.get( inheritedDesc ) : lang.get( inheritedTitle ) } 
+						key={ (item.key || index) + ":" + item.secure } 
+						free={ depth > 0 ? false : true }
+						style={{ 
+							opacity: hidden ? "0" : null,
+							pointerEvents: hidden ? "none" : null,
+						}}
+					>
+						{ value }
+					</Tooltip>
+
+
 					<div className={
 						Props.className( "tools-module-children", { 
 							active: children && (settings.keyExist( item.key ) ? secureValue : getToolValue( item.key ))
@@ -438,7 +443,6 @@ export const Tools = ( props: any ) => {
 						e.preventDefault();
 					}}>{ children }</div>
 				</div>
-			</Tooltip>
 		)};
 	};	
 

@@ -182,6 +182,8 @@ export default {
     "Settings::Module::SideBar": "Sidebar panel",
     "Settings::Module::Others": "Additional parameters",
 
+    "General::Language::AllowLanguageSelection": "Allow language selection",
+    "General::Language::AllowLanguageSelection::Desc": "Allow language selection in the tools menu",
     "General::Language::EnabledLanguages": "Enabled Languages",
     "General::Language::EnabledLanguages::Desc": "List of possible languages",
     "General::Language::EnabledLanguages::ru": "Russian",
@@ -213,7 +215,9 @@ export default {
     "General::Mouse::CurrentMouseWheelOrientation::Inverse": "Inverse",
 
     "General::SideBar::SideBarExpand": "Enable sidebar panel",
-    "General::SideBar::SideBarExpand::Desc": "Enable acces to sidebar panel",    
+    "General::SideBar::SideBarExpand::Desc": "Enable acces to sidebar panel",        
+    "General::SideBar::SearchBarEnabled": "Enable search bar",
+    "General::SideBar::SearchBarEnabled::Desc": "Enable acces to search bar",    
     
     "General::Others::Version": "Display version",    
     "General::Others::LiveUpdates": "Dynamically update page changes",

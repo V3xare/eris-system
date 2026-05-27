@@ -249,10 +249,16 @@ export const Tools = ( props: any ) => {
 							return { 
 								value: item.token, 
 								icon: (
+
+								<Tooltip 
+									content={ item.name } 
+								>
 									<Icon style={{ fontFamily: "inherit" }}>
 										<Color simple value={ (((secureRef || {}).table || {})[ item.token ] || {}).MarksColor }/>
 										{ Common.paddingLeft( item.sac, 3, "0" ) + ":" + Common.paddingLeft( item.sic, 3, "0" ) }
 									</Icon>
+								</Tooltip>
+
 								), 
 							};
 						})}
@@ -293,7 +299,17 @@ export const Tools = ( props: any ) => {
 						{ ...extra }
 						onChange={( v: any ) => makeEvent( {}, item, depth, { list: v.value, sort: v.sort, defaultValue: v.defaultValue } ) } 
 						suggestions={(Array.isArray( params ) ? params : []).map(( child ) => {
-							return { title: simple ? (lang.get( child.prefix ) || lang.get( child.title )) : lang.get( child.title ), value: child.value, icon: child.icon };
+							return { 
+								title: simple ? (lang.get( child.prefix ) || lang.get( child.title )) : lang.get( child.title ), 
+								value: child.value, 
+								icon: (!simple && child.icon ? (
+									<Tooltip 
+										content={ lang.get( child.title ) } 
+									>
+										{ child.icon }
+									</Tooltip>
+								) : (child.icon)) 
+							};
 						})}
 					/>									
 				</div>

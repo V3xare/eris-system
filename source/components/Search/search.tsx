@@ -14,7 +14,7 @@ export const Search = ( props: {
 	const tools = props.tools ? props.tools : [];
 
 	return (
-		<div className={ Props.className( "eris-search", { overlay: expanded, reduced: !expanded }) }>
+		<div className={ Props.className( "eris-search", { overlay: expanded, hidden: props.hidden, reduced: !expanded }) }>
 			<AutoComplete 
 				larger 
 				onSelect={ props.onSelect } 

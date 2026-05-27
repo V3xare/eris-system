@@ -11,6 +11,10 @@
 		transition: 240ms ease-in-out;		
 	}
 
+	&-hidden{
+		display: none;
+	}
+
 }
 
 .eris-search-overlay .input{

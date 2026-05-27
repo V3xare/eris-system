@@ -34,6 +34,7 @@
 .input,
 .select .select-overlay, 
 .multiselect-headerless .multiselect-suggestions,
+.autocomplete-headerless .autocomplete-suggestions,
 .toggle
 {
 	border: 1px solid color.mix( var( --bg ), var( --element-light ), 25%, 100% );

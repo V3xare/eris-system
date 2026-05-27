@@ -84,7 +84,7 @@
 		font-size: 80%;
 		padding: 0px 8px;
 	}
-	&-children &-item .icon{
+	&-children &-text .icon, &-children &-line > .icon{
 		padding: 4px 2px 4px 4px;
 		border-radius: 4px;
 		min-width: 19px;
@@ -240,6 +240,10 @@
 }
 .tools-module-item .multiselect-headerless .multiselect-suggestions-item{
 	margin: 0px 3px 0px 0px;
+	padding: 5px 9px;
+	flex-grow: 1;
+	flex-shrink: 1;
+	justify-content: center;
 }
 .tools-module-item .multiselect-headerless .multiselect-suggestions-item > .typography{
 	display: none;
@@ -255,12 +259,15 @@
 	border: 0px;
 }
 .tools-module-item .multiselect-headerless .multiselect-suggestions-item-selected .icon{
-	color: color.mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 80% );
+	//color: color.mix( var( --element-text-flat ), var( --element-accent2 ), calc(100% * var(--element-text-multi-text)), 80% );
 }
 .tools-module-item .multiselect-headerless{
 	margin-bottom: 1px;
 }
 
 .tools-module-item .multiselect-suggestions-item{
-	background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 15% );
+	background-color: transparent;
+}
+.tools-module-item .multiselect-suggestions-item-selected{
+	background-color: color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 10% );
 }

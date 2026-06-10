@@ -295,8 +295,8 @@ export const Tools = ( props: any ) => {
 						onChange={( v: any ) => makeEvent( {}, item, depth, { list: v.value, sort: v.sort, defaultValue: v.defaultValue } ) } 
 						suggestions={(Array.isArray( params ) ? params : []).map(( child ) => {
 							return { 
-								tooltip: !simple && child.icon ? lang.get( child.title ) : null,
-								title: simple ? (lang.get( child.prefix ) || lang.get( child.title )) : lang.get( child.title ), 
+								tooltip: !simple && child.icon ? lang.get( child.prefix ) : null,
+								title: simple ? (lang.get( child.title ) || lang.get( child.prefix )) : lang.get( child.title ), 
 								value: child.value, 
 								icon: child.icon 
 							};

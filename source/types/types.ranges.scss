@@ -10,7 +10,7 @@
 	&-wrap{
 		width: 100%;
 		position: relative;
-		padding-bottom: 18px;
+		margin-bottom: 18px;
 	}
 
 	&-gridless > &-wrap{
@@ -114,6 +114,69 @@
 		}
 
 	}
+
+
+	&-radial &-item{
+		left: 0px !important;
+		top: 0px !important;
+		width: 100% !important;
+		height: 100% !important;
+		--offset: 45deg;
+		--percentage: 50%;
+		background: conic-gradient(from var(--offset), color.mix( var( --element-bg ), var( --element-accent2 ), calc(90% * var(--element-text-multi-main)), 50% ) 0% var(--percentage), transparent var(--percentage) 100%);
+		border-radius: 50%;
+	}
+
+	&-radial &-wrap{
+		width: 80px;
+		height: 80px;
+	}	
+	&-medium &-wrap{
+		width: 120px;
+		height: 120px;
+	}	
+	&-large &-wrap{
+		width: 180px;
+		height: 180px;
+	}
+	&-radial &-list{
+		border-radius: 50%;
+		width: 100%;
+		height: 100%;	
+		background: color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 14% );
+	}
+	&-radial &-line, &-radial &-item-bg{
+		display: none !important;
+	}
+	&-radial &-item-dot{
+		top: 0px;
+		left: 0px;
+		--angle: -90deg;
+		--radius: 50%;
+		margin-top: calc(50% - 8px + sin(var(--angle)) * var(--radius));
+		margin-left: calc(50% - 8px + cos(var(--angle)) * var(--radius));
+	}
+	&-radial-bg{
+		display: none;
+		position: absolute;
+		width: calc(100% - 8px);
+		height: calc(100% - 8px);
+		top: 4px;
+		left: 4px;
+		background: #3c3c3c;
+		padding: 0px 0px;
+		border-radius: 50%;
+		z-index: 1;
+	}
+	&-radial &-radial-bg{
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		justify-content: center;
+		font-size: 16px;
+		color: color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 50% );
+	}
+
 	&-line{
 		background: color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 14% );
 		position: absolute;
@@ -128,7 +191,8 @@
 		left: 0px;
 		right: 0px;
 		height: 8px;
-		z-index: 0;
+		z-index: 2;
+		pointer-events: none;
 		top: 10px;
 		margin-left: 5px;
 		margin-right: 8px;
@@ -139,17 +203,56 @@
 			border-left: 2px solid color.mix( var( --element-bg ), var( --element-accent ), calc(90% * var(--element-text-multi-main)), 14% );
 			height: 100%;
 			top: 0px;
+			width: 0px;
+			display: flex;
+			justify-content: center;		
 
 			& > span{
 				position: relative;
-				margin-left: -50%;
-				left: -1px;
 				top: 9px;
 				opacity: 0.5;
 			}
 
 		}
 
+	}
+
+	&-radial &-grid{
+		left: 0px;
+		right: 0px;
+		width: calc(100% - 8px);
+		height: calc(100% - 8px);
+		top: 0px;
+		margin-left: 10px;
+		margin-right: 0px;
+		margin-top: 0px;
+	}
+	&-radial &-grid-mark{
+		--radius: 50%;
+		--angle: 0deg;
+		--angleR: 0deg;
+		transform: rotate(var(--angleR));
+		height: 8px;
+		top: calc(50% - 0px + sin(var(--angle)) * var(--radius));
+		left: calc(50% - 0px + cos(var(--angle)) * var(--radius));
+	}
+	&-radial &-wrap{
+		margin-bottom: 0px;
+	}	
+	&-wrap-flip{
+		margin-top: 12px;
+		margin-bottom: 12px !important;
+		margin-right: 12px;
+		margin-left: 12px;
+	}
+	&-radial &-grid-mark > span{
+		top: 13px;
+	}
+	&-wrap-flip &-grid-mark > span{
+		top: -16px;
+	}
+	&-radial &-value{
+		display: none;
 	}
 
 }

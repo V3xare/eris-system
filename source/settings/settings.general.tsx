@@ -36,6 +36,9 @@ export const SettingsTableGeneral = [
 	{
 		title: "Settings::Module::Theme", key: "Theme", icon: <Icons.paintformat/>,
 		list: [
+			//{ key: "Points1", title: "Grid::Settings::Points", desc: "Grid::Settings::Points::Desc", type: "ranges", value: [ [ 10, 20 ] ], params: { min: 5, max: 25, grid: true } },
+			//{ key: "Points2", title: "Grid::Settings::Points", desc: "Grid::Settings::Points::Desc", type: "ranges", value: [ [ 10, 20 ] ], params: { min: 5, max: 25, grid: true, radial: true, multi: true } },
+			//{ key: "Points3", title: "Grid::Settings::Points", desc: "Grid::Settings::Points::Desc", type: "ranges", value: [ 90 ], params: { min: 0, max: 360, grid: { step: 45, mark: 15, flip: true }, radial: true, single: true } },
 			{ key: "CurrentTheme", title: "General::Theme::CurrentTheme",
 				desc: "General::Theme::CurrentTheme::Desc",
 				type: "theme",

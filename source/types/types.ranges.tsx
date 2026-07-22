@@ -134,7 +134,7 @@ const RangesToArray = ( v: any, isSingle: boolean, isMulti: boolean, min: number
 };
 
 export const Ranges = ( props: any ) => {
-	let { className, min, max, step, grid, input, separated, inactive, onChange, ...rest } = props;
+	let { className, min, max, step, grid, input, separated, inactive, radial, medium, large, onChange, ...rest } = props;
 
 	if( input !== false )
 		input = true;
@@ -164,6 +164,13 @@ export const Ranges = ( props: any ) => {
 		offset: { x: 0, y: 0 }
 	});	
 	
+	let gridParams = grid ? 
+	(typeof grid == "number" ? { step: grid, mark: 0, flip: false } 
+		: 
+		{ step: typeof grid.step == "number" ? Common.float( grid.step ) : 1, mark: typeof grid.step == "number" ? Common.float( grid.mark ) : 0, flip: grid.flip }) 
+		: 
+		{ step: 1, mark: 0, flip: false };
+
 	step = step === undefined ? 1 : RangesFloatType( step, isFloat );
 	let distance = (max - min) * 1.0;
 	const percent = ((ranges[ 0 ] || 0) - min) / distance * 100.0;
@@ -181,23 +188,60 @@ export const Ranges = ( props: any ) => {
 
 		drag.current.dragging = false;
 	};
-	const computeValue = ( e: any, offset: any ) => {
-		let xShift = (offset.width / (distance || 1)) * (isFloat ? 0.0 : 0.5);
-		let x = VMath.clamp( e.clientX + (0 + xShift) - offset.x, 0, offset.width ) / (offset.width * 1.0);
-		let y = VMath.clamp( e.clientY - offset.y, 0, offset.height ) / (offset.height * 1.0);
-		let c = RangesFloatType( x * distance, isFloat );
+	const computeValue = ( e: any, offset: any, lastValue: number | undefined ) => {
+
+		let x;
+		let y;
+		let c;
+		let xShift;	
+
+		xShift = 0;
+
+		if( radial ){
+			let center = {
+				x: offset.x + offset.width * 0.5,
+				y: offset.y + offset.height * 0.5,
+			};
+			let point = {
+				x: e.clientX,
+				y: e.clientY,
+			};
+			let angle = Math.atan2( point.y - center.y, point.x - center.x );
+			angle = angle * 180.0 / Math.PI + 90.0;
+
+			if( angle < 0 )
+				angle += 360;
+
+			c = angle / 360.0 * distance;
+
+		}else{
+			xShift = (offset.width / (distance || 1)) * (isFloat ? 0.0 : 0.5);
+			x = VMath.clamp( e.clientX + (0 + xShift) - offset.x, 0, offset.width ) / (offset.width);
+			y = VMath.clamp( e.clientY - offset.y, 0, offset.height ) / (offset.height);
+			c = RangesFloatType( x * distance, isFloat );
+		};
 
 		if( isFloat ){
 			c = Common.int( (c * 100000.0) / (step * 100000.0) ) * step;
 			c = +c.toFixed( 4 );
 		}else{
-			c = Common.int( (c / step) ) * step;
+			c = Common.int( radial ? (Math.round( c / step )) : (c / step) ) * step;
 		};
 
 		c += min;
 
 		if( !c )
 			c = 0;
+
+		if( radial && !isSingle ){
+
+			if( lastValue !== undefined && Math.abs( lastValue - c ) > (distance * 0.5) ){
+				c = lastValue;
+			};
+
+		};
+
+		//c  = VMath.clamp( c, min, max );
 
 		return { x, y, c };
 	};
@@ -288,7 +332,7 @@ export const Ranges = ( props: any ) => {
 			return;
 
 		drag.current.offset = Common.offset( wrapRef.current as any );
-		let { x, y, c } = computeValue( e, drag.current.offset );
+		let { x, y, c } = computeValue( e, drag.current.offset, drag.current.value );
 		drag.current.c = c;
 		setRangeValue( c );
 
@@ -320,30 +364,76 @@ export const Ranges = ( props: any ) => {
 			return lines;
 
 		let s = isFloat ? (Common.uint( step ) || 1) : step;
-		
-		for( let n = min, limit = max + 1; n < limit; n += s ){
-			lines.push(
-				<div key={ n } 
-					className={ "ranges-grid-mark" } 
-					style={{ 
-						left: ((n - min) / distance * 100.0) + "%",
-					}}
-					>
-						<span>{ n }</span>
-				</div>
-			);
+		s = typeof gridParams.step == "number" ? gridParams.step : s;
+		let plusOne = radial ? 0 : 1;
+
+		if( s > 0 ){
+
+			for( let n = min, limit = max + plusOne; n < limit; n += s ){
+				let offset = ((n - min) / distance * 100.0);
+				let angle: number =  ((offset / 100.0) * 360.0) - 90;
+
+				lines.push(
+					<div key={ n } 
+						className={ "ranges-grid-mark" } 
+						style={{ 
+							left: radial ? undefined : (offset + "%"),
+							"--angle": angle + "deg",
+							"--angleR": (angle + 90) + "deg"
+						} as React.CSSProperties }
+						>
+							<span>{ n }</span>
+					</div>
+				);
+			};
+
+		};
+
+		if( !gridParams.mark )
+			return lines;
+
+		s = typeof gridParams.mark == "number" ? gridParams.mark : s;
+
+		if( s > 0 ){
+			
+			for( let n = min, limit = max + plusOne; n < limit; n += s ){
+				let offset = ((n - min) / distance * 100.0);
+				let angle: number =  ((offset / 100.0) * 360.0) - 90;
+
+				lines.push(
+					<div key={ "mark:" + n } 
+						className={ "ranges-grid-mark" } 
+						style={{ 
+							left: radial ? undefined : (offset + "%"),
+							"--angle": angle + "deg",
+							"--angleR": (angle + 90) + "deg"
+						} as React.CSSProperties }
+						>
+					</div>
+				);
+			};
+
 		};
 
 		return lines;
-	}, [ min, max ]);
+	}, [ grid, min, max ]);
 
 	const createDotElement = ( pair: any, v: any, index: number, subIndex: number ) => {
+		let offset = ((v - min) / distance * 100.0);
+		let percent: any = (((subIndex + 1) < pair.length ? (pair[ subIndex + 1 ] - v) : (0)) / distance * 100.0);
+		let angle: number =  ((offset / 100.0) * 360.0) - 90;
+
 		return (
 			<div className={ "ranges-item" } key={ "range:" + v + ":" + index + ":" + subIndex } style={{ 
-				left: ((v - min) / distance * 100.0) + "%",
-				width: (((subIndex + 1) < pair.length ? (pair[ subIndex + 1 ] - v) : (0)) / distance * 100.0) + "%",
-			}}>
+				left: offset + "%",
+				width: percent + "%",
+				"--offset": ((offset / 100.0) * 360.0) + "deg",
+				"--percentage": percent + "%"
+			} as React.CSSProperties }>
 				<div className={ "ranges-item-dot" } 
+					style={{ 
+						"--angle": angle + "deg"
+					} as React.CSSProperties }				
 					onMouseDown={( e ) => {
 
 						e.stopPropagation();
@@ -385,7 +475,7 @@ export const Ranges = ( props: any ) => {
 
 	return (<div
 		className={
-			Props.className( "ranges", className, { gridless: !grid, separated: separated, inactive })
+			Props.className( "ranges", className, { gridless: !grid, separated: separated, inactive, radial: radial, medium: medium, large: large })
 		}
 	>
 		{ input && !inactive ? 
@@ -437,7 +527,7 @@ export const Ranges = ( props: any ) => {
 				pointerEvents: inactive ? "none" : null,
 			}}			
 		>
-		<div className={ "ranges-wrap" } onMouseEnter={() => setHovered( true ) } onMouseLeave={() => setHovered( false ) }>
+		<div className={ Props.className( "ranges-wrap", { flip: gridParams.flip } ) } onMouseEnter={() => setHovered( true ) } onMouseLeave={() => setHovered( false ) }>
 			{ inactive ? (<Input inactive>{ parsedText }</Input>) : null }
 			<div className={ "ranges-list" } ref={ wrapRef }
 				onMouseDown={( e ) => {
@@ -452,8 +542,9 @@ export const Ranges = ( props: any ) => {
 						return;
 					
 					e.preventDefault();
+
 					drag.current.offset = Common.offset( wrapRef.current as any );
-					let { x, y, c } = computeValue( e, drag.current.offset );
+					let { x, y, c } = computeValue( e, drag.current.offset, undefined );
 					computeRange( c, false );
 					drag.current.dragging = true;
 				}}
@@ -469,6 +560,7 @@ export const Ranges = ( props: any ) => {
 					e.preventDefault();
 				}}
 			>
+			<div className={ "ranges-radial-bg" }>{ isSingle ? Common.string( ranges[ 0 ] ) : null }</div>
 			<span className={ Props.className( "ranges-value", { hidden: !isSingle, flip: percent > 80 } ) } style={{ left: (percent) + "%" }}>{ isSingle ? ranges[ 0 ] : null }</span>
 			{
 				ranges.map(( value: any, index: number ) => { 

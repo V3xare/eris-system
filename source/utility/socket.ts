@@ -10,6 +10,7 @@ export enum SocketState{
 
 export class Socket{
 
+	private reconnectTimeout: any;
 	private pingInterval: any;
 	private pingIntervalValue: number;
 	private pingIntervalDelay: number;
@@ -31,6 +32,7 @@ export class Socket{
 
 	constructor(){
 		this.state = SocketState.Closed;
+		this.reconnectTimeout = null;
 		this.pingInterval = null;
 		this.initParams = {
 			url: location.host,
@@ -51,6 +53,7 @@ export class Socket{
 	};
 
 	private stopPinging(){
+		clearTimeout( this.reconnectTimeout );
 		clearInterval( this.pingInterval );
 		this.pingInterval = null;
 	};
@@ -132,13 +135,18 @@ export class Socket{
 	};
 	public tryReconnect(){
 		console.log( "Reconnecting: " + this.initParams.proto + "://" + this.initParams.url );
-		this.connect();
+		clearTimeout( this.reconnectTimeout );
+		this.reconnectTimeout = setTimeout(() => {
+			this.connect();
+		}, 5000 );
 	};	
 	public reconnect(){
 		this.disconnect();
 		this.connect();
 	};
 	public disconnect(){
+
+		clearTimeout( this.reconnectTimeout );
 
 		if( !this.connection )
 			return;

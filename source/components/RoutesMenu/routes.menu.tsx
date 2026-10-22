@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, useNavigate, useLocation, Link } from "re
 import { Auth, AuthContext,AuthModuleInit } from "../Auth/auth";
 import { BuildContext, BuildContextType } from "../Build/build";
 import { Button, LangContext, Column, Row, Props, Select } from "v-eris";
-import { CancelListContext, CancelListContextType, CancelListModuleInit, useCancelList } from "../CancelList/cancel.list";
+import { CancelListContext, CancelListContextType, CancelListModuleInit, useCancelList } from "v-eris";
 
 import "./routes.menu.scss"
 

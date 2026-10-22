@@ -8,7 +8,7 @@ import { ParseWhere } from "./types.appendix";
 import { Pagination } from "./types.pagination";
 import { BuildContext, BuildContextType } from "../components/Build/build";
 import { TypeRemove } from "./types.remove";
-import { CancelListContext, CancelListContextType, useCancelList } from "../components/CancelList/cancel.list";
+import { CancelListContext, CancelListContextType, useCancelList } from "v-eris";
 
 
 export const TypeTable = ( props: any ) => {

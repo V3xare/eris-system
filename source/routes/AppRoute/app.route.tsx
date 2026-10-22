@@ -10,7 +10,7 @@ import { Sidebar } from "../../components/Sidebar/sidebar";
 import { Search } from "../../components/Search/search";
 import { Templates } from "../../components/Templates/templates";
 import { TemplatesTable } from "@components/Templates/templates.table";
-import { CancelListContext, CancelListContextType, useCancelList } from "../../components/CancelList/cancel.list";
+import { CancelListContext, CancelListContextType, useCancelList } from "v-eris";
 
 export const AppRoute = () => {
 	const nav = useNavigate();

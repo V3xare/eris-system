@@ -10,7 +10,7 @@ import "../../../assets/styles/fixes.scss"
 import { AuthContext, AuthContextType } from "../Auth/auth";
 import { useSettings, SettingsInitType } from "../../utility/use.settings";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CancelListContext, CancelListContextType } from "../CancelList/cancel.list";
+import { CancelListContext, CancelListContextType } from "v-eris";
 
 export interface BuildTableItem{
 	key: string, 

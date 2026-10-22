@@ -91,9 +91,6 @@ export const TypeTableParams = ( props: any ) => {
 
 	const keyListener = ( event: KeyboardEvent ) => {
 
-		if( event.keyCode == 27 ){
-			onCancel();
-		};
 		if( event.keyCode == 13 ){
 			save();
 		};

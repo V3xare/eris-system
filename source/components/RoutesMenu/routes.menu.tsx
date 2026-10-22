@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, useNavigate, useLocation, Link } from "re
 import { Auth, AuthContext,AuthModuleInit } from "../Auth/auth";
 import { BuildContext, BuildContextType } from "../Build/build";
 import { Button, LangContext, Column, Row, Props, Select } from "v-eris";
+import { CancelListContext, CancelListContextType, CancelListModuleInit, useCancelList } from "../CancelList/cancel.list";
 
 import "./routes.menu.scss"
 
@@ -15,6 +16,8 @@ export const RoutesMenu = ( props: any ) => {
 	const lang: any = useContext( LangContext );
 	const build: BuildContextType = useContext( BuildContext );
 	const nav = useNavigate();
+
+	useCancelList( "routesMenu", profileExpanded, setProfileExpanded );
 
 	let routesList = useMemo(() => {
 		const list: any[] = [];

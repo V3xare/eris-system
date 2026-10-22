@@ -8,6 +8,7 @@ import { ParseWhere } from "./types.appendix";
 import { Pagination } from "./types.pagination";
 import { BuildContext, BuildContextType } from "../components/Build/build";
 import { TypeRemove } from "./types.remove";
+import { CancelListContext, CancelListContextType, useCancelList } from "../components/CancelList/cancel.list";
 
 
 export const TypeTable = ( props: any ) => {
@@ -33,6 +34,8 @@ export const TypeTable = ( props: any ) => {
 	const [ limit, setLimit ] = useState( 20 );
 	const routeStorage: StorageInitType = useContext( StorageContext );
 	const build: BuildContextType = useContext( BuildContext );
+
+	useCancelList( "typeTable", selectedToken, setSelectedToken );
 
 	const whereAny = props.group ? { token: props.value } : {};
 	
@@ -215,10 +218,12 @@ export const TypeTable = ( props: any ) => {
 		<Pagination offset={ offset } limit={ limit } length={ storage.length } autoHide={ inactive } onChange={( e ) => { 
 			setOffset( e.offset ); 
 		}}/>
-		<Modal className={ "settings-type-params-modal" } bg active={ selectedToken && inList } onClose={() => {
-			setSelectedToken( null );
-			//nav( Common.setQuery( location, { section: qs.section, token: undefined } ) );
-		}}>{
+		<Modal className={ "settings-type-params-modal" } bg active={ selectedToken && inList } 
+			onClose={() => {
+				setSelectedToken( null );
+				//nav( Common.setQuery( location, { section: qs.section, token: undefined } ) );
+			}}
+		>{
 			selectedToken ? (
 				<TypeTableParams
 					title={ storage.getValue( "name" ) || storage.getValue( "token" ) } 

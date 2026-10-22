@@ -13,7 +13,7 @@ export const Sidebar = ( props: { active?: boolean, hidden?: boolean, onClick?: 
 	const hidden = props.hidden === undefined ? !settings.getSecureValue( "General::SideBar::SideBarExpand" ) : props.hidden;
 
 	return (
-		<div className={ Props.className( "eris-sidebar", { active: props.active && !props.hidden, hasSearch: props.hasSearch, hidden: hidden}) }>
+		<div className={ Props.className( "eris-sidebar", { active: props.active && !props.hidden, hasSearch: props.hasSearch, hidden: hidden }) }>
 			<div className={ Props.className( "eris-sidebar-toggle", { static: props.hasSearch, active: props.active }) } 
 				onClick={ (props.onClick || (() => {})) as any }
 			></div>

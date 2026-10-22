@@ -10,16 +10,18 @@ import { Sidebar } from "../../components/Sidebar/sidebar";
 import { Search } from "../../components/Search/search";
 import { Templates } from "../../components/Templates/templates";
 import { TemplatesTable } from "@components/Templates/templates.table";
+import { CancelListContext, CancelListContextType, useCancelList } from "../../components/CancelList/cancel.list";
 
 export const AppRoute = () => {
 	const nav = useNavigate();
 	const location = useLocation();
 	const qs = Common.parseQuery( location );
 	const build: BuildContextType = useContext( BuildContext );
-	const route: BuildRoute = build.routes[ "admin" ];
 	const settings: SettingsInitType = build.settings;
 	const [ tools, setToolsRef ] = useState({});
 	const [ sidebarActive, setSidebarActive ] = useState( true );
+
+	useCancelList( "sideBar", sidebarActive, setSidebarActive );
 
 	const setTools = ( data: { key: string, value: any } ) => {
 		console.log( data );

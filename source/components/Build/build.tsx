@@ -10,6 +10,7 @@ import "../../../assets/styles/fixes.scss"
 import { AuthContext, AuthContextType } from "../Auth/auth";
 import { useSettings, SettingsInitType } from "../../utility/use.settings";
 import { useLocation, useNavigate } from "react-router-dom";
+import { CancelListContext, CancelListContextType } from "../CancelList/cancel.list";
 
 export interface BuildTableItem{
 	key: string, 
@@ -163,6 +164,7 @@ export const BuildInside = (
 	props: { 
 		currentLang?: string, 
 		currentTheme?: string, 
+		cancelKey?: number, 
 		languages?: { [langName: string]: {[key: string]: string} }, 
 		settingsTable: BuildTable,
 		routes?: { [routePath: string]: BuildRouteSimple }, 
@@ -173,6 +175,7 @@ export const BuildInside = (
 	const { children, languages, currentLang, routes, types } = props;
 	const lang: LangContextType = useContext( LangContext );
 	const auth: AuthContextType = useContext( AuthContext );
+	const cancelList: CancelListContextType = useContext( CancelListContext );
 	const userToken = window.localStorage.getItem( "RoleMirror" ) || "self";
 	const settings = useSettings({ 
 		token: "users:" + userToken,
@@ -215,6 +218,22 @@ export const BuildInside = (
 		};
 
 	}, [ languages ]);
+
+	const cancelKey = props.cancelKey || 27;
+	const keyListener = ( event: KeyboardEvent ) => {
+
+		if( event.keyCode == cancelKey ){
+			cancelList.exec();
+		};
+
+	};
+
+	useEffect(() => {
+		document.addEventListener( "keyup", keyListener );
+		return () => {
+			document.removeEventListener( "keyup", keyListener );
+		};
+	}, [ cancelList.state.list ]);
 
 	useEffect(() => {
    		lang.dispatch([ "select", selectedLang ]);
@@ -285,6 +304,7 @@ export const Build = (
 	props: { 
 		currentLang?: string, 
 		currentTheme?: string, 
+		cancelKey?: number, 
 		modules: any[], 
 		settingsTable: BuildTable,
 		routes: { [routePath: string]: BuildRouteSimple }, 
@@ -294,7 +314,7 @@ export const Build = (
 	} 
 ) => {
 	
-	const { modules, children, languages, currentLang, settingsTable, routes, types } = props;
+	const { modules, children, languages, currentLang, settingsTable, routes, types, cancelKey } = props;
 
 	const providersDefault = ( inside: any ) => {
 		return <Lang>{ inside }</Lang>
@@ -316,7 +336,17 @@ export const Build = (
 	return (
 	<>
 	{
-		providers(<BuildInside currentLang={ currentLang } currentTheme={ props.currentTheme } settingsTable={ settingsTable } languages={ languages } routes={ routes } types={ types }>{ children }</BuildInside>)
+		providers(<BuildInside 
+			currentLang={ currentLang } 
+			currentTheme={ props.currentTheme } 
+			settingsTable={ settingsTable } 
+			languages={ languages } 
+			routes={ routes } 
+			types={ types }
+			cancelKey={ cancelKey }
+		>
+			{ children }
+		</BuildInside>)
 	}
 	</>
 	);
